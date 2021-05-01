@@ -1,7 +1,19 @@
 stages:
+  - init
   - validate 
   - deploy
   - destroy
+
+init_job:
+  stage: init
+  tags:
+    - shell
+  script:
+          - cd terraform
+          - terraform init
+  artifacts:
+    paths:
+            - output
   
 validate_job:
   stage: validate
@@ -10,9 +22,6 @@ validate_job:
   script:
           - cd terraform
           - terraform validate
-  artifacts:
-    paths:
-            - output
         
 deploy_job:
   stage: deploy
