@@ -17,7 +17,6 @@ deploy_job:
   tags:
     - shell
   script:
-          - cd terraform
           - terraform apply
   only:
   - master
@@ -27,7 +26,6 @@ destroy_job:
   tags:
     - shell
   script:
-          - cd terraform
           - terraform destroy
   only:
   - master
