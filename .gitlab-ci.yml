@@ -11,7 +11,11 @@ validate_job:
           - cd terraform
           - terraform init
           - terraform validate
-        
+  cache:
+    paths:
+      - .terraform
+      - terraform.tfstate
+
 deploy_job:
   stage: deploy
   tags:
@@ -20,6 +24,10 @@ deploy_job:
           - terraform apply
   only:
   - master
+  cache:
+    paths:
+      - .terraform
+      - terraform.tfstate
 
 destroy_job:
   stage: destroy
@@ -30,4 +38,9 @@ destroy_job:
   only:
   - master
   when: manual
-  
+  cache:
+    paths:
+      - .terraform
+      - terraform.tfstate
+
+ 
