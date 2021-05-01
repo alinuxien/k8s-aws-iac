@@ -1,0 +1,37 @@
+stages:
+  - validate 
+  - deploy
+  - destroy
+  
+validate_job:
+  stage: validate
+  tags:
+    - shell
+  script:
+          - cd terraform
+          - terraform validate
+  artifacts:
+    paths:
+            - output
+        
+deploy_job:
+  stage: deploy
+  tags:
+    - shell
+  script:
+          - cd terraform
+          - terraform apply
+  only:
+  - master
+
+destroy_job:
+  stage: destroy
+  tags:
+    - shell
+  script:
+          - cd terraform
+          - terraform destroy
+  only:
+  - master
+  when: manual
+  
