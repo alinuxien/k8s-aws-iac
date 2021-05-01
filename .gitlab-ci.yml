@@ -11,7 +11,6 @@ validate_job:
       - cd terraform
       - terraform init
       - terraform validate
-      - ls -la
   artifacts:
     paths:
       - terraform/.terraform
@@ -23,14 +22,14 @@ deploy_job:
     - shell
   script:
       - cd terraform
-      - ls -la
       - terraform apply
   only:
   - master
   artifacts:
     paths:
-      - .terraform
-      - terraform.tfstate
+      - terraform/.terraform
+      - terraform/.terraform.lock.hcl
+      - terraform/terraform.tfstate
 
 destroy_job:
   stage: destroy
@@ -42,9 +41,5 @@ destroy_job:
   only:
   - master
   when: manual
-  artifacts:
-    paths:
-      - .terraform
-      - terraform.tfstate
 
  
