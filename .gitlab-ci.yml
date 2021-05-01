@@ -11,9 +11,6 @@ validate_job:
           - cd terraform
           - terraform init
           - terraform validate
-  artifacts:
-    paths:
-            - .
         
 deploy_job:
   stage: deploy
