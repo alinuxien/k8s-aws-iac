@@ -21,6 +21,7 @@ deploy_job:
   tags:
     - shell
   script:
+          - cd terraform
           - ls -la
           - terraform apply
   only:
