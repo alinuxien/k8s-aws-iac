@@ -4,8 +4,6 @@ stages:
   - destroy
 
 validate_job:
-  variables:
-    CI_DEBUG_TRACE: "true"
   stage: validate 
   tags:
     - shell
@@ -17,7 +15,7 @@ validate_job:
   artifacts:
     paths:
       - .terraform
-      - .terraform.lock.hcl
+      - terraform.lock.hcl
 
 deploy_job:
   stage: deploy
