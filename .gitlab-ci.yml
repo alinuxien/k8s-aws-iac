@@ -21,6 +21,7 @@ deploy_job:
   tags:
     - shell
   script:
+      - whoami
       - cd terraform
       - terraform apply
   only:
