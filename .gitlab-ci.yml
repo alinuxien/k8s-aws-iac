@@ -14,8 +14,8 @@ validate_job:
       - ls -la
   artifacts:
     paths:
-      - .terraform
-      - terraform.lock.hcl
+      - terraform/.terraform
+      - terraform/.terraform.lock.hcl
 
 deploy_job:
   stage: deploy
