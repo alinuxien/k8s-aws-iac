@@ -1,27 +1,19 @@
 stages:
-  - init
   - validate 
   - deploy
   - destroy
 
-init_job:
-  stage: init
+validate_job:
+  stage: validate 
   tags:
     - shell
   script:
           - cd terraform
           - terraform init
+          - terraform validate
   artifacts:
     paths:
-            - output
-  
-validate_job:
-  stage: validate
-  tags:
-    - shell
-  script:
-          - cd terraform
-          - terraform validate
+            - .
         
 deploy_job:
   stage: deploy
