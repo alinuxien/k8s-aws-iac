@@ -11,6 +11,7 @@ validate_job:
       - cd terraform
       - terraform init
       - terraform validate
+      - ls -la
   artifacts:
     paths:
       - .terraform
