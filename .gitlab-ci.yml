@@ -22,7 +22,7 @@ deploy_job:
     - shell
   script:
       - cd terraform
-      - terraform apply
+      - terraform apply -auto-approve
   only:
   - master
   artifacts:
