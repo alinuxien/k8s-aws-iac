@@ -37,7 +37,7 @@ destroy_job:
     - shell
   script:
       - cd terraform
-      - terraform destroy
+      - terraform destroy -auto-approve
   only:
   - master
   when: manual
