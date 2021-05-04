@@ -48,7 +48,7 @@ resource "aws_internet_gateway" "igw" {
   }
 }
 
-resource "aws_eip" "ip-ngwi-a" {
+resource "aws_eip" "ip-ngw-a" {
   vpc = true
 }
 
