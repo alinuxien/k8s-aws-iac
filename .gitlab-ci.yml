@@ -13,8 +13,7 @@ validate_job:
       - terraform validate
   artifacts:
     paths:
-      - terraform/.terraform
-      - terraform/.terraform.lock.hcl
+      - CI_BUILDS_DIR 
 
 deploy_job:
   stage: deploy
@@ -27,9 +26,7 @@ deploy_job:
   - master
   artifacts:
     paths:
-      - terraform/.terraform
-      - terraform/.terraform.lock.hcl
-      - terraform/terraform.tfstate
+        - CI_BUILDS_DIR
 
 destroy_job:
   stage: destroy
