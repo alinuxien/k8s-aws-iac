@@ -57,7 +57,7 @@ resource "aws_nat_gateway" "ngw-a" {
   subnet_id     = aws_subnet.public-a.id
 }
 
-resource "aws_eip" "ip-ngwi-b" {
+resource "aws_eip" "ip-ngw-b" {
   vpc = true
 }
 
