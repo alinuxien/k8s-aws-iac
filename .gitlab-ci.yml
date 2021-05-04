@@ -13,7 +13,7 @@ validate_job:
       - terraform validate
   artifacts:
     paths:
-      - CI_BUILDS_DIR 
+      - CI_PROJECT_DIR 
 
 deploy_job:
   stage: deploy
@@ -26,7 +26,7 @@ deploy_job:
   - master
   artifacts:
     paths:
-        - CI_BUILDS_DIR
+        - CI_PROJECT_DIR
 
 destroy_job:
   stage: destroy
