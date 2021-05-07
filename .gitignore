@@ -1,2 +1,7 @@
-id_rsa_aws_k8s
-id_rsa_aws_k8s.pub
+credentials/id_rsa_aws_k8s
+credentials/id_rsa_aws_k8s.pub
+terraform/.terrafom/*
+.terraform.lock.hcl
+.terraform
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
