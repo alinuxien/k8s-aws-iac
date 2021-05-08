@@ -15,6 +15,7 @@ validate_job:
     paths:
       - terraform/.terraform
       - terraform/.terraform.lock.hcl
+      - credentials
 
 deploy_job:
   stage: deploy
@@ -30,6 +31,7 @@ deploy_job:
       - terraform/.terraform
       - terraform/.terraform.lock.hcl
       - terraform/terraform.tfstate
+      - credentials
 
 destroy_job:
   stage: destroy
