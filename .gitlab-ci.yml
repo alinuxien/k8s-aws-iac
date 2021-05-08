@@ -23,8 +23,6 @@ deploy_job:
   script:
       - cd terraform
       - terraform apply -auto-approve
-  only:
-  - master
   artifacts:
     paths:
       - terraform/.terraform
@@ -38,8 +36,6 @@ destroy_job:
   script:
       - cd terraform
       - terraform destroy -auto-approve
-  only:
-  - master
   when: manual
 
  
