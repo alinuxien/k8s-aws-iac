@@ -22,8 +22,3 @@ variable "instance-type-bastion" {
   default     = "t2.micro"
 }
 
-variable "public_key_file" {
-  type        = string
-  description = "Chemin complet du fichier contenant la cle publique"
-}
-
