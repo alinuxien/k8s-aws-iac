@@ -7,11 +7,9 @@ terraform {
   }
 }
 
-variable "region" {}
-
 # AWS Provider
 provider "aws" {
-  region = var.region
+  region = "eu-west-3" 
 }
 
 # Import State "global" From Remote S3 Bucket
