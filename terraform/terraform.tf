@@ -6,10 +6,10 @@ terraform {
     region = "[...]"
   }
 }
+
 # AWS Provider
-provider "aws" {
-  region = "[...]"
-}
+provider "aws" {}
+
 # Import State "global" From Remote S3 Bucket
 data "terraform_remote_state" "global" {
   backend = "s3"
