@@ -1,11 +1,18 @@
 stages:
-  - validate 
+  - check 
   - plan
   - apply
   - destroy
 
+fmt_job:
+  stage: check 
+  tags:
+    - shell
+  script:
+      - terraform fmt -check -recursive terraform/
+
 validate_job:
-  stage: validate 
+  stage: check 
   tags:
     - shell
   script:
