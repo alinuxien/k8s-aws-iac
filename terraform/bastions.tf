@@ -24,27 +24,22 @@ resource "aws_security_group" "allow-ssh" {
   }
 }
 
-resource "aws_instance" "bastion-a" {
+resource "aws_instance" "bastion" {
+  #  user_data                   = data.terraform_remote_state.global.user_data
   ami                         = var.ami-bastion
   instance_type               = var.instance-type-bastion
   subnet_id                   = aws_subnet.public-a.id
   associate_public_ip_address = true
+  key_name                    = data.terraform_remote_state.global.id_rsa_aws_k8s_pub
   vpc_security_group_ids      = [aws_security_group.allow-ssh.id]
-  key_name                    = aws_key_pair.keypair.id
   tags = {
     Name = "bastion-a"
   }
-}
-
-resource "aws_instance" "bastion-b" {
-  ami                         = var.ami-bastion
-  instance_type               = var.instance-type-bastion
-  subnet_id                   = aws_subnet.public-b.id
-  associate_public_ip_address = true
-  vpc_security_group_ids      = [aws_security_group.allow-ssh.id]
-  key_name                    = aws_key_pair.keypair.id
-  tags = {
-    Name = "bastion-b"
-  }
+  # ignore user_data updates, as this will require a new resource!
+  #  lifecycle {
+  #    ignore_changes = [
+  #      "user_data",
+  #    ]
+  #  }
 }
 

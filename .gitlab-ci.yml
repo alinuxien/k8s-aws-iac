@@ -1,6 +1,7 @@
 stages:
   - validate 
-  - deploy
+  - plan
+  - apply
   - destroy
 
 validate_job:
@@ -9,25 +10,30 @@ validate_job:
     - shell
   script:
       - cd terraform
-      - terraform init
+      - terraform init -backend-config="bucket=$AWS_STATE_BUCKET" -backend-config="key=$AWS_STATE_KEY" -backend-config="region=$AWS_REGION"
       - terraform validate
-  artifacts:
-    paths:
-      - terraform/.terraform
-      - terraform/.terraform.lock.hcl
 
-deploy_job:
-  stage: deploy
+plan_job:
+  stage: plan 
   tags:
     - shell
   script:
       - cd terraform
-      - terraform apply -auto-approve
+      - terraform init
+      - terraform plan -out "planfile"
   artifacts:
     paths:
-      - terraform/.terraform
-      - terraform/.terraform.lock.hcl
-      - terraform/terraform.tfstate
+      - terraform/planfile
+
+
+apply_job:
+  stage: apply
+  tags:
+    - shell
+  script:
+      - cd terraform
+      - terraform apply -auto-approve "planfile"
+  when: manual
 
 destroy_job:
   stage: destroy
