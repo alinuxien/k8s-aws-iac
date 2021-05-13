@@ -20,6 +20,8 @@ plan_job:
   script:
       - cd terraform
       - terraform init -backend-config="bucket=$AWS_STATE_BUCKET" -backend-config="key=$AWS_STATE_KEY" -backend-config="region=$AWS_REGION"
+      - ls -la
+      - echo $AWS_REGION
       - terraform plan -out "planfile"
   artifacts:
     paths:
