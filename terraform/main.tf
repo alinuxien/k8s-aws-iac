@@ -1,6 +1,11 @@
-provider "aws" {
-  region = "eu-west-3"
+data "aws_availability_zones" "available" {}
+
+data "local_file" "local-pub-key" {
+  filename = var.public_key_file
 }
 
-data "aws_availability_zones" "available" {}
+resource "aws_key_pair" "keypair" {
+  key_name   = "keypair"
+  public_key = data.local_file.local-pub-key.content
+}
 
