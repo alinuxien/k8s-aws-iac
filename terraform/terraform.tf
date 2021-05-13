@@ -8,17 +8,15 @@ terraform {
 }
 
 # AWS Provider
-provider "aws" {
-  region = "eu-west-3" 
-}
+provider "aws" {}
 
 # Import State "global" From Remote S3 Bucket
-data "terraform_remote_state" "global" {
-  backend = "s3"
-  config = {
-    region = "[...]"
-    bucket = "[...]"
-    key    = "[...]"
-  }
-}
+#data "terraform_remote_state" "global" {
+#  backend = "s3"
+#  config = {
+#    region = "[...]"
+#    bucket = "[...]"
+#    key    = "[...]"
+#  }
+#}
 
