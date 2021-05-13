@@ -24,13 +24,22 @@ resource "aws_security_group" "allow-ssh" {
   }
 }
 
+data "aws_s3_bucket_object" "ssh_pubkey" {
+  bucket = "clusters.kube.akrour.fr"
+  key    = "id_rsa_aws_k8s.pub"
+}
+resource "aws_key_pair" "bastion" {
+  key_name   = aws_s3_bucket_object.ssh_pubkey.key.name
+  public_key = aws_s3_bucket_object.ssh_pubkey.body
+}
+
 resource "aws_instance" "bastion" {
   #  user_data                   = data.terraform_remote_state.global.user_data
   ami                         = var.ami-bastion
   instance_type               = var.instance-type-bastion
   subnet_id                   = aws_subnet.public-a.id
   associate_public_ip_address = true
-  key_name                    = data.terraform_remote_state.global.ssh_pubkey
+  key_name                    = aws_key_pair.bastion.key_name
   vpc_security_group_ids      = [aws_security_group.allow-ssh.id]
   tags = {
     Name = "bastion-a"

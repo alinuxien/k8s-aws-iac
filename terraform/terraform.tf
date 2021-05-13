@@ -17,7 +17,6 @@ data "terraform_remote_state" "global" {
     region = "[...]"
     bucket = "[...]"
     key    = "[...]"
-    ssh_pubkey = "[...]"
   }
 }
 
