@@ -30,7 +30,7 @@ resource "aws_instance" "bastion" {
   instance_type               = var.instance-type-bastion
   subnet_id                   = aws_subnet.public-a.id
   associate_public_ip_address = true
-  key_name                    = data.terraform_remote_state.global.id_rsa_aws_k8s_pub
+  key_name                    = data.terraform_remote_state.global.ssh_pubkey
   vpc_security_group_ids      = [aws_security_group.allow-ssh.id]
   tags = {
     Name = "bastion-a"
