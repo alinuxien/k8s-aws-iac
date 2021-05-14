@@ -21,7 +21,7 @@ validate_job:
   script:
       - cd terraform
       - terraform init -input=false -backend-config="bucket=$AWS_STATE_BUCKET" -backend-config="key=$BRANCH_STATE_KEY" -backend-config="region=$AWS_REGION"
-      - terraform validate -input=false 
+      - terraform validate 
 
 plan_job:
   stage: plan 
@@ -44,7 +44,6 @@ apply_job:
       - cd terraform
       - terraform init -input=false -backend-config="bucket=$AWS_STATE_BUCKET" -backend-config="key=$BRANCH_STATE_KEY" -backend-config="region=$AWS_REGION"
       - terraform apply -input=false -auto-approve "planfile"
-  when: manual
 
 destroy_job:
   stage: destroy
