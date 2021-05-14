@@ -4,3 +4,8 @@
           name: *
           state: latest
           update_cache: yes
+
+- include_tasks: "{{ item }}"
+  with_items:
+          - cfssl.yml
+          - kubectl.yml
