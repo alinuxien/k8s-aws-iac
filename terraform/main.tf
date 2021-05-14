@@ -5,6 +5,15 @@ terraform {
     key    = "[...]"
     region = "[...]"
   }
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "= v3.40.0"
+    }
+  }
+
+  required_version = "= 0.15.3"
 }
 
 # AWS Provider
