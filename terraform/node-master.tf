@@ -1,6 +1,6 @@
 resource "aws_security_group" "k8s-sg" {
   name        = "k8s-sg"
-  description = "Groupe de Securite des Nodes K8S" 
+  description = "Groupe de Securite des Nodes K8S"
   vpc_id      = aws_vpc.main.id
 
   tags = {
