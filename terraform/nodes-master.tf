@@ -44,7 +44,7 @@ resource "aws_security_group_rule" "in-icmp-for-external" {
   security_group_id = aws_security_group.k8s-sg.id
 }
 
-esource "aws_security_group_rule" "out-all" {
+resource "aws_security_group_rule" "out-all" {
   type              = "egress"
   from_port         = 0
   to_port           = 0
