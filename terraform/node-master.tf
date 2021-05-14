@@ -44,7 +44,7 @@ resource "aws_security_group_rule" "out-all" {
   security_group_id = aws_security_group.k8s-sg.id
 }
 
-resource "aws_instance" "node-master-a" {
+resource "aws_instance" "k8s-node-master-a" {
   ami                    = var.ami-k8s-nodes
   instance_type          = var.instance-type-k8s-node-master
   subnet_id              = aws_subnet.private-a.id

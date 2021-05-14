@@ -27,6 +27,11 @@ variable "public_key_file" {
   description = "Chemin complet du fichier contenant la cle publique"
 }
 
+variable "private_key_file" {
+  type        = string
+  description = "Chemin complet du fichier contenant la cle privee"
+}
+
 variable "ami-k8s-nodes" {
   type        = string
   description = "Image Amazon à utiliser pour les nodes Kubernetes"
