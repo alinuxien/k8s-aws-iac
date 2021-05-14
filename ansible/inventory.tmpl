@@ -7,7 +7,7 @@ ${k8s-node-master-a-dns} ansible_host=${k8s-node-master-a-ip} ansible_ssh_privat
 [bastion:vars]
 ansible_ssh_common_args= '-o StrictHostkeyChecking=no'
 
-[webservers:vars]
+[node-masters:vars]
 ansible_ssh_common_args= '-o ProxyCommand="ssh -i ${private_key_file} -W %h:%p ${bastion-user}@${bastion-ip} -o StrictHostKeyChecking=no" -o StrictHostKeyChecking=no'
 ansible_user= ${k8s-nodes-user}
 ansible_become= yes 

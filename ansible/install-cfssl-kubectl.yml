@@ -1,0 +1,5 @@
+---
+- name: "Installation de CFSSL, CFSSLJSON, et KUBECTL"
+  hosts: node-masters
+  roles:
+          - role: "cfssl-kubectl"
