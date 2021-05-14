@@ -1,7 +1,7 @@
 ---
 - name: Mise à jour de la liste des paquets et des paquets installés
   yum:
-          name: *
+          name: '*'
           state: latest
           update_cache: yes
 
