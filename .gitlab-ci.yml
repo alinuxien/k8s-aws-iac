@@ -5,7 +5,8 @@ stages:
   - destroy
 
 variables:
-  $BRANCH_STATE_KEY = $AWS_STATE_KEY-$CI_COMMIT_BRANCH
+  BRANCH_STATE_KEY: $AWS_STATE_KEY-$CI_COMMIT_BRANCH
+        
 fmt_job:
   stage: check 
   tags:
