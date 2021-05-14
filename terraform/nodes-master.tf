@@ -8,30 +8,39 @@ resource "aws_security_group" "k8s-sg" {
   }
 }
 
-resource "aws_security_group_rule" "in-ssh" {
+resource "aws_security_group_rule" "in-all-for-internal" {
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = [aws_vpc.main.cidr_block]
+  security_group_id = aws_security_group.k8s-sg.id
+}
+
+resource "aws_security_group_rule" "in-ssh-for-external" {
   type              = "ingress"
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
-  cidr_blocks       = [aws_vpc.main.cidr_block]
+  cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.k8s-sg.id
 }
 
-resource "aws_security_group_rule" "in-http" {
+resource "aws_security_group_rule" "in-https-for-external" {
   type              = "ingress"
-  from_port         = 80
-  to_port           = 80
+  from_port         = 6443
+  to_port           = 6443
   protocol          = "tcp"
-  cidr_blocks       = [aws_vpc.main.cidr_block]
+  cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.k8s-sg.id
 }
 
-resource "aws_security_group_rule" "in-https" {
+resource "aws_security_group_rule" "in-icmp-for-external" {
   type              = "ingress"
-  from_port         = 443
-  to_port           = 443
-  protocol          = "tcp"
-  cidr_blocks       = [aws_vpc.main.cidr_block]
+  from_port         = 8
+  to_port           = 0
+  protocol          = "icmp"
+  cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.k8s-sg.id
 }
 
