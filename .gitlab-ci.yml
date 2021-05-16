@@ -49,6 +49,7 @@ apply_job:
   artifacts:
     paths:
       - ansible/inventory.ini
+      - ansible/roles/prepare-certs/tasks/main.yml
 
 destroy_job:
   stage: destroy
