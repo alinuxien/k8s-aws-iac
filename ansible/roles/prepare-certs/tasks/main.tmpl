@@ -1,4 +1,8 @@
 ---
+
+- name: "Affichage de l'arborescence recherchée"
+  shell: "ls ../../../.."
+
 - name: "Création d'une Autorité de Certification"
   shell: "cfssl gencert -initca ../../../../certs/ca-csr.json | cfssljson -bare ca"
 
