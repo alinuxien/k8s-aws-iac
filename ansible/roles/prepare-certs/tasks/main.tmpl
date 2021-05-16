@@ -1,0 +1,22 @@
+---
+- name: "Création d'une Autorité de Certification"
+  shell: "cfssl gencert -initca ../../../../certs/ca-csr.json | cfssljson -bare ca"
+
+- name: "Génération du certificat Admin Client"
+  shell: "cfssl gencert \
+            -ca=ca.pem \
+            -ca-key=ca-key.pem \
+            -config=../../../../ca-config.json \
+            -profile=kubernetes \
+            ../../../../admin-csr.json | cfssljson -bare admin"
+
+- name: "Génération du certificat Client Kubelet"
+  shell: "cfssl gencert \
+            -ca=ca.pem \
+            -ca-key=ca-key.pem \
+            -config=../../../../ca-config.json \
+            -hostname=$master-a,${master-a-ext-ip},${master-a-int-ip} \
+            -profile=kubernetes \
+            $../../../../master-a-csr.json | cfssljson -bare master-a"
+
+

@@ -1,0 +1,17 @@
+{
+  "CN": "Kubernetes",
+  "key": {
+    "algo": "rsa",
+    "size": 2048
+  },
+  "names": [
+    {
+      "C": "FR",
+      "L": "Toulouse",
+      "O": "Kubernetes",
+      "OU": "HG",
+      "ST": "Haute-Garonne"
+    }
+  ]
+}
+
