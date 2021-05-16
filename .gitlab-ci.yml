@@ -34,7 +34,7 @@ plan_job:
   artifacts:
     paths:
       - terraform/planoutput.txt
-
+      - terraform/planfile
 
 apply_job:
   stage: apply
