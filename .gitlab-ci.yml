@@ -47,7 +47,7 @@ apply_job:
   allow_failure: true
   artifacts:
     paths:
-      - ansible/inventory
+      - ansible/inventory.ini
 
 destroy_job:
   stage: destroy
