@@ -1,22 +1,22 @@
 ---
 - name: "Création d'une Autorité de Certification"
-  shell: "cfssl gencert -initca {{ CI_PROJECT_PATH }}/certs/ca-csr.json | cfssljson -bare ca"
+  shell: "cfssl gencert -initca /home/vagrant/on-demand-infra/certs/ca-csr.json | cfssljson -bare ca"
 
 - name: "Génération du certificat Admin Client"
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
-            -config={{ CI_PROJECT_PATH }}/certs/ca-config.json \
+            -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
             -profile=kubernetes \
-            {{ CI_PROJECT_PATH }}/certs/admin-csr.json | cfssljson -bare admin"
+            /home/vagrant/on-demand-infra/certs/admin-csr.json | cfssljson -bare admin"
 
 - name: "Génération du certificat Client Kubelet"
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
-            -config={{ CI_PROJECT_PATH }}/certs/ca-config.json \
+            -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
             -hostname=$master-a,${master-a-ext-ip},${master-a-int-ip} \
             -profile=kubernetes \
-            ${{ CI_PROJECT_PATH }}/certs/master-a-csr.json | cfssljson -bare master-a"
+            /home/vagrant/on-demand-infra/certs/master-a-csr.json | cfssljson -bare master-a"
 
 
