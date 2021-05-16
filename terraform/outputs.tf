@@ -26,7 +26,7 @@ resource "local_file" "AnsibleK8SCertificatePreparation" {
     master-a-ext-ip = aws_instance.k8s-node-master-a.public_ip,
     master-a-int-ip = aws_instance.k8s-node-master-a.private_ip
   })
-  filename = "../ansible/roles/prepare-certs/tasks/mains.yml"
+  filename = "../ansible/roles/prepare-certs/tasks/main.yml"
 }
 
 
