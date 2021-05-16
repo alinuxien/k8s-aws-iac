@@ -6,17 +6,17 @@
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
-            -config=../../../../ca-config.json \
+            -config=../../../../certs/ca-config.json \
             -profile=kubernetes \
-            ../../../../admin-csr.json | cfssljson -bare admin"
+            ../../../../certs/admin-csr.json | cfssljson -bare admin"
 
 - name: "Génération du certificat Client Kubelet"
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
-            -config=../../../../ca-config.json \
+            -config=../../../../certs/ca-config.json \
             -hostname=$master-a,${master-a-ext-ip},${master-a-int-ip} \
             -profile=kubernetes \
-            $../../../../master-a-csr.json | cfssljson -bare master-a"
+            $../../../../certs/master-a-csr.json | cfssljson -bare master-a"
 
 
