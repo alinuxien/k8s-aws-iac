@@ -6,7 +6,8 @@ resource "null_resource" "plays_k8s-master" {
   depends_on = [
     aws_nat_gateway.ngw-a,
     aws_instance.bastion,
-    aws_instance.k8s-node-master-a
+    aws_instance.k8s-node-master-a,
+    local_file.AnsibleK8SCertificatePreparation
   ]
 }
 
