@@ -1,6 +1,6 @@
 resource "null_resource" "plays_k8s-master" {
   provisioner "local-exec" {
-    command = "ansible-playbook -i ../ansible/inventory ../ansible/prepare-certs.yml"
+    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/prepare-certs.yml"
   }
 
   depends_on = [

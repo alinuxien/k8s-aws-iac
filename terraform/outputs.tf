@@ -18,7 +18,7 @@ resource "local_file" "AnsibleInventory" {
     k8s-nodes-user        = var.k8s-nodes-user,
     private_key_file      = var.private_key_file
   })
-  filename = "../ansible/inventory"
+  filename = "../ansible/inventory.ini"
 }
 
 resource "local_file" "AnsibleK8SCertificatePreparation" {
