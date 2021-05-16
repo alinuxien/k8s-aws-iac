@@ -23,8 +23,8 @@ resource "local_file" "AnsibleInventory" {
 
 resource "local_file" "AnsibleK8SCertificatePreparation" {
   content = templatefile("../ansible/roles/prepare-certs/tasks/main.tmpl", {
-    master-a-ext-ip = aws_instance.k8s-node-master-a.public-ip,
-    master-a-int-ip = aws_instance.k8s-node-master-a.private-ip
+    master-a-ext-ip = aws_instance.k8s-node-master-a.public_ip,
+    master-a-int-ip = aws_instance.k8s-node-master-a.private_ip
   })
   filename = "../ansible/roles/prepare-certs/tasks/mains.yml"
 }
