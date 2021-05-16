@@ -29,7 +29,6 @@ data "local_file" "local-pub-key" {
 
 # Prepare EC2 Key Pair
 resource "aws_key_pair" "keypair" {
-  key_name   = "keypair"
   public_key = data.local_file.local-pub-key.content
 }
 
