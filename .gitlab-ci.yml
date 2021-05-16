@@ -6,7 +6,8 @@ stages:
 
 variables:
   BRANCH_STATE_KEY: $AWS_STATE_KEY-$CI_COMMIT_BRANCH
-        
+  CI_PROJECT_PATH: $CI_PROJECT_PATH
+
 fmt_job:
   stage: check 
   tags:
