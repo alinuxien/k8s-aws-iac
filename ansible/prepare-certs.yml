@@ -1,5 +1,5 @@
 ---
 - name: "Préparation des certificats pour les composants Kubernetes"
-  hosts: local
+  hosts: localhost
   roles:
           - role: "prepare-certs"
