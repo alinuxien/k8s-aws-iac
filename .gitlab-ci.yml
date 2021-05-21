@@ -49,7 +49,10 @@ apply_job:
   artifacts:
     paths:
       - ansible/inventory.ini
-      - ansible/roles/prepare-certs/tasks/main.yml
+      - ca.pem
+      - ca-key.pem
+      - admin-key.pem
+      - admin.pem
 
 destroy_job:
   stage: destroy
