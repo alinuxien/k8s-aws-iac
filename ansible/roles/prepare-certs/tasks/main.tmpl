@@ -15,7 +15,7 @@
             -ca=ca.pem \
             -ca-key=ca-key.pem \
             -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
-            -hostname=$master-a,${master-a-ext-ip},${master-a-int-ip} \
+            -hostname=master-a,${master-a-ext-ip},${master-a-int-ip} \
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/master-a-csr.json | cfssljson -bare master-a"
 
