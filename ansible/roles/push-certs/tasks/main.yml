@@ -1,0 +1,6 @@
+---
+- name: "Copie des certificats et clés privés sur les workers"
+  ansible.builtin.copy:
+    src: ansible/ca.pem ansible/master-a-key.pem on-demand-infra/ansible/master-a.pem
+    dest: ~/
+
