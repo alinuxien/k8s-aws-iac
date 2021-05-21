@@ -1,4 +1,11 @@
 ---
+- name: "Debug path"
+  command: tree
+  register: tree
+
+- debug: msg="{{tree.stdout}}"
+
+- debug: msg="{{tree.stderr}}"
 - name: "Copie des certificats et clés privés sur les workers"
   ansible.builtin.copy:
     src: ca.pem master-a-key.pem master-a.pem
