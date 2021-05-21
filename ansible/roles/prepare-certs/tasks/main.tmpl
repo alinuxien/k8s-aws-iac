@@ -23,7 +23,7 @@
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
-            -config=ca-config.json \
+            -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/kube-controller-manager-csr.json | cfssljson -bare kube-controller-manager"
 
@@ -31,7 +31,7 @@
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
-            -config=ca-config.json \
+            -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/kube-proxy-csr.json | cfssljson -bare kube-proxy"
 
@@ -39,7 +39,7 @@
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
-            -config=ca-config.json \
+            -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/kube-scheduler-csr.json | cfssljson -bare kube-scheduler"
 
@@ -47,7 +47,7 @@
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
-            -config=ca-config.json \
+            -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
             -hostname=${api-server-ip},${master-a-int-ip},${kubernetes-public-adress},127.0.0.1,${kubernetes-hostnames} \
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/kubernetes-csr.json | cfssljson -bare kubernetes"
