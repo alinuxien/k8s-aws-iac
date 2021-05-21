@@ -56,3 +56,15 @@ variable "instance-type-k8s-node-worker" {
   default     = "t2.micro"
 }
 
+variable "api-server-ip" {
+  type        = string
+  description = "Addresse IP de l'API Server Kubernetes"
+  default     = "10.32.0.1"
+}
+
+variable "internal-cluster-ip-cidr" {
+  type        = string
+  description = "Plage d'adresses IP réservée pour les services internes du Cluster Kubernetes"
+  default     = "10.32.0.0/24"
+}
+

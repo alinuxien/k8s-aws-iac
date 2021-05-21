@@ -19,4 +19,36 @@
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/master-a-csr.json | cfssljson -bare master-a"
 
+- name: "Génération du certificat du Control Manager"
+  shell: "cfssl gencert \
+            -ca=ca.pem \
+            -ca-key=ca-key.pem \
+            -config=ca-config.json \
+            -profile=kubernetes \
+            kube-controller-manager-csr.json | cfssljson -bare kube-controller-manager"
+
+- name: "Génération du certificat du client Kube Proxy"
+  shell: "cfssl gencert \
+            -ca=ca.pem \
+            -ca-key=ca-key.pem \
+            -config=ca-config.json \
+            -profile=kubernetes \
+            kube-proxy-csr.json | cfssljson -bare kube-proxy"
+
+- name: "Génération du certificat du client Scheduler"
+  shell: "cfssl gencert \
+            -ca=ca.pem \
+            -ca-key=ca-key.pem \
+            -config=ca-config.json \
+            -profile=kubernetes \
+            kube-scheduler-csr.json | cfssljson -bare kube-scheduler"
+
+- name: "Génération du certificat de l'API Server Kubernetes"
+  shell: "cfssl gencert \
+            -ca=ca.pem \
+            -ca-key=ca-key.pem \
+            -config=ca-config.json \
+            -hostname=${api-server-ip},${master-a-int-ip},${kubernetes-public-adress},127.0.0.1,${kubernetes-hostnames} \
+            -profile=kubernetes \
+            kubernetes-csr.json | cfssljson -bare kubernetes"
 

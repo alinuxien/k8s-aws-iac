@@ -24,7 +24,9 @@ resource "local_file" "AnsibleInventory" {
 resource "local_file" "AnsibleK8SCertificatePreparation" {
   content = templatefile("../ansible/roles/prepare-certs/tasks/main.tmpl", {
     master-a-ext-ip = aws_instance.k8s-node-master-a.public_ip,
-    master-a-int-ip = aws_instance.k8s-node-master-a.private_ip
+    master-a-int-ip = aws_instance.k8s-node-master-a.private_ip,
+    kubernetes-public-adress = aws_lb.lb.dns_name,
+    kubernetes-hostnames = "kubernetes,kubernetes.default,kubernetes.default.svc,kubernetes.default.svc.cluster,kubernetes.svc.cluster.local"
   })
   filename = "../ansible/roles/prepare-certs/tasks/main.yml"
 }
