@@ -62,5 +62,5 @@
 
 - name: "Copie des certificats et clés privés sur les workers"
   ansible.builtin.copy:
-    src: /home/vagrant/on-demand-infra/ansible/ca.pem /home/vagrant/on-demand-infra/ansible/master-a-key.pem /home/vagrant/on-demand-infra/ansible/master-a.pem
+    src: ansible/ca.pem ansible/master-a-key.pem on-demand-infra/ansible/master-a.pem
     dest: ~/
