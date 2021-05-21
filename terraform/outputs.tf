@@ -27,7 +27,7 @@ resource "local_file" "AnsibleK8SCertificatePreparation" {
     master-a-int-ip          = aws_instance.k8s-node-master-a.private_ip,
     kubernetes-public-adress = aws_lb.lb.dns_name,
     kubernetes-hostnames     = "kubernetes,kubernetes.default,kubernetes.default.svc,kubernetes.default.svc.cluster,kubernetes.svc.cluster.local",
-    api-server-ip = var.api-server-ip
+    api-server-ip            = var.api-server-ip
   })
   filename = "../ansible/roles/prepare-certs/tasks/main.yml"
 }
