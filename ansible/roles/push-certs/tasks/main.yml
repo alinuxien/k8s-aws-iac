@@ -4,3 +4,6 @@
     src: /tmp/certs/ca.pem /tmp/certs/master-a-key.pem /tmp/certs/master-a.pem
     dest: ~/
 
+- name: "Suppression des fichiers temporaires"
+  shell: "rm -rf /tmp/certs"
+

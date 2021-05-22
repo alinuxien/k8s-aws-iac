@@ -4,8 +4,6 @@
 
 - name: "Preparation d'un dossier temporaire pour stocker les Certificats générés"
   shell: "mkdir /tmp/certs"
-  args:
-    warn: no
 
 - name: "Génération du certificat Admin Client"
   shell: "cfssl gencert \
@@ -15,8 +13,6 @@
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/admin-csr.json | cfssljson -bare admin;\
             mv admin-key.pem admin.pem /tmp/certs"
-  args:
-    warn: no
 
 - name: "Génération du certificat Client Kubelet"
   shell: "cfssl gencert \
@@ -27,8 +23,6 @@
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/master-a-csr.json | cfssljson -bare master-a;\
             mv master-a-key.pem master-a.pem /tmp/certs"
-  args:
-    warn: no
 
 - name: "Génération du certificat du Control Manager"
   shell: "cfssl gencert \
@@ -38,8 +32,6 @@
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/kube-controller-manager-csr.json | cfssljson -bare kube-controller-manager;\
             mv kube-controller-manager-key.pem kube-controller-manager.pem /tmp/certs"
-  args:
-    warn: no
 
 - name: "Génération du certificat du client Kube Proxy"
   shell: "cfssl gencert \
@@ -49,8 +41,6 @@
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/kube-proxy-csr.json | cfssljson -bare kube-proxy;\
             mv kube-proxy-key.pem kube-proxy.pem /tmp/certs"
-  args:
-    warn: no
 
 - name: "Génération du certificat du client Scheduler"
   shell: "cfssl gencert \
@@ -60,8 +50,6 @@
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/kube-scheduler-csr.json | cfssljson -bare kube-scheduler;\
             mv kube-scheduler-key.pem kube-scheduler.pem /tmp/certs"
-  args:
-    warn: no
 
 - name: "Génération du certificat de l'API Server Kubernetes"
   shell: "cfssl gencert \
@@ -72,8 +60,6 @@
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/kubernetes-csr.json | cfssljson -bare kubernetes;\
             mv kubernetes-key.pem kubernetes.pem /tmp/certs"
-  args:
-    warn: no
 
 - name: "Génération de la paire de clé pour le Service Account"
   shell: "cfssl gencert \
@@ -83,5 +69,3 @@
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/service-account-csr.json | cfssljson -bare service-account;\
             mv service-account-key.pem service-account.pem /tmp/certs"
-  args:
-    warn: no
