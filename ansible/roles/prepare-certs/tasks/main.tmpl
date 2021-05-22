@@ -2,13 +2,17 @@
 - name: "Création d'une Autorité de Certification"
   shell: "cfssl gencert -initca /home/vagrant/on-demand-infra/certs/ca-csr.json | cfssljson -bare ca"
 
+- name: "Preparation d'un dossier temp"
+  shell: "mkdir /tmp/certs"
+
 - name: "Génération du certificat Admin Client"
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
             -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
             -profile=kubernetes \
-            /home/vagrant/on-demand-infra/certs/admin-csr.json | cfssljson -bare admin"
+            /home/vagrant/on-demand-infra/certs/admin-csr.json | cfssljson -bare admin;\
+            mv admin-key.pem admin.pem /tmp/certs"
 
 - name: "Génération du certificat Client Kubelet"
   shell: "cfssl gencert \
