@@ -22,7 +22,7 @@
             -hostname=master-a,${master-a-ext-ip},${master-a-int-ip} \
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/master-a-csr.json | cfssljson -bare master-a;\
-            mv admin-key.pem admin.pem /tmp/certs"
+            mv master-a-key.pem master-a.pem /tmp/certs"
 
 - name: "Génération du certificat du Control Manager"
   shell: "cfssl gencert \
@@ -31,7 +31,7 @@
             -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/kube-controller-manager-csr.json | cfssljson -bare kube-controller-manager;\
-            mv admin-key.pem admin.pem /tmp/certs"
+            mv kube-controller-manager-key.pem kube-controller-manager.pem /tmp/certs"
 
 - name: "Génération du certificat du client Kube Proxy"
   shell: "cfssl gencert \
@@ -40,7 +40,7 @@
             -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/kube-proxy-csr.json | cfssljson -bare kube-proxy;\
-            mv admin-key.pem admin.pem /tmp/certs"
+            mv kube-proxy-key.pem kube-proxy.pem /tmp/certs"
 
 - name: "Génération du certificat du client Scheduler"
   shell: "cfssl gencert \
@@ -49,7 +49,7 @@
             -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/kube-scheduler-csr.json | cfssljson -bare kube-scheduler;\
-            mv admin-key.pem admin.pem /tmp/certs"
+            mv kube-scheduler-key.pem kube-scheduler.pem /tmp/certs"
 
 - name: "Génération du certificat de l'API Server Kubernetes"
   shell: "cfssl gencert \
@@ -59,14 +59,14 @@
             -hostname=${api-server-ip},${master-a-int-ip},${kubernetes-public-adress},127.0.0.1,${kubernetes-hostnames} \
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/kubernetes-csr.json | cfssljson -bare kubernetes;\
-            mv admin-key.pem admin.pem /tmp/certs"
+            mv kubernetes-key.pem kubernetes.pem /tmp/certs"
 
 - name: "Génération de la paire de clé pour le Service Account"
   shell: "cfssl gencert \
-  -ca=ca.pem \
-  -ca-key=ca-key.pem \
-  -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
-  -profile=kubernetes \
-  /home/vagrant/on-demand-infra/certs/service-account-csr.json | cfssljson -bare service-account;\
-            mv admin-key.pem admin.pem /tmp/certs"
+            -ca=ca.pem \
+            -ca-key=ca-key.pem \
+            -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
+            -profile=kubernetes \
+            /home/vagrant/on-demand-infra/certs/service-account-csr.json | cfssljson -bare service-account;\
+            mv service-account-key.pem service-account.pem /tmp/certs"
 
