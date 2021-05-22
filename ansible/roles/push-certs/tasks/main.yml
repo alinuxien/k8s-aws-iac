@@ -3,7 +3,7 @@
   ansible.builtin.command: ls -la
   register: current_ls
 
-- debug: msg="{{current.stdout}}"
+- debug: msg="{{current_ls.stdout}}"
 
-- debug: msg="{{current.stderr}}"
+- debug: msg="{{current_ls.stderr}}"
 
