@@ -1,9 +1,6 @@
 ---
-- name: "Debug path"
-  ansible.builtin.command: ls -la
-  register: current_ls
-
-- debug: msg="{{current_ls.stdout}}"
-
-- debug: msg="{{current_ls.stderr}}"
+- name: "Copie des certificats et clés privés sur les workers"
+  ansible.builtin.copy:
+    src: /tmp/certs/ca.pem /tmp/certs/master-a-key.pem /tmp/certs/master-a.pem
+    dest: ~/
 
