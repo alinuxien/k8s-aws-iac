@@ -49,7 +49,7 @@ apply_job:
   artifacts:
     paths:
       - ansible/inventory.ini
-      - ansible/*.pem
+      - ansible/master-a.pem
         
 destroy_job:
   stage: destroy
