@@ -9,7 +9,7 @@
 
 - name: "Création du fichier de Configuration pour le Cryptage"
   shell: 
-    cmd: " |
+    cmd: |
       cat > encryption-config.yaml <<EOF 
 kind: EncryptionConfig 
 apiVersion: v1 
@@ -22,7 +22,7 @@ resources:
             - name: key1 
               secret: ${ENCRYPTION_KEY} 
       - identity: {} 
-EOF"
+EOF
 
 - name: "Copie du fichier de configuration du cryptage dans un dossier temporaire"
   ansible.builtin.copy:
