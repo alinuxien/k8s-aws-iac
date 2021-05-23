@@ -11,6 +11,7 @@ resource "null_resource" "plays_k8s-master" {
     aws_nat_gateway.ngw-a,
     aws_instance.bastion,
     aws_instance.k8s-node-master-a,
+    aws_lb.lb,
     local_file.AnsibleK8SCertificatePreparation
   ]
 }
