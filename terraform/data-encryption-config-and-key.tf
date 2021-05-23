@@ -8,10 +8,7 @@ resource "null_resource" "prepare-and-deploy-encryption" {
   }
 
   depends_on = [
-    aws_instance.bastion,
-    aws_instance.k8s-node-master-a,
-    local_file.AnsibleInventory,
-    null_resource.prepare-and-deploy-encryption
+    null_resource.prepare-and-deploy-configs
   ]
 }
 
