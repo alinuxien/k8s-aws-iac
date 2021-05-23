@@ -4,7 +4,7 @@
 
 - name: "Création d'une Autorité de Certification"
   shell: "cfssl gencert -initca /home/vagrant/on-demand-infra/certs/ca-csr.json | cfssljson -bare ca;\
-            mv ca.pem ca-key.pem /tmp/certs"
+            cp ca.pem ca-key.pem /tmp/certs"
 
 - name: "Génération du certificat Admin Client"
   shell: "cfssl gencert \
