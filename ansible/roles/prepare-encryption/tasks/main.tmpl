@@ -9,7 +9,8 @@
 
 - name: "Création du fichier de Configuration pour le Cryptage"
   shell: 
-    cmd: cat > encryption-config.yaml <<EOF 
+    cmd: |
+      cat > encryption-config.yaml <<EOF 
 kind: EncryptionConfig 
 apiVersion: v1 
 resources: 
