@@ -9,5 +9,8 @@
     - "/tmp/certs/master-a.pem"
 
 - name: "Suppression des fichiers temporaires"
-  shell: "rm -rf /tmp/certs"
+  ansible.builtin.file:
+    path: /tmp/certs
+    state: absent
+
 
