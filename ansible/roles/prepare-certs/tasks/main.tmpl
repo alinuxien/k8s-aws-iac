@@ -8,7 +8,7 @@
   shell: "cfssl gencert -initca /home/vagrant/on-demand-infra/certs/ca-csr.json | cfssljson -bare ca"
 
 - name: "Copie des certificats dans un dossier temporaire"
-  ansible.built.copy:
+  ansible.builtin.copy:
     src: "{{ item }}"
     dest: /tmp/certs
   with_items: 
@@ -24,7 +24,7 @@
             /home/vagrant/on-demand-infra/certs/admin-csr.json | cfssljson -bare admin"
 
 - name: "Copie des certificats dans un dossier temporaire"
-  ansible.built.copy:
+  ansible.builtin.copy:
     src: "{{ item }}" 
     dest: /tmp/certs
   with_items: 
@@ -41,7 +41,7 @@
             /home/vagrant/on-demand-infra/certs/master-a-csr.json | cfssljson -bare master-a"
 
 - name: "Copie des certificats dans un dossier temporaire"
-  ansible.built.copy:
+  ansible.builtin.copy:
     src: "{{ item }}" 
     dest: /tmp/certs
   with_items: 
@@ -57,7 +57,7 @@
             /home/vagrant/on-demand-infra/certs/kube-controller-manager-csr.json | cfssljson -bare kube-controller-manager"
 
 - name: "Copie des certificats dans un dossier temporaire"
-  ansible.built.copy:
+  ansible.builtin.copy:
     src: "{{ item }}" 
     dest: /tmp/certs
   with_items: 
@@ -73,7 +73,7 @@
             /home/vagrant/on-demand-infra/certs/kube-proxy-csr.json | cfssljson -bare kube-proxy"
 
 - name: "Copie des certificats dans un dossier temporaire"
-  ansible.built.copy:
+  ansible.builtin.copy:
     src: "{{ item }}" 
     dest: /tmp/certs
   with_items: 
@@ -89,7 +89,7 @@
             /home/vagrant/on-demand-infra/certs/kube-scheduler-csr.json | cfssljson -bare kube-scheduler"
 
 - name: "Copie des certificats dans un dossier temporaire"
-  ansible.built.copy:
+  ansible.builtin.copy:
     src: "{{ item }}" 
     dest: /tmp/certs
   with_items: 
@@ -106,7 +106,7 @@
             /home/vagrant/on-demand-infra/certs/kubernetes-csr.json | cfssljson -bare kubernetes"
 
 - name: "Copie des certificats dans un dossier temporaire"
-  ansible.built.copy:
+  ansible.builtin.copy:
     src: "{{ item }}" 
     dest: /tmp/certs
   with_items: 
@@ -122,7 +122,7 @@
             /home/vagrant/on-demand-infra/certs/service-account-csr.json | cfssljson -bare service-account"
 
 - name: "Copie des certificats dans un dossier temporaire"
-  ansible.built.copy:
+  ansible.builtin.copy:
     src: "{{ item }}" 
     dest: /tmp/certs
   with_items: 
