@@ -26,9 +26,6 @@
 
 - name: "Copie du fichier de Configuration dans un dossier temporaire"
   ansible.builtin.copy:
-    src: "{{ item }}" 
+    src: "master-a.kubeconfig" 
     dest: "/tmp/configs"
-  with_items: 
-    - "service-account-key.pem" 
-    - "service-account.pem"
 
