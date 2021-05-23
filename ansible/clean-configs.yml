@@ -1,0 +1,5 @@
+---
+- name: "Nettoyage des fichiers de Configuration"
+  hosts: localhost
+  roles:
+          - role: "clean-configs"
