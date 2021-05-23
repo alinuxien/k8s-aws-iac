@@ -11,18 +11,18 @@
   shell: 
     cmd: |
       cat > encryption-config.yaml <<EOF 
-kind: EncryptionConfig 
-apiVersion: v1 
-resources: 
-  - resources: 
-      - secrets 
-    providers: 
-      - aescbc: 
-          keys:  
-            - name: key1 
-              secret: ${ENCRYPTION_KEY} 
-      - identity: {} 
-EOF
+      kind: EncryptionConfig 
+      apiVersion: v1 
+      resources: 
+        - resources: 
+            - secrets 
+          providers: 
+            - aescbc: 
+                keys:  
+                  - name: key1 
+                    secret: ${ENCRYPTION_KEY} 
+            - identity: {} 
+       EOF
 
 - name: "Copie du fichier de configuration du cryptage dans un dossier temporaire"
   ansible.builtin.copy:
