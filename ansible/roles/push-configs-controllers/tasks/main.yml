@@ -1,0 +1,10 @@
+---
+- name: "Copie des KubeConfig sur les Controllers"
+  ansible.builtin.copy:
+    src: "{{ item }}"    
+    dest: "~/"
+  with_items:
+    - "/tmp/configs/admin.kubeconfig"
+    - "/tmp/configs/kube-controller-manager.kubeconfig"
+    - "/tmp/configs/kube-scheduler.kubeconfig" 
+

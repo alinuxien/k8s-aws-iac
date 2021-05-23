@@ -1,131 +1,117 @@
 ---
-- name: "Preparation d'un dossier temporaire pour stocker les Certificats générés"
+- name: "Preparation d'un dossier temporaire pour stocker les fichiers de Configuration générés"
   ansible.builtin.file:
-    path: /tmp/certs
-    state: directory  
+    path: /tmp/configs
+    state: directory 
 
-- name: "Création d'une Autorité de Certification"
-  shell: "cfssl gencert -initca /home/vagrant/on-demand-infra/certs/ca-csr.json | cfssljson -bare ca"
+- name: "Création du fichier de Configuration pour le Kubelet"
+  shell: "kubectl config set-cluster kubernetes-the-hard-way \
+            --certificate-authority=ca.pem \
+            --embed-certs=true \
+            --server=https://${kubernetes-public-adress}:6443 \
+            --kubeconfig=master-a.kubeconfigi; \
+          kubectl config set-credentials system:node:master-a \
+            --client-certificate=master-a.pem \
+            --client-key=master-a-key.pem \
+            --embed-certs=true \
+            --kubeconfig=master-a.kubeconfig; \
+          kubectl config set-context default \
+            --cluster=kubernetes-the-hard-way \
+            --user=system:node:master-a \
+            --kubeconfig=master-a.kubeconfig; \
+          kubectl config use-context default --kubeconfig=master-a.kubeconfig"
 
-- name: "Copie des certificats dans un dossier temporaire"
+- name: "Copie du fichier de Configuration dans un dossier temporaire"
   ansible.builtin.copy:
-    src: "{{ item }}"
-    dest: /tmp/certs
-  with_items: 
-    - "ca.pem"
-    - "ca-key.pem"
+    src: "master-a.kubeconfig" 
+    dest: "/tmp/configs"
 
-- name: "Génération du certificat Admin Client"
-  shell: "cfssl gencert \
-            -ca=ca.pem \
-            -ca-key=ca-key.pem \
-            -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
-            -profile=kubernetes \
-            /home/vagrant/on-demand-infra/certs/admin-csr.json | cfssljson -bare admin"
+- name: "Création du fichier de configuration pour le Kube-Proxy"
+  shell: "kubectl config set-cluster kubernetes-the-hard-way \
+            --certificate-authority=ca.pem \
+            --embed-certs=true \
+            --server=https://${kubernetes-public-adress}:6443 \
+            --kubeconfig=kube-proxy.kubeconfig; \
+          kubectl config set-credentials system:kube-proxy \
+            --client-certificate=kube-proxy.pem \
+            --client-key=kube-proxy-key.pem \
+            --embed-certs=true \
+            --kubeconfig=kube-proxy.kubeconfig; \
+          kubectl config set-context default \
+            --cluster=kubernetes-the-hard-way \
+            --user=system:kube-proxy \
+            --kubeconfig=kube-proxy.kubeconfig; \
+          kubectl config use-context default --kubeconfig=kube-proxy.kubeconfig"
 
-- name: "Copie des certificats dans un dossier temporaire"
+- name: "Copie du fichier de Configuration dans un dossier temporaire"
   ansible.builtin.copy:
-    src: "{{ item }}" 
-    dest: /tmp/certs
-  with_items: 
-    - "admin-key.pem" 
-    - "admin.pem"
+    src: "kube-proxy.kubeconfig" 
+    dest: "/tmp/configs"
 
-- name: "Génération du certificat Client Kubelet"
-  shell: "cfssl gencert \
-            -ca=ca.pem \
-            -ca-key=ca-key.pem \
-            -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
-            -hostname=master-a,${master-a-ext-ip},${master-a-int-ip} \
-            -profile=kubernetes \
-            /home/vagrant/on-demand-infra/certs/master-a-csr.json | cfssljson -bare master-a"
+- name: "Création du fichier de Configuration pour le Controller Manager"
+  shell: "kubectl config set-cluster kubernetes-the-hard-way \
+            --certificate-authority=ca.pem \
+            --embed-certs=true \
+            --server=https://127.0.0.1:6443 \
+            --kubeconfig=kube-controller-manager.kubeconfig; \
+          kubectl config set-credentials system:kube-controller-manager \
+            --client-certificate=kube-controller-manager.pem \
+            --client-key=kube-controller-manager-key.pem \
+            --embed-certs=true \
+            --kubeconfig=kube-controller-manager.kubeconfig; \
+          kubectl config set-context default \
+            --cluster=kubernetes-the-hard-way \
+            --user=system:kube-controller-manager \
+            --kubeconfig=kube-controller-manager.kubeconfig; \
+          kubectl config use-context default --kubeconfig=kube-controller-manager.kubeconfig"
 
-- name: "Copie des certificats dans un dossier temporaire"
+- name: "Copie du fichier de Configuration dans un dossier temporaire"
   ansible.builtin.copy:
-    src: "{{ item }}" 
-    dest: /tmp/certs
-  with_items: 
-    - "master-a-key.pem" 
-    - "master-a.pem"
+    src: "kube-controller-manager.kubeconfig" 
+    dest: "/tmp/configs"
 
-- name: "Génération du certificat du Control Manager"
-  shell: "cfssl gencert \
-            -ca=ca.pem \
-            -ca-key=ca-key.pem \
-            -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
-            -profile=kubernetes \
-            /home/vagrant/on-demand-infra/certs/kube-controller-manager-csr.json | cfssljson -bare kube-controller-manager"
+- name: "Création du fichier de Configuration pour le Kube Scheduler"
+  shell: "kubectl config set-cluster kubernetes-the-hard-way \
+            --certificate-authority=ca.pem \
+            --embed-certs=true \
+            --server=https://127.0.0.1:6443 \
+            --kubeconfig=kube-scheduler.kubeconfig; \
+          kubectl config set-credentials system:kube-scheduler \
+            --client-certificate=kube-scheduler.pem \
+            --client-key=kube-scheduler-key.pem \
+            --embed-certs=true \
+            --kubeconfig=kube-scheduler.kubeconfig; \
+          kubectl config set-context default \
+            --cluster=kubernetes-the-hard-way \
+            --user=system:kube-scheduler \
+            --kubeconfig=kube-scheduler.kubeconfig; \
+          kubectl config use-context default --kubeconfig=kube-scheduler.kubeconfig"
 
-- name: "Copie des certificats dans un dossier temporaire"
+- name: "Copie du fichier de Configuration dans un dossier temporaire"
   ansible.builtin.copy:
-    src: "{{ item }}" 
-    dest: /tmp/certs
-  with_items: 
-    - "kube-controller-manager-key.pem" 
-    - "kube-controller-manager.pem" 
+    src: "kube-scheduler.kubeconfig" 
+    dest: "/tmp/configs"
 
-- name: "Génération du certificat du client Kube Proxy"
-  shell: "cfssl gencert \
-            -ca=ca.pem \
-            -ca-key=ca-key.pem \
-            -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
-            -profile=kubernetes \
-            /home/vagrant/on-demand-infra/certs/kube-proxy-csr.json | cfssljson -bare kube-proxy"
+- name: "Création du fichier de Configuration pour le User admin"
+  shell: "kubectl config set-cluster kubernetes-the-hard-way \
+            --certificate-authority=ca.pem \
+            --embed-certs=true \
+            --server=https://127.0.0.1:6443 \
+            --kubeconfig=admin.kubeconfig; \
+          kubectl config set-credentials admin \
+            --client-certificate=admin.pem \
+            --client-key=admin-key.pem \
+            --embed-certs=true \
+            --kubeconfig=admin.kubeconfig; \
+          kubectl config set-context default \
+            --cluster=kubernetes-the-hard-way \
+            --user=admin \
+            --kubeconfig=admin.kubeconfig; \
+          kubectl config use-context default --kubeconfig=admin.kubeconfig"
 
-- name: "Copie des certificats dans un dossier temporaire"
+- name: "Copie du fichier de Configuration dans un dossier temporaire"
   ansible.builtin.copy:
-    src: "{{ item }}" 
-    dest: /tmp/certs
-  with_items: 
-    - "kube-proxy-key.pem" 
-    - "kube-proxy.pem" 
+    src: "admin.kubeconfig" 
+    dest: "/tmp/configs"
 
-- name: "Génération du certificat du client Scheduler"
-  shell: "cfssl gencert \
-            -ca=ca.pem \
-            -ca-key=ca-key.pem \
-            -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
-            -profile=kubernetes \
-            /home/vagrant/on-demand-infra/certs/kube-scheduler-csr.json | cfssljson -bare kube-scheduler"
-
-- name: "Copie des certificats dans un dossier temporaire"
-  ansible.builtin.copy:
-    src: "{{ item }}" 
-    dest: /tmp/certs
-  with_items: 
-    - "kube-scheduler-key.pem" 
-    - "kube-scheduler.pem"
-
-- name: "Génération du certificat de l'API Server Kubernetes"
-  shell: "cfssl gencert \
-            -ca=ca.pem \
-            -ca-key=ca-key.pem \
-            -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
-            -hostname=${api-server-ip},${master-a-int-ip},${kubernetes-public-adress},127.0.0.1,${kubernetes-hostnames} \
-            -profile=kubernetes \
-            /home/vagrant/on-demand-infra/certs/kubernetes-csr.json | cfssljson -bare kubernetes"
-
-- name: "Copie des certificats dans un dossier temporaire"
-  ansible.builtin.copy:
-    src: "{{ item }}" 
-    dest: /tmp/certs
-  with_items: 
-    - "kubernetes-key.pem" 
-    - "kubernetes.pem" 
-
-- name: "Génération de la paire de clé pour le Service Account"
-  shell: "cfssl gencert \
-            -ca=ca.pem \
-            -ca-key=ca-key.pem \
-            -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
-            -profile=kubernetes \
-            /home/vagrant/on-demand-infra/certs/service-account-csr.json | cfssljson -bare service-account"
-
-- name: "Copie des certificats dans un dossier temporaire"
-  ansible.builtin.copy:
-    src: "{{ item }}" 
-    dest: /tmp/certs
-  with_items: 
-    - "service-account-key.pem" 
-    - "service-account.pem"
 
