@@ -19,7 +19,7 @@ resource "null_resource" "cleaning-temp-encryption-files" {
 
   depends_on = [
     aws_instance.bastion,
-    aws_instance.k8s-node-master-a
+    aws_instance.k8s-node-master-a,
     local_file.AnsibleInventory
   ]
 }
