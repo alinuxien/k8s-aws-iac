@@ -1,4 +1,9 @@
 ---
+- name: "Preparation d'un dossier temporaire pour stocker le fichier de config de cryptage"
+  ansible.builtin.file:
+    path: /tmp/encryption
+    state: directory
+
 - name: "Génération de la clé de Cryptage"
   shell: "ENCRYPTION_KEY=$(head -c 32 /dev/urandom | base64)"
 
@@ -16,4 +21,9 @@ resources:
               secret: ${ENCRYPTION_KEY}
       - identity: {}
 EOF"
+
+- name: "Copie du fichier de configuration du cryptage dans un dossier temporaire"
+  ansible.builtin.copy:
+    src: "encryption-config.yaml"
+    dest: /tmp/encryption
 

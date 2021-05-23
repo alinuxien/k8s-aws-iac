@@ -11,3 +11,14 @@ resource "null_resource" "prepare-and-deploy-encryption" {
     null_resource.prepare-and-deploy-configs
   ]
 }
+
+resource "null_resource" "cleaning-temp-encryption-files" {
+  provisioner "local-exec" {
+    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/clean-encryption.yml"
+  }
+
+  depends_on = [
+    null_resource.prepare-and-deploy-encryption
+  ]
+}
+
