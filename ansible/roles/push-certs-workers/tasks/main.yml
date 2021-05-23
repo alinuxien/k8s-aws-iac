@@ -2,7 +2,7 @@
 - name: "Copie des certificats et clés privés sur les workers"
   ansible.builtin.copy:
     src: "{{ item }}"    
-    dest: ~/
+    dest: "~/"
   with_items:
     - "/tmp/certs/ca.pem"
     - "/tmp/certs/master-a-key.pem"
