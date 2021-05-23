@@ -2,7 +2,7 @@ resource "null_resource" "prepare-and-deploy-configs" {
   provisioner "local-exec" {
     command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/prepare-configs.yml"
   }
-  
+
   provisioner "local-exec" {
     command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/push-configs-workers.yml"
   }
