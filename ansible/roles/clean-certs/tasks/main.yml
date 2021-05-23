@@ -1,0 +1,7 @@
+---
+- name: "Suppression des fichiers temporaires"
+  ansible.builtin.file:
+    path: /tmp/certs
+    state: absent
+
+

@@ -1,0 +1,5 @@
+---
+- name: "Nettoyage des certificats"
+  hosts: localhost
+  roles:
+          - role: "clean-certs"
