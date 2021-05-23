@@ -6,7 +6,8 @@ stages:
 
 variables:
   BRANCH_STATE_KEY: $AWS_STATE_KEY-$CI_COMMIT_BRANCH
-        
+  CI_PROJECT_PATH: $CI_PROJECT_PATH
+
 fmt_job:
   stage: check 
   tags:
@@ -30,7 +31,7 @@ plan_job:
   script:
       - cd terraform
       - terraform init -input=false -backend-config="bucket=$AWS_STATE_BUCKET" -backend-config="key=$BRANCH_STATE_KEY" -backend-config="region=$AWS_REGION"
-      - terraform plan -input=false -out "planfile" >> planoutput.txt
+      - terraform plan -input=false -out "planfile" -no-color >> planoutput.txt
   artifacts:
     paths:
       - terraform/planoutput.txt
@@ -47,8 +48,8 @@ apply_job:
   allow_failure: true
   artifacts:
     paths:
-      - ansible/inventory
-
+      - ansible/inventory.ini
+        
 destroy_job:
   stage: destroy
   tags:

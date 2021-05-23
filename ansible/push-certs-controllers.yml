@@ -1,0 +1,6 @@
+---
+- name: "Copie des certificats générés sur les controllers"
+  hosts: nodes_master
+  roles:
+          - role: "push-certs-controllers"
+

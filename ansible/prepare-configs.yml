@@ -1,0 +1,5 @@
+---
+- name: "Préparation des KubeConfig pour les composants Kubernetes"
+  hosts: localhost
+  roles:
+          - role: "prepare-configs"

@@ -28,6 +28,15 @@ resource "aws_security_group_rule" "in-ssh-for-external" {
 
 resource "aws_security_group_rule" "in-https-for-external" {
   type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.k8s-sg.id
+}
+
+resource "aws_security_group_rule" "in-https-other-port-for-external" {
+  type              = "ingress"
   from_port         = 6443
   to_port           = 6443
   protocol          = "tcp"
