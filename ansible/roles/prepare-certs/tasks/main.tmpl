@@ -9,11 +9,11 @@
 
 - name: "Copie des certificats dans un dossier temporaire"
   ansible.built.copy:
-    src: {{ item }} 
+    src: "{{ item }}"
     dest: /tmp/certs
   with_items: 
-    - ca.pem
-    - ca-key.pem
+    - "ca.pem"
+    - "ca-key.pem"
 
 - name: "Génération du certificat Admin Client"
   shell: "cfssl gencert \
@@ -25,11 +25,11 @@
 
 - name: "Copie des certificats dans un dossier temporaire"
   ansible.built.copy:
-    src: {{ item }} 
+    src: "{{ item }}" 
     dest: /tmp/certs
   with_items: 
-    - admin-key.pem 
-    - admin.pem
+    - "admin-key.pem" 
+    - "admin.pem"
 
 - name: "Génération du certificat Client Kubelet"
   shell: "cfssl gencert \
@@ -42,11 +42,11 @@
 
 - name: "Copie des certificats dans un dossier temporaire"
   ansible.built.copy:
-    src: {{ item }} 
+    src: "{{ item }}" 
     dest: /tmp/certs
   with_items: 
-    - master-a-key.pem 
-    - master-a.pem
+    - "master-a-key.pem" 
+    - "master-a.pem"
 
 - name: "Génération du certificat du Control Manager"
   shell: "cfssl gencert \
@@ -58,11 +58,11 @@
 
 - name: "Copie des certificats dans un dossier temporaire"
   ansible.built.copy:
-    src: {{ item }} 
+    src: "{{ item }}" 
     dest: /tmp/certs
   with_items: 
-    - kube-controller-manager-key.pem 
-    - kube-controller-manager.pem 
+    - "kube-controller-manager-key.pem" 
+    - "kube-controller-manager.pem" 
 
 - name: "Génération du certificat du client Kube Proxy"
   shell: "cfssl gencert \
@@ -74,11 +74,11 @@
 
 - name: "Copie des certificats dans un dossier temporaire"
   ansible.built.copy:
-    src: {{ item }} 
+    src: "{{ item }}" 
     dest: /tmp/certs
   with_items: 
-    - kube-proxy-key.pem 
-    - kube-proxy.pem 
+    - "kube-proxy-key.pem" 
+    - "kube-proxy.pem" 
 
 - name: "Génération du certificat du client Scheduler"
   shell: "cfssl gencert \
@@ -90,11 +90,11 @@
 
 - name: "Copie des certificats dans un dossier temporaire"
   ansible.built.copy:
-    src: {{ item }} 
+    src: "{{ item }}" 
     dest: /tmp/certs
   with_items: 
-    - kube-scheduler-key.pem 
-    - kube-scheduler.pem
+    - "kube-scheduler-key.pem" 
+    - "kube-scheduler.pem"
 
 - name: "Génération du certificat de l'API Server Kubernetes"
   shell: "cfssl gencert \
@@ -107,11 +107,11 @@
 
 - name: "Copie des certificats dans un dossier temporaire"
   ansible.built.copy:
-    src: {{ item }} 
+    src: "{{ item }}" 
     dest: /tmp/certs
   with_items: 
-    - kubernetes-key.pem 
-    - kubernetes.pem 
+    - "kubernetes-key.pem" 
+    - "kubernetes.pem" 
 
 - name: "Génération de la paire de clé pour le Service Account"
   shell: "cfssl gencert \
@@ -123,9 +123,9 @@
 
 - name: "Copie des certificats dans un dossier temporaire"
   ansible.built.copy:
-    src: {{ item }} 
+    src: "{{ item }}" 
     dest: /tmp/certs
   with_items: 
-    - service-account-key.pem 
-    - service-account.pem
+    - "service-account-key.pem" 
+    - "service-account.pem"
 
