@@ -9,11 +9,20 @@ resource "null_resource" "prepare-and-deploy-configs" {
   ]
 }
 
-resource "null_resource" "cleaning-temp-files" {
+resource "null_resource" "cleaning-temp-certs-files" {
   provisioner "local-exec" {
     command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/clean-certs.yml"
+  }
+
+  depends_on = [
+    null_resource.prepare-and-deploy-configs
+  ]
+}
+
+resource "null_resource" "cleaning-temp-config-files" {
+  provisioner "local-exec" {
     command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/clean-configs.yml"
- }
+  }
 
   depends_on = [
     null_resource.prepare-and-deploy-configs
