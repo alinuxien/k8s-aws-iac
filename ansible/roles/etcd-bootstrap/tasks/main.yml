@@ -12,6 +12,9 @@
 
 - name: "Installation de etcd"
   copy:
-    src: "~/etcd-v3.4.15-linux-amd64/etcd*"
+    src: "{{ item }}"
     dest: "/usr/local/bin"
     remote_src: yes
+  with_items:
+    - ~/etcd-v3.4.15-linux-amd64/etcd 
+    - ~/etcd-v3.4.15-linux-amd64/etcdctl
