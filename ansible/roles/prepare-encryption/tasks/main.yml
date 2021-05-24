@@ -4,10 +4,7 @@
     path: /tmp/encryption
     state: directory
 
-- name: "Génération de la clé de Cryptage"
-  shell: "ENCRYPTION_KEY=$(head -c 32 /dev/urandom | base64)"
-
-- name: "Création du fichier de Configuration pour le Cryptage"
+- name: "Création du fichier de Configuration pour le Cryptage avec key gen"
   shell: 
     cmd: |
       cat > encryption-config.yaml <<EOF 
@@ -20,9 +17,9 @@
             - aescbc: 
                 keys:  
                   - name: key1 
-                    secret: ${ENCRYPTION_KEY} 
+                    secret: $(head -c 32 /dev/urandom | base64) 
             - identity: {} 
-       EOF
+      EOF
 
 - name: "Copie du fichier de configuration du cryptage dans un dossier temporaire"
   ansible.builtin.copy:
