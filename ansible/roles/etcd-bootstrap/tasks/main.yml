@@ -7,11 +7,11 @@
 - name: "Décompression de etcd"
   unarchive:
     src: "etcd-v3.4.15-linux-amd64.tar.gz"
-    dest: "~/etcd/"
+    dest: "~/"
     remote_src: yes
 
 - name: "Installation de etcd"
   copy:
-    src: "~/etcd/etcd-v3.4.15-linux-amd64/etcd*"
+    src: "~/etcd-v3.4.15-linux-amd64/etcd*"
     dest: "/usr/local/bin"
     remote_src: yes
