@@ -6,7 +6,7 @@
 
 - name: "Décompression de etcd"
   unarchive:
-    src: "etcd-v3.4.15-linux-amd64.tar.gz"
+    src: "~/etcd-v3.4.15-linux-amd64.tar.gz"
     dest: "~/"
     remote_src: yes
 
