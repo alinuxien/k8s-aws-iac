@@ -16,6 +16,6 @@
     dest: "/etc/etcd"
     remote_src: yes
   with_items:
-    - ca.pem 
-    - kubernetes-key.pem 
-    - kubernetes.pem
+    - ~/ca.pem 
+    - ~/kubernetes-key.pem 
+    - ~/kubernetes.pem
