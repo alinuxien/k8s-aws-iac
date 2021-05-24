@@ -45,7 +45,7 @@ resource "local_file" "AnsibleK8SKubeConfigPreparation" {
 
 resource "local_file" "AnsibleK8SETCD" {
   content = templatefile("../ansible/roles/etcd-config/tasks/main.tmpl", {
-    master-a-int-ip          = aws_instance.k8s-node-master-a.private_ip,
+    master-a-int-ip = aws_instance.k8s-node-master-a.private_ip,
   })
   filename = "../ansible/roles/etcd-config/tasks/main.yml"
 }
