@@ -1,0 +1,17 @@
+---
+- name: "Téléchargement de etcd"
+  get_url:
+    url: "https://github.com/etcd-io/etcd/releases/download/v3.4.15/etcd-v3.4.15-linux-amd64.tar.gz"    
+    dest: "~/"
+
+- name: "Décompression de etcd"
+  unarchive:
+    src: "etcd-v3.4.15-linux-amd64.tar.gz"
+    dest: "~/etcd/"
+    remote_src: yes
+
+- name: "Installation de etcd"
+  copy:
+    src: "~/etcd/etcd-v3.4.15-linux-amd64/etcd*"
+    dest: "/usr/local/bin"
+    remote_src: yes

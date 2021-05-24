@@ -1,0 +1,5 @@
+---
+- name: "Démarrage d'un serveur ETCD dans le Cluster"
+  hosts: nodes-master
+  roles:
+          - role: "etcd-bootstrap"
