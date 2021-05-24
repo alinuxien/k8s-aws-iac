@@ -7,9 +7,9 @@ resource "null_resource" "etcd-bootstrap" {
     command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/etcd-config.yml"
   }
 
-
   depends_on = [
-    null_resource.prepare-and-deploy-encryption
+    null_resource.prepare-and-deploy-encryption,
+    local_file.AnsibleK8SETCD
   ]
 }
 
