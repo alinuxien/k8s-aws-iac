@@ -1,0 +1,5 @@
+---
+- name: "Nettoyage des fichiers de Configuration de Cryptage"
+  hosts: localhost
+  roles:
+          - role: "clean-encryption"

@@ -1,0 +1,6 @@
+---
+- name: "Copie du fichier de configuration du Cryptage sur les Controllers"
+  ansible.builtin.copy:
+    src: "/tmp/encryption/encryption-config.yaml"    
+    dest: "~/"
+
