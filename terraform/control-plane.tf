@@ -5,7 +5,7 @@ resource "null_resource" "control-plane" {
 
   depends_on = [
     null_resource.etcd-bootstrap,
-    localfile.AnsibleK8SControlPlane
+    local_file.AnsibleK8SControlPlane
   ]
 }
 
