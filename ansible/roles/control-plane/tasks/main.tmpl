@@ -26,7 +26,7 @@
     - "~/kube-scheduler"
     - "~/kubectl"
 
-- name: "Préparatio du Dossier de Configuration de l'API Server"
+- name: "Préparation du Dossier de Configuration de l'API Server"
   file:
     path: "/var/lib/kubernetes"
     state: directory
@@ -183,7 +183,7 @@
 - name: "Prepares HTTP Health Checks NGINX Config"
   shell: 
     cmd: |
-      cat > kubernetes.default.svc.cluster.local <<EOF
+      cat <<EOF | sudo tee ~/kubernetes.default.svc.cluster.local
       server {
         listen      80;
         server_name kubernetes.default.svc.cluster.local;
@@ -197,7 +197,7 @@
 
 - name: "Installation du fichier de Configuration NGINX"
   copy:
-    src: "/home/{{ ansible_ssh_user }}/kubernetes.default.svc.cluster.local"
+    src: "~/kubernetes.default.svc.cluster.local"
     dest: "/etc/nginx/sites-available"
     remote_src: yes
 
