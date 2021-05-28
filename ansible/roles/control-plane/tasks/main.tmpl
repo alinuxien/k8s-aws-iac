@@ -197,7 +197,7 @@
 
 - name: "Installation du fichier de Configuration NGINX"
   copy:
-    src: "~/kubernetes.default.svc.cluster.local"
+    src: "/home/{{ ansible_ssh_user }}/kubernetes.default.svc.cluster.local"
     dest: "/etc/nginx/sites-available"
     remote_src: yes
 
