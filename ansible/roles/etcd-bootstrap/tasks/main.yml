@@ -15,6 +15,7 @@
     src: "{{ item }}"
     dest: "/usr/local/bin"
     remote_src: yes
+    mode: '0755'
   with_items:
     - ~/etcd-v3.4.15-linux-amd64/etcd 
     - ~/etcd-v3.4.15-linux-amd64/etcdctl
