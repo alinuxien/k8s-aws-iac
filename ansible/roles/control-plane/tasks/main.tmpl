@@ -204,7 +204,7 @@
 - name: "Activation du fichier de Configuration NGINX"
   ansible.builtin.file:
     src: /etc/nginx/sites-available/kubernetes.default.svc.cluster.local
-    dest: /etc/nginx/sites-enabled/
+    dest: /etc/nginx/sites-enabled/kubernetes.default.svc.cluster.local
     state: link
 
 - name: "Starts  NGINX"
