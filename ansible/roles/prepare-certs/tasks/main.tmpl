@@ -101,7 +101,7 @@
             -ca=ca.pem \
             -ca-key=ca-key.pem \
             -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
-            -hostname=${api-server-ip},${master-a-int-ip},${k8s-node-master-a-dns},${kubernetes-public-adress},127.0.0.1,${kubernetes-hostnames} \
+            -hostname=${api-server-ip},${master-a-int-ip},${kubernetes-public-adress},127.0.0.1,${kubernetes-hostnames} \
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/kubernetes-csr.json | cfssljson -bare kubernetes"
 
