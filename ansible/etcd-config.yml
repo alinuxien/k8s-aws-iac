@@ -1,0 +1,5 @@
+---
+- name: "Configuration de ETCD"
+  hosts: nodes_master
+  roles:
+          - role: "etcd-config"

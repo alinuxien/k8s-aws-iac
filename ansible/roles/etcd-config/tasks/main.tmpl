@@ -1,0 +1,64 @@
+---
+- name: "Création du dossier /etc de ETCD"
+  file:
+    path: "/etc/etcd"
+    state: directory
+
+- name: "Création du dossier /var/lib de ETCD"
+  file:
+    path: "/var/lib/etcd"
+    state: directory
+    mode: '0700'
+
+- name: "Installation des certificats et clés dans etcd"
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/etcd"
+    remote_src: yes
+  with_items:
+    - ~/ca.pem 
+    - ~/kubernetes-key.pem 
+    - ~/kubernetes.pem
+
+- name: "Create the etcd.service systemd unit file"
+  shell: 
+    cmd: |
+      cat <<EOF | sudo tee /etc/systemd/system/etcd.service
+      [Unit]
+      Description=etcd
+      Documentation=https://github.com/coreos
+
+      [Service]
+      Type=notify
+      ExecStart=/usr/local/bin/etcd \\
+        --name $(hostname -s) \\
+        --cert-file=/etc/etcd/kubernetes.pem \\
+        --key-file=/etc/etcd/kubernetes-key.pem \\
+        --peer-cert-file=/etc/etcd/kubernetes.pem \\
+        --peer-key-file=/etc/etcd/kubernetes-key.pem \\
+        --trusted-ca-file=/etc/etcd/ca.pem \\
+        --peer-trusted-ca-file=/etc/etcd/ca.pem \\
+        --peer-client-cert-auth \\
+        --client-cert-auth \\
+        --initial-advertise-peer-urls https://{{ ansible_ssh_host }}:2380 \\
+        --listen-peer-urls https://{{ ansible_ssh_host }}:2380 \\
+        --listen-client-urls https://{{ ansible_ssh_host }}:2379,https://127.0.0.1:2379 \\
+        --advertise-client-urls https://{{ ansible_ssh_host }}:2379 \\
+        --initial-cluster-token etcd-cluster-0 \\
+        --initial-cluster $(hostname -s)=https://${master-a-int-ip}:2380 \\
+        --initial-cluster-state new \\
+        --data-dir=/var/lib/etcd
+      Restart=on-failure
+      RestartSec=5
+
+      [Install]
+      WantedBy=multi-user.target
+      EOF
+
+- name: Starts the etcd server
+  ansible.builtin.systemd:
+    state: started
+    name: etcd
+    daemon_reload: yes
+    enabled: yes
+
