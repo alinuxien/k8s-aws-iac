@@ -68,3 +68,9 @@ variable "internal-cluster-ip-cidr" {
   default     = "10.32.0.0/24"
 }
 
+variable "pod-cidr" {
+  type        = string
+  description = "Plage d'allocation des sous-réseaux réservée pour les PODS"
+  default     = "10.200.0.0/16"
+}
+

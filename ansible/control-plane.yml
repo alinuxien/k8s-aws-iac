@@ -1,0 +1,5 @@
+---
+- name: "Démarrage du Control Plane Kubernetes"
+  hosts: nodes_master
+  roles:
+          - role: "control-plane"
