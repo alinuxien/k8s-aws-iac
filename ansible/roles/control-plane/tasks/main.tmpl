@@ -174,6 +174,18 @@
     - "kube-controller-manager"
     - "kube-scheduler"
 
+- name: "Installs CA Cert in Certs Library"
+  ansible.builtin.copy:
+    src: "~/ca.pem"
+    dest: "/etc/ssl/certs"
+    remote_src: yes
+
+- name: "Adds alias to node for NGINX proxy pass"
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    regexp: '^127\.0\.0\.1\tlocalhost'
+    line: '127.0.0.1 localhost kubernetes.default.svc.cluster.local'
+
 - name: "Installs NGINX"
   apt:
     name: "nginx"
@@ -190,7 +202,7 @@
 
         location /healthz {
            proxy_pass                    https://127.0.0.1:6443/healthz;
-           proxy_ssl_trusted_certificate /var/lib/kubernetes/ca.pem;
+           proxy_ssl_trusted_certificate /etc/ssl/certs/ca.pem;
         }
       }
       EOF
