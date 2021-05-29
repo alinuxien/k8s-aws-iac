@@ -216,7 +216,7 @@
 - name: "Configuration RBAC : Cluster Role"
   shell: 
     cmd: |
-      cat <<EOF | kubectl apply --kubeconfig admin.kubeconfig -f -
+      cat <<EOF | sudo kubectl apply --kubeconfig ~/admin.kubeconfig -f -
       apiVersion: rbac.authorization.k8s.io/v1beta1
       kind: ClusterRole
       metadata:
@@ -241,7 +241,7 @@
 - name: "Configuration RBAC : Cluster Role Binding"
   shell: 
     cmd: |
-      cat <<EOF | kubectl apply --kubeconfig admin.kubeconfig -f -
+      cat <<EOF | sudo kubectl apply --kubeconfig ~/admin.kubeconfig -f -
       apiVersion: rbac.authorization.k8s.io/v1beta1
       kind: ClusterRoleBinding
       metadata:
