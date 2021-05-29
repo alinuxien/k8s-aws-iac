@@ -4,7 +4,7 @@ resource "null_resource" "control-plane" {
   }
 
   depends_on = [
-    null_resource.etcd-bootstrap,
+    null_resource.prepare-and-deploy-certs,
     local_file.AnsibleK8SControlPlane
   ]
 }

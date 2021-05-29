@@ -8,7 +8,7 @@ resource "null_resource" "prepare-and-deploy-encryption" {
   }
 
   depends_on = [
-    null_resource.prepare-and-deploy-configs
+    aws_instance.k8s-node-master-a
   ]
 }
 
