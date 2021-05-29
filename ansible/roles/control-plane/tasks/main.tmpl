@@ -180,6 +180,9 @@
     dest: "/etc/ssl/certs"
     remote_src: yes
 
+- name: "Update System CA Cert Library"
+  shell: "update-ca-certificates || true"
+
 - name: "Adds alias to node for NGINX proxy pass"
   ansible.builtin.lineinfile:
     path: /etc/hosts
@@ -221,7 +224,7 @@
 
 - name: "Starts  NGINX"
   ansible.builtin.systemd:
-    state: started
+    state: restarted
     name: "nginx"
     enabled: yes
  
