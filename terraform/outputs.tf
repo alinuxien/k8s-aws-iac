@@ -6,6 +6,10 @@ output "k8s-node-master-a_ip" {
   value = aws_instance.k8s-node-master-a.private_ip
 }
 
+output "kubernetes-public-adress" {
+  value = aws_lb.lb.dns_name
+}
+
 resource "local_file" "AnsibleInventory" {
   content = templatefile("../ansible/inventory.tmpl", {
     bastion-dns           = aws_instance.bastion.private_dns,
@@ -45,9 +49,19 @@ resource "local_file" "AnsibleK8SKubeConfigPreparation" {
 
 resource "local_file" "AnsibleK8SETCD" {
   content = templatefile("../ansible/roles/etcd-config/tasks/main.tmpl", {
-    master-a-int-ip = aws_instance.k8s-node-master-a.private_ip,
+    master-a-int-ip = aws_instance.k8s-node-master-a.private_ip
   })
   filename = "../ansible/roles/etcd-config/tasks/main.yml"
+}
+
+resource "local_file" "AnsibleK8SControlPlane" {
+  content = templatefile("../ansible/roles/control-plane/tasks/main.tmpl", {
+    kubernetes-public-adress = aws_lb.lb.dns_name,
+    master-a-int-ip          = aws_instance.k8s-node-master-a.private_ip,
+    service-cluster-ip-range = var.internal-cluster-ip-cidr,
+    pod-cidr                 = var.pod-cidr
+  })
+  filename = "../ansible/roles/control-plane/tasks/main.yml"
 }
 
 

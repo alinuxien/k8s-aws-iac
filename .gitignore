@@ -7,3 +7,6 @@ terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
 terraform/k8splan
 
+credentials/perso/id_rsa_aws_k8s
+credentials/perso/id_rsa_aws_k8s.pub
+credentials/perso

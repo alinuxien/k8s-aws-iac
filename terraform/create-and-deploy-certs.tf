@@ -16,6 +16,7 @@ resource "null_resource" "prepare-and-deploy-certs" {
     aws_instance.bastion,
     aws_instance.k8s-node-master-a,
     aws_lb.lb,
+    local_file.AnsibleInventory,
     local_file.AnsibleK8SCertificatePreparation
   ]
 }
