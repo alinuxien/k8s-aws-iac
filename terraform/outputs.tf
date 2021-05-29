@@ -6,6 +6,10 @@ output "k8s-node-master-a_ip" {
   value = aws_instance.k8s-node-master-a.private_ip
 }
 
+output "kubernetes-public-adress" {
+  value = aws_lb.lb.dns_name
+}
+
 resource "local_file" "AnsibleInventory" {
   content = templatefile("../ansible/inventory.tmpl", {
     bastion-dns           = aws_instance.bastion.private_dns,
