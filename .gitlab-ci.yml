@@ -52,7 +52,7 @@ apply_job:
       - ansible/roles/prepare-certs/tasks/main.yml 
       - ansible/roles/prepare-configs/tasks/main.yml
       - ansible/roles/etcd-config/tasks/main.yml
-      - ansible/ansible/roles/control-plane/tasks/main.yml
+      - ansible/roles/control-plane/tasks/main.yml
 
 destroy_job:
   stage: destroy
