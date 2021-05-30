@@ -69,7 +69,7 @@
         --etcd-cafile=/var/lib/kubernetes/ca.pem \\
         --etcd-certfile=/var/lib/kubernetes/kubernetes.pem \\
         --etcd-keyfile=/var/lib/kubernetes/kubernetes-key.pem \\
-        --etcd-servers=https://${master-a-int-ip}:2379 \\
+        --etcd-servers=https://${controller-0-int-ip}:2379 \\
         --event-ttl=1h \\
         --encryption-provider-config=/var/lib/kubernetes/encryption-config.yaml \\
         --kubelet-certificate-authority=/var/lib/kubernetes/ca.pem \\

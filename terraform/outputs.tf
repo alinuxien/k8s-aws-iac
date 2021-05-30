@@ -2,8 +2,8 @@ output "bastion_ip" {
   value = aws_instance.bastion.public_ip
 }
 
-output "k8s-node-master-a_ip" {
-  value = aws_instance.k8s-node-master-a.private_ip
+output "controller-0_ip" {
+  value = aws_instance.controller-0.private_ip
 }
 
 output "kubernetes-public-adress" {
@@ -12,23 +12,23 @@ output "kubernetes-public-adress" {
 
 resource "local_file" "AnsibleInventory" {
   content = templatefile("../ansible/inventory.tmpl", {
-    bastion-dns           = aws_instance.bastion.private_dns,
-    bastion-ip            = aws_instance.bastion.public_ip,
-    bastion-id            = aws_instance.bastion.id,
-    bastion-user          = var.bastion-user,
-    k8s-node-master-a-dns = aws_instance.k8s-node-master-a.private_dns,
-    k8s-node-master-a-ip  = aws_instance.k8s-node-master-a.private_ip,
-    k8s-node-master-a-id  = aws_instance.k8s-node-master-a.id,
-    k8s-nodes-user        = var.k8s-nodes-user,
-    private_key_file      = var.private_key_file
+    bastion-dns      = aws_instance.bastion.private_dns,
+    bastion-ip       = aws_instance.bastion.public_ip,
+    bastion-id       = aws_instance.bastion.id,
+    bastion-user     = var.bastion-user,
+    controller-0-dns = aws_instance.controller-0.private_dns,
+    controller-0-ip  = aws_instance.controller-0.private_ip,
+    controller-0-id  = aws_instance.controller-0.id,
+    k8s-nodes-user   = var.k8s-nodes-user,
+    private_key_file = var.private_key_file
   })
   filename = "../ansible/inventory.ini"
 }
 
 resource "local_file" "AnsibleK8SCertificatePreparation" {
   content = templatefile("../ansible/roles/prepare-certs/tasks/main.tmpl", {
-    master-a-ext-ip          = aws_instance.k8s-node-master-a.public_ip,
-    master-a-int-ip          = aws_instance.k8s-node-master-a.private_ip,
+    controller-0-ext-ip      = aws_instance.controller-0.public_ip,
+    controller-0-int-ip      = aws_instance.controller-0.private_ip,
     kubernetes-public-adress = aws_lb.lb.dns_name,
     kubernetes-hostnames     = "kubernetes,kubernetes.default,kubernetes.default.svc,kubernetes.default.svc.cluster,kubernetes.svc.cluster.local",
     api-server-ip            = var.api-server-ip
@@ -38,8 +38,8 @@ resource "local_file" "AnsibleK8SCertificatePreparation" {
 
 resource "local_file" "AnsibleK8SKubeConfigPreparation" {
   content = templatefile("../ansible/roles/prepare-configs/tasks/main.tmpl", {
-    master-a-ext-ip          = aws_instance.k8s-node-master-a.public_ip,
-    master-a-int-ip          = aws_instance.k8s-node-master-a.private_ip,
+    controller-0-ext-ip      = aws_instance.controller-0.public_ip,
+    controller-0-int-ip      = aws_instance.controller-0.private_ip,
     kubernetes-public-adress = aws_lb.lb.dns_name,
     kubernetes-hostnames     = "kubernetes,kubernetes.default,kubernetes.default.svc,kubernetes.default.svc.cluster,kubernetes.svc.cluster.local",
     api-server-ip            = var.api-server-ip
@@ -49,7 +49,7 @@ resource "local_file" "AnsibleK8SKubeConfigPreparation" {
 
 resource "local_file" "AnsibleK8SETCD" {
   content = templatefile("../ansible/roles/etcd-config/tasks/main.tmpl", {
-    master-a-int-ip = aws_instance.k8s-node-master-a.private_ip
+    controller-0-int-ip = aws_instance.controller-0.private_ip
   })
   filename = "../ansible/roles/etcd-config/tasks/main.yml"
 }
@@ -57,7 +57,7 @@ resource "local_file" "AnsibleK8SETCD" {
 resource "local_file" "AnsibleK8SControlPlane" {
   content = templatefile("../ansible/roles/control-plane/tasks/main.tmpl", {
     kubernetes-public-adress = aws_lb.lb.dns_name,
-    master-a-int-ip          = aws_instance.k8s-node-master-a.private_ip,
+    controller-0-int-ip      = aws_instance.controller-0.private_ip,
     service-cluster-ip-range = var.internal-cluster-ip-cidr,
     pod-cidr                 = var.pod-cidr
   })

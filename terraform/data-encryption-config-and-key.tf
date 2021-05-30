@@ -8,7 +8,7 @@ resource "null_resource" "prepare-and-deploy-encryption" {
   }
 
   depends_on = [
-    aws_instance.k8s-node-master-a,
+    aws_instance.controller-0,
     aws_instance.bastion,
     aws_nat_gateway.ngw-a,
     aws_nat_gateway.ngw-b,

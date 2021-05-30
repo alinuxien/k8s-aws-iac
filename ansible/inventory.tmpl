@@ -4,7 +4,7 @@ localhost ansible_user=vagrant ansible_password=vagrant ansible_become=no ansibl
 ${bastion-dns} ansible_host=${bastion-ip} ansible_ssh_user=${bastion-user} ansible_ssh_private_key_file=${private_key_file} # ${bastion-id}
 
 [nodes_master]
-${k8s-node-master-a-dns} ansible_host=${k8s-node-master-a-ip} ansible_ssh_private_key_file=${private_key_file} ansible_ssh_user=${k8s-nodes-user} # ${k8s-node-master-a-id}
+${controller-0-dns} ansible_host=${controller-0-ip} ansible_ssh_private_key_file=${private_key_file} ansible_ssh_user=${k8s-nodes-user} # ${controller-0-id}
 
 [bastion:vars]
 ansible_ssh_common_args= '-o StrictHostkeyChecking=no'

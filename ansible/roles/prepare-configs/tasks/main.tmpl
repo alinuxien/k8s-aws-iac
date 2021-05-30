@@ -9,21 +9,21 @@
             --certificate-authority=ca.pem \
             --embed-certs=true \
             --server=https://${kubernetes-public-adress}:6443 \
-            --kubeconfig=master-a.kubeconfigi; \
-          kubectl config set-credentials system:node:master-a \
-            --client-certificate=master-a.pem \
-            --client-key=master-a-key.pem \
+            --kubeconfig=controller-0.kubeconfig; \
+          kubectl config set-credentials system:node:controller-0 \
+            --client-certificate=controller-0.pem \
+            --client-key=controller-0-key.pem \
             --embed-certs=true \
-            --kubeconfig=master-a.kubeconfig; \
+            --kubeconfig=controller-0.kubeconfig; \
           kubectl config set-context default \
             --cluster=kubernetes-the-hard-way \
-            --user=system:node:master-a \
-            --kubeconfig=master-a.kubeconfig; \
-          kubectl config use-context default --kubeconfig=master-a.kubeconfig"
+            --user=system:node:controller-0 \
+            --kubeconfig=controller-0.kubeconfig; \
+          kubectl config use-context default --kubeconfig=controller-0.kubeconfig"
 
 - name: "Copie du fichier de Configuration dans un dossier temporaire"
   ansible.builtin.copy:
-    src: "master-a.kubeconfig" 
+    src: "controller-0.kubeconfig" 
     dest: "/tmp/configs"
 
 - name: "Création du fichier de configuration pour le Kube-Proxy"
