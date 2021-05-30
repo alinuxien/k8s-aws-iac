@@ -84,8 +84,8 @@ resource "local_file" "AnsibleK8SETCD" {
     controller-1-int-ip = aws_instance.controller-1.private_ip,
     worker-0-int-ip     = aws_instance.worker-0.private_ip,
     worker-1-int-ip     = aws_instance.worker-1.private_ip,
-    controller-0-id     = regex( "^ip[-0-9]*", aws_instance.controller-0.private_dns) 
-    controller-1-id     = regex( "^ip[-0-9]*", aws_instance.controller-1.private_dns)
+    controller-0-id     = regex("^ip[-0-9]*", aws_instance.controller-0.private_dns)
+    controller-1-id     = regex("^ip[-0-9]*", aws_instance.controller-1.private_dns)
   })
   filename = "../ansible/roles/etcd-config/tasks/main.yml"
 }
