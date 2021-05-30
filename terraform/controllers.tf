@@ -64,7 +64,7 @@ resource "aws_security_group_rule" "out-all" {
 
 resource "aws_instance" "controller-0" {
   ami                    = var.ami-k8s-nodes
-  instance_type          = var.instance-type-k8s-node-master
+  instance_type          = var.instance-type-k8s-node-controller
   subnet_id              = aws_subnet.private-a.id
   vpc_security_group_ids = [aws_security_group.k8s-sg.id]
   key_name               = aws_key_pair.keypair.id

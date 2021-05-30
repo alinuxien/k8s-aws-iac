@@ -44,7 +44,7 @@ variable "k8s-nodes-user" {
   default     = "ubuntu"
 }
 
-variable "instance-type-k8s-node-master" {
+variable "instance-type-k8s-node-controller" {
   type        = string
   description = "Type d'Instance à utiliser pour les nodes Master Kubernetes"
   default     = "t2.micro"
