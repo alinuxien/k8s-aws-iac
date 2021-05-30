@@ -252,6 +252,7 @@
           verbs:
             - "*"
       EOF
+  run_once: true
 
 - name: "Configuration RBAC : Cluster Role Binding"
   shell: 
@@ -271,5 +272,5 @@
           kind: User
           name: kubernetes
       EOF
-
+  run_once: true
 
