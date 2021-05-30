@@ -1,4 +1,4 @@
---
+---
 - name: "Copie des KubeConfig sur les workers"
   ansible.builtin.copy:
     src: "{{ item }}"    
