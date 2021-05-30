@@ -24,7 +24,13 @@ resource "aws_lb_target_group" "tgs" {
 
 resource "aws_lb_target_group_attachment" "tgs1" {
   target_group_arn = aws_lb_target_group.tgs.arn
-  target_id        = aws_instance.k8s-node-master-a.id
+  target_id        = aws_instance.controller-0.id
+  port             = 6443
+}
+
+resource "aws_lb_target_group_attachment" "tgs2" {
+  target_group_arn = aws_lb_target_group.tgs.arn
+  target_id        = aws_instance.controller-1.id
   port             = 6443
 }
 

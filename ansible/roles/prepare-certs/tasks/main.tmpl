@@ -31,22 +31,34 @@
     - "admin-key.pem" 
     - "admin.pem"
 
-- name: "Génération du certificat Client Kubelet"
+- name: "Génération du certificat Client Kubelet pour le Worker 0"
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
             -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
-            -hostname=master-a,${master-a-ext-ip},${master-a-int-ip} \
+            -hostname=worker-0,${worker-0-ext-ip},${worker-0-int-ip} \
             -profile=kubernetes \
-            /home/vagrant/on-demand-infra/certs/master-a-csr.json | cfssljson -bare master-a"
+            /home/vagrant/on-demand-infra/certs/worker-0-csr.json | cfssljson -bare worker-0"
+
+- name: "Génération du certificat Client Kubelet pour le Worker 1"
+  shell: "cfssl gencert \
+            -ca=ca.pem \
+            -ca-key=ca-key.pem \
+            -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
+            -hostname=worker-1,${worker-1-ext-ip},${worker-1-int-ip} \
+            -profile=kubernetes \
+            /home/vagrant/on-demand-infra/certs/worker-1-csr.json | cfssljson -bare worker-1"
 
 - name: "Copie des certificats dans un dossier temporaire"
   ansible.builtin.copy:
     src: "{{ item }}" 
     dest: /tmp/certs
   with_items: 
-    - "master-a-key.pem" 
-    - "master-a.pem"
+    - "worker-0-key.pem" 
+    - "worker-0.pem"
+    - "worker-1-key.pem" 
+    - "worker-1.pem"
+
 
 - name: "Génération du certificat du Control Manager"
   shell: "cfssl gencert \
@@ -101,7 +113,7 @@
             -ca=ca.pem \
             -ca-key=ca-key.pem \
             -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
-            -hostname=${api-server-ip},${master-a-int-ip},${kubernetes-public-adress},127.0.0.1,${kubernetes-hostnames} \
+            -hostname=${api-server-ip},${controller-0-int-ip},${controller-1-int-ip},${kubernetes-public-adress},127.0.0.1,${kubernetes-hostnames} \
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/kubernetes-csr.json | cfssljson -bare kubernetes"
 

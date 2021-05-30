@@ -1,5 +1,5 @@
 ---
-- name: "Copie des certificats et clés privés sur les masters"
+- name: "Copie des certificats et clés privés sur les controllers"
   ansible.builtin.copy:
     src: "{{ item }}"    
     dest: "~/"

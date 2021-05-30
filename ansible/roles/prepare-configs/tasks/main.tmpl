@@ -4,27 +4,47 @@
     path: /tmp/configs
     state: directory 
 
-- name: "Création du fichier de Configuration pour le Kubelet"
+- name: "Création du fichier de Configuration pour le Kubelet pour le Worker 0"
   shell: "kubectl config set-cluster kubernetes-the-hard-way \
             --certificate-authority=ca.pem \
             --embed-certs=true \
             --server=https://${kubernetes-public-adress}:6443 \
-            --kubeconfig=master-a.kubeconfigi; \
-          kubectl config set-credentials system:node:master-a \
-            --client-certificate=master-a.pem \
-            --client-key=master-a-key.pem \
+            --kubeconfig=worker-0.kubeconfig; \
+          kubectl config set-credentials system:node:worker-0 \
+            --client-certificate=worker-0.pem \
+            --client-key=worker-0-key.pem \
             --embed-certs=true \
-            --kubeconfig=master-a.kubeconfig; \
+            --kubeconfig=worker-0.kubeconfig; \
           kubectl config set-context default \
             --cluster=kubernetes-the-hard-way \
-            --user=system:node:master-a \
-            --kubeconfig=master-a.kubeconfig; \
-          kubectl config use-context default --kubeconfig=master-a.kubeconfig"
+            --user=system:node:worker-0 \
+            --kubeconfig=worker-0.kubeconfig; \
+          kubectl config use-context default --kubeconfig=worker-0.kubeconfig"
+
+- name: "Création du fichier de Configuration pour le Kubelet pour le Worker 1"
+  shell: "kubectl config set-cluster kubernetes-the-hard-way \
+            --certificate-authority=ca.pem \
+            --embed-certs=true \
+            --server=https://${kubernetes-public-adress}:6443 \
+            --kubeconfig=worker-1.kubeconfig; \
+          kubectl config set-credentials system:node:worker-1 \
+            --client-certificate=worker-1.pem \
+            --client-key=worker-1-key.pem \
+            --embed-certs=true \
+            --kubeconfig=worker-1.kubeconfig; \
+          kubectl config set-context default \
+            --cluster=kubernetes-the-hard-way \
+            --user=system:node:worker-1 \
+            --kubeconfig=worker-1.kubeconfig; \
+          kubectl config use-context default --kubeconfig=worker-1.kubeconfig"
 
 - name: "Copie du fichier de Configuration dans un dossier temporaire"
   ansible.builtin.copy:
-    src: "master-a.kubeconfig" 
+    src: "{{ item }}" 
     dest: "/tmp/configs"
+  with_items:
+    - "worker-0.kubeconfig" 
+    - "worker-1.kubeconfig" 
 
 - name: "Création du fichier de configuration pour le Kube-Proxy"
   shell: "kubectl config set-cluster kubernetes-the-hard-way \

@@ -4,6 +4,7 @@
     src: "{{ item }}"    
     dest: "~/"
   with_items:
-    - "/tmp/configs/master-a.kubeconfig"
+    - "/tmp/configs/worker-0.kubeconfig"
+    - "/tmp/configs/worker-1.kubeconfig"
     - "/tmp/configs/kube-proxy.kubeconfig"
 
