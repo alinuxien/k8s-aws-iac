@@ -95,6 +95,8 @@ resource "local_file" "AnsibleK8SControlPlane" {
     controller-1-int-ip      = aws_instance.controller-1.private_ip,
     worker-0-int-ip          = aws_instance.worker-0.private_ip,
     worker-1-int-ip          = aws_instance.worker-1.private_ip
+    worker-0-id              = aws_instance.worker-0.id,
+    worker-1-id              = aws_instance.worker-1.id,
     service-cluster-ip-range = var.internal-cluster-ip-cidr,
     pod-cidr                 = var.pod-cidr
   })
