@@ -1,5 +1,5 @@
 {
-  "CN": "system:node:controller-0",
+  "CN": "system:node:worker-0",
   "key": {
     "algo": "rsa",
     "size": 2048

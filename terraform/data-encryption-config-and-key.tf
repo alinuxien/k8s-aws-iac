@@ -1,6 +1,6 @@
 resource "null_resource" "prepare-and-deploy-encryption" {
   provisioner "local-exec" {
-    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/encryption.yml"
+    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/prepare-encryption.yml"
   }
 
   provisioner "local-exec" {
@@ -9,6 +9,9 @@ resource "null_resource" "prepare-and-deploy-encryption" {
 
   depends_on = [
     aws_instance.controller-0,
+    aws_instance.controller-1,
+    aws_instance.worker-0,
+    aws_instance.worker-1,
     aws_instance.bastion,
     aws_nat_gateway.ngw-a,
     aws_nat_gateway.ngw-b,

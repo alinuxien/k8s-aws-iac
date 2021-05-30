@@ -45,7 +45,7 @@
         --listen-client-urls https://{{ ansible_ssh_host }}:2379,https://127.0.0.1:2379 \\
         --advertise-client-urls https://{{ ansible_ssh_host }}:2379 \\
         --initial-cluster-token etcd-cluster-0 \\
-        --initial-cluster $(hostname -s)=https://${controller-0-int-ip}:2380 \\
+        --initial-cluster controller-0=https://${controller-0-int-ip}:2380,controller-1=https://${controller-1-int-ip}:2380 \\
         --initial-cluster-state new \\
         --data-dir=/var/lib/etcd
       Restart=on-failure

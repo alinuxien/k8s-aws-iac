@@ -5,6 +5,8 @@
     dest: "~/"
   with_items:
     - "/tmp/certs/ca.pem"
-    - "/tmp/certs/controller-0-key.pem"
-    - "/tmp/certs/controller-0.pem"
+    - "/tmp/certs/worker-0-key.pem"
+    - "/tmp/certs/worker-0.pem"
+    - "/tmp/certs/worker-1-key.pem"
+    - "/tmp/certs/worker-1.pem"
 
