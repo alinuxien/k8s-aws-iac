@@ -1,0 +1,5 @@
+---
+- name: "Préparation des Workers Kubernetes"
+  hosts: nodes_worker
+  roles:
+          - role: "control-plane"
