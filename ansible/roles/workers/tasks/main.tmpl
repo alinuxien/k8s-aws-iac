@@ -10,7 +10,7 @@
     - "ipset"
 
 - name: "Disable Swap : Current Session & @Boot"
-  shell: "sudo swapoff -a && sed -ri '/\sswap\s/s/^#?/#/' /etc/fstab"
+  shell: "sudo swapoff -a && sed -ri 's/swap/^#?/#/g' /etc/fstab"
 
 - name: "Download Worker Binaries"
   get_url:
