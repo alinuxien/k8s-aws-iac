@@ -103,4 +103,11 @@ resource "local_file" "AnsibleK8SControlPlane" {
   filename = "../ansible/roles/control-plane/tasks/main.yml"
 }
 
+resource "local_file" "AnsibleK8SWorkers" {
+  content = templatefile("../ansible/roles/workers/tasks/main.tmpl", {
+    pod-cidr = var.pod-cidr
+  })
+  filename = "../ansible/roles/workers/tasks/main.yml"
+}
+
 
