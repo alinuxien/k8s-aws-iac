@@ -163,6 +163,9 @@
       EOF 
 
 - name: "Install Worker-0 key & certificate"
+  hosts: ${worker-0-dns}
+  become: yes
+  become_method: su 
   copy:
     src: "{{ item }}"
     dest: "/var/lib/kubelet/"
@@ -170,20 +173,20 @@
   with_items:
     - "~/worker-0-key.pem"
     - "~/worker-0.pem"
-  become: yes
-  become_method: su
-  hosts: ${worker-0-dns}
-
+ 
 - name: "Install Worker-0 kubeconfig"
-  copy:
+  hosts: ${worker-0-dns}
+  become: yes
+  become_method: su 
+   copy:
     src: "~/worker-0.kubeconfig"
     dest: "/var/lib/kubelet/kubeconfig/"
     remote_src: yes
-  become: yes
-  become_method: su
-  hosts: ${worker-0-dns}
 
 - name: "Install Worker-1 key & certificate"
+  hosts: ${worker-1-dns}
+  become: yes
+  become_method: su 
   copy:
     src: "{{ item }}"
     dest: "/var/lib/kubelet/"
@@ -191,26 +194,23 @@
   with_items:
     - "~/worker-1-key.pem"
     - "~/worker-1.pem"
-  become: yes
-  become_method: su
-  hosts: ${worker-1-dns}
 
 - name: "Install Worker-1 kubeconfig"
+  hosts: ${worker-1-dns}
+  become: yes
+  become_method: su 
   copy:
     src: "~/worker-1.kubeconfig"
     dest: "/var/lib/kubelet/kubeconfig/"
     remote_src: yes
-  become: yes
-  become_method: su
-  hosts: ${worker-1-dns}
 
 - name: "Install CA Certificate on the Workers"
+  become: yes
+  become_method: su
   copy:
     src: "~/ca.pem"
     dest: "/var/lib/kubernetes/"
     remote_src: yes
-  become: yes
-  become_method: su
 
 - name: "Create the Worker-0 Kubelet Configuration File"
   shell: 
@@ -292,12 +292,12 @@
       EOF
 
 - name: "Install the Kube Proxy KubeConfig file on the Workers"
+  become: yes
+  become_method: su
   copy:
     src: "~/kube-proxy.kubeconfig"
     dest: "/var/lib/kube-proxy/kubeconfig/"
     remote_src: yes
-  become: yes
-  become_method: su
 
 - name: "Create the Kube Proxy Systemd Unit File on the Workers"
   shell: 
