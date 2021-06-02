@@ -163,7 +163,7 @@
       EOF 
 
 - name: "Install Worker-0 key & certificate"
-  hosts: ${worker-0-dns}
+  when: inventory_hostname == ${worker-0-dns}
   become: yes
   become_method: su 
   copy:
@@ -175,16 +175,16 @@
     - "~/worker-0.pem"
  
 - name: "Install Worker-0 kubeconfig"
-  hosts: ${worker-0-dns}
+  when: inventory_hostname == ${worker-0-dns}
   become: yes
   become_method: su 
-   copy:
+  copy:
     src: "~/worker-0.kubeconfig"
     dest: "/var/lib/kubelet/kubeconfig/"
     remote_src: yes
 
 - name: "Install Worker-1 key & certificate"
-  hosts: ${worker-1-dns}
+  when: inventory_hostname == ${worker-1-dns}
   become: yes
   become_method: su 
   copy:
@@ -196,7 +196,7 @@
     - "~/worker-1.pem"
 
 - name: "Install Worker-1 kubeconfig"
-  hosts: ${worker-1-dns}
+  when: inventory_hostname == ${worker-1-dns}
   become: yes
   become_method: su 
   copy:
