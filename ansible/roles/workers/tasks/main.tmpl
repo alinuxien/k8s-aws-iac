@@ -1,7 +1,7 @@
 ---
 - name: "Install the OS Dependencies"
   apt:
-    name: "{{ item }}"
+    name: ['socat', 'conntrack', 'ipset']
     state: latest
     update_cache: yes
   with_items:
@@ -56,7 +56,8 @@
     dest: "/opt/cni/bin/"
     remote_src: yes
   become: yes
-  become_method: su
+  become_method: sudo
+  become_ask_pass: false
 
 - name: "Rename runc"
   copy:
@@ -76,7 +77,8 @@
     - "~/kube-proxy"
     - "~/kubelet runc"
   become: yes
-  become_method: su
+  become_method: sudo
+  become_ask_pass: false
 
 - name: "Copy containerd binary to bin dir"
   copy:
@@ -85,7 +87,8 @@
     remote_src: yes
     mode: '0755'
   become: yes
-  become_method: su
+  become_method: sudo
+  become_ask_pass: false
 
 - name: "Configure CNI Networking"
   shell: 
@@ -165,7 +168,8 @@
 - name: "Install Worker-0 key & certificate"
   when: inventory_hostname == ${worker-0-dns}
   become: yes
-  become_method: su 
+  become_method: sudo 
+  become_ask_pass: false
   copy:
     src: "{{ item }}"
     dest: "/var/lib/kubelet/"
@@ -177,7 +181,8 @@
 - name: "Install Worker-0 kubeconfig"
   when: inventory_hostname == ${worker-0-dns}
   become: yes
-  become_method: su 
+  become_method: sudo
+  become_ask_pass: false
   copy:
     src: "~/worker-0.kubeconfig"
     dest: "/var/lib/kubelet/kubeconfig/"
@@ -186,7 +191,8 @@
 - name: "Install Worker-1 key & certificate"
   when: inventory_hostname == ${worker-1-dns}
   become: yes
-  become_method: su 
+  become_method: sudo 
+  become_ask_pass: false
   copy:
     src: "{{ item }}"
     dest: "/var/lib/kubelet/"
@@ -198,7 +204,8 @@
 - name: "Install Worker-1 kubeconfig"
   when: inventory_hostname == ${worker-1-dns}
   become: yes
-  become_method: su 
+  become_method: sudo
+  become_ask_pass: false
   copy:
     src: "~/worker-1.kubeconfig"
     dest: "/var/lib/kubelet/kubeconfig/"
@@ -206,7 +213,8 @@
 
 - name: "Install CA Certificate on the Workers"
   become: yes
-  become_method: su
+  become_method: sudo
+  become_ask_pass: false
   copy:
     src: "~/ca.pem"
     dest: "/var/lib/kubernetes/"
@@ -293,7 +301,8 @@
 
 - name: "Install the Kube Proxy KubeConfig file on the Workers"
   become: yes
-  become_method: su
+  become_method: sudo
+  become_ask_pass: false
   copy:
     src: "~/kube-proxy.kubeconfig"
     dest: "/var/lib/kube-proxy/kubeconfig/"
