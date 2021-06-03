@@ -213,6 +213,7 @@
     remote_src: yes
 
 - name: "Create the Worker-0 Kubelet Configuration File"
+  when: inventory_hostname == ${worker-0-dns}
   shell: 
     cmd: |
       cat <<EOF | sudo tee /var/lib/kubelet/kubelet-config.yaml
@@ -236,10 +237,10 @@
       tlsCertFile: "/var/lib/kubelet/worker-0.pem"
       tlsPrivateKeyFile: "/var/lib/kubelet/worker-0-key.pem"
       EOF
-  hosts: ${worker-0-dns}
 
 - name: "Create the Worker-1 Kubelet Configuration File"
-  shell: 
+  when: inventory_hostname == ${worker-1-dns}
+  shell:
     cmd: |
       cat <<EOF | sudo tee /var/lib/kubelet/kubelet-config.yaml
       kind: KubeletConfiguration
@@ -262,7 +263,6 @@
       tlsCertFile: "/var/lib/kubelet/worker-1.pem"
       tlsPrivateKeyFile: "/var/lib/kubelet/worker-1-key.pem"
       EOF
-  hosts: ${worker-1-dns}
 
 - name: "Create the Kubelet Systemd Unit File on the Workers"
   shell: 
