@@ -60,11 +60,11 @@
     remote_src: yes
 
 - name: "Copy worker binaries to exec path"
-  shell: "sudo cp /home/${k8s-nodes-user}/crictl /usr/local/bin; \
-          sudo cp /home/${k8s-nodes-user}/kubectl /usr/local/bin; \
-          sudo cp /home/${k8s-nodes-user}/kube-proxy /usr/local/bin; \
-          sudo cp /home/${k8s-nodes-user}/kubelet /usr/local/bin; \
-          sudo cp /home/${k8s-nodes-user}/runc /usr/local/bin; \
+  shell: "sudo cp /home/${k8s-nodes-user}/crictl /usr/local/bin/; \
+          sudo cp /home/${k8s-nodes-user}/kubectl /usr/local/bin/; \
+          sudo cp /home/${k8s-nodes-user}/kube-proxy /usr/local/bin/; \
+          sudo cp /home/${k8s-nodes-user}/kubelet /usr/local/bin/; \
+          sudo cp /home/${k8s-nodes-user}/runc /usr/local/bin/; \
           sudo chmod +x /usr/local/bin/crictl; \
           sudo chmod +x /usr/local/bin/kubectl; \
           sudo chmod +x /usr/local/bin/kube-proxy; \
@@ -73,7 +73,7 @@
 
 - name: "Copy containerd binary to bin dir"
   shell: "sudo chmod +x /home/${k8s-nodes-user}/containerd/bin/*; \
-          sudo cp /home/${k8s-nodes-user}/containerd/bin/* /bin \"
+          sudo cp /home/${k8s-nodes-user}/containerd/bin/* /bin/ \"
 
 - name: "Configure CNI Networking"
   shell: 
@@ -152,8 +152,8 @@
 
 - name: "Install Worker-0 key & certificate"
   when: inventory_hostname == ${worker-0-dns}
-  shell: "sudo cp /home/${k8s-nodes-user}/worker-0.pem /var/lib/kubelet; \
-          sudo cp /home/${k8s-nodes-user}/worker-0-key.pem /var/lib/kubelet \"
+  shell: "sudo cp /home/${k8s-nodes-user}/worker-0.pem /var/lib/kubelet/; \
+          sudo cp /home/${k8s-nodes-user}/worker-0-key.pem /var/lib/kubelet/ \"
  
 - name: "Install Worker-0 kubeconfig"
   when: inventory_hostname == ${worker-0-dns}
@@ -161,15 +161,15 @@
 
 - name: "Install Worker-1 key & certificate"
   when: inventory_hostname == ${worker-1-dns}
-  shell: "sudo cp /home/${k8s-nodes-user}/worker-1.pem /var/lib/kubelet; \
-          sudo cp /home/${k8s-nodes-user}/worker-1-key.pem /var/lib/kubelet \"
+  shell: "sudo cp /home/${k8s-nodes-user}/worker-1.pem /var/lib/kubelet/; \
+          sudo cp /home/${k8s-nodes-user}/worker-1-key.pem /var/lib/kubelet/ \"
 
 - name: "Install Worker-1 kubeconfig"
   when: inventory_hostname == ${worker-1-dns}
   shell: "sudo cp /home/${k8s-nodes-user}/worker-1.kubeconfig /var/lib/kubelet/kubeconfig \"
 
 - name: "Install CA Certificate on the Workers"
-  shell: "sudo cp /home/${k8s-nodes-user}/ca.pem /var/lib/kubernetes \"
+  shell: "sudo cp /home/${k8s-nodes-user}/ca.pem /var/lib/kubernetes/ \"
 
 - name: "Create the Worker-0 Kubelet Configuration File"
   when: inventory_hostname == ${worker-0-dns}
