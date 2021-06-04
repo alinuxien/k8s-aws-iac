@@ -105,7 +105,6 @@ resource "local_file" "AnsibleK8SControlPlane" {
 
 resource "local_file" "AnsibleK8SWorkers" {
   content = templatefile("../ansible/roles/workers/tasks/main.tmpl", {
-    k8s-nodes-user = var.k8s-nodes-user,
     pod-cidr       = var.pod-cidr,
     worker-0-dns   = aws_instance.worker-0.private_dns,
     worker-1-dns   = aws_instance.worker-1.private_dns
