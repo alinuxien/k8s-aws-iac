@@ -151,28 +151,28 @@
       EOF 
 
 - name: "Install Worker-0 key & certificate"
-  when: inventory_hostname == ${worker-0-dns}
+  when: inventory_hostname == "${worker-0-dns}"
   shell: "sudo cp ~/worker-0.pem /var/lib/kubelet/; \
           sudo cp ~/worker-0-key.pem /var/lib/kubelet/ "
  
 - name: "Install Worker-0 kubeconfig"
-  when: inventory_hostname == ${worker-0-dns}
+  when: inventory_hostname == "${worker-0-dns}"
   shell: "sudo cp ~/worker-0.kubeconfig /var/lib/kubelet/kubeconfig; "
 
 - name: "Install Worker-1 key & certificate"
-  when: inventory_hostname == ${worker-1-dns}
+  when: inventory_hostname == "${worker-1-dns}"
   shell: "sudo cp ~/worker-1.pem /var/lib/kubelet/; \
           sudo cp ~/worker-1-key.pem /var/lib/kubelet/ "
 
 - name: "Install Worker-1 kubeconfig"
-  when: inventory_hostname == ${worker-1-dns}
+  when: inventory_hostname == "${worker-1-dns}"
   shell: "sudo cp ~/worker-1.kubeconfig /var/lib/kubelet/kubeconfig "
 
 - name: "Install CA Certificate on the Workers"
   shell: "sudo cp ~/ca.pem /var/lib/kubernetes/ "
 
 - name: "Create the Worker-0 Kubelet Configuration File"
-  when: inventory_hostname == ${worker-0-dns}
+  when: inventory_hostname == "${worker-0-dns}"
   shell: 
     cmd: |
       cat <<EOF | sudo tee /var/lib/kubelet/kubelet-config.yaml
@@ -198,7 +198,7 @@
       EOF
 
 - name: "Create the Worker-1 Kubelet Configuration File"
-  when: inventory_hostname == ${worker-1-dns}
+  when: inventory_hostname == "${worker-1-dns}"
   shell:
     cmd: |
       cat <<EOF | sudo tee /var/lib/kubelet/kubelet-config.yaml
