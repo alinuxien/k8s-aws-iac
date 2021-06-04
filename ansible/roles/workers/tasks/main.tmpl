@@ -253,6 +253,18 @@
 - name: "Install the Kube Proxy KubeConfig file on the Workers"
   shell: "sudo cp ~/kube-proxy.kubeconfig /var/lib/kube-proxy/kubeconfig "
 
+- name: "Create the Kube Proxy Config Yaml Configuration File"
+  shell: 
+    cmd: |
+      cat <<EOF | sudo tee /var/lib/kube-proxy/kube-proxy-config.yaml
+      kind: KubeProxyConfiguration
+      apiVersion: kubeproxy.config.k8s.io/v1alpha1
+      clientConnection:
+        kubeconfig: "/var/lib/kube-proxy/kubeconfig"
+      mode: "iptables"
+      clusterCIDR: "${pod-cidr}"
+      EOF
+
 - name: "Create the Kube Proxy Systemd Unit File on the Workers"
   shell: 
     cmd: |
