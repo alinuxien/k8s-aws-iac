@@ -223,7 +223,8 @@
       tlsPrivateKeyFile: "/var/lib/kubelet/worker-1-key.pem"
       EOF
 
-- name: "Create the Kubelet Systemd Unit File on the Workers"
+- name: "Create the Kubelet Systemd Unit File on the worker-0"
+  when: inventory_hostname == "${worker-0-dns}"
   shell: 
     cmd: |
       cat <<EOF | sudo tee /etc/systemd/system/kubelet.service
@@ -242,6 +243,36 @@
         --kubeconfig=/var/lib/kubelet/kubeconfig \\
         --network-plugin=cni \\
         --register-node=true \\
+        --hostname-override worker-0 \
+        --v=2
+      Restart=on-failure
+      RestartSec=5
+
+      [Install]
+      WantedBy=multi-user.target
+      EOF
+
+- name: "Create the Kubelet Systemd Unit File on the worker-1"
+  when: inventory_hostname == "${worker-1-dns}"
+  shell: 
+    cmd: |
+      cat <<EOF | sudo tee /etc/systemd/system/kubelet.service
+      [Unit]
+      Description=Kubernetes Kubelet
+      Documentation=https://github.com/kubernetes/kubernetes
+      After=containerd.service
+      Requires=containerd.service
+
+      [Service]
+      ExecStart=/usr/local/bin/kubelet \\
+        --config=/var/lib/kubelet/kubelet-config.yaml \\
+        --container-runtime=remote \\
+        --container-runtime-endpoint=unix:///var/run/containerd/containerd.sock \\
+        --image-pull-progress-deadline=2m \\
+        --kubeconfig=/var/lib/kubelet/kubeconfig \\
+        --network-plugin=cni \\
+        --register-node=true \\
+        --hostname-override worker-1 \
         --v=2
       Restart=on-failure
       RestartSec=5
