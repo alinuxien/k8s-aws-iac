@@ -61,6 +61,14 @@ resource "local_file" "AnsibleK8SCertificatePreparation" {
   filename = "../ansible/roles/prepare-certs/tasks/main.yml"
 }
 
+resource "local_file" "AnsibleK8SCertificatePush" {
+  content = templatefile("../ansible/roles/push-certs-workers/tasks/main.tmpl", {
+    worker-0-dns = aws_instance.worker-0.private_dns,
+    worker-1-dns = aws_instance.worker-1.private_dns
+  })
+  filename = "../ansible/roles/push-certs-workers/tasks/main.yml"
+}
+
 resource "local_file" "AnsibleK8SKubeConfigPreparation" {
   content = templatefile("../ansible/roles/prepare-configs/tasks/main.tmpl", {
     controller-0-ext-ip      = aws_instance.controller-0.public_ip,
@@ -76,6 +84,14 @@ resource "local_file" "AnsibleK8SKubeConfigPreparation" {
     api-server-ip            = var.api-server-ip
   })
   filename = "../ansible/roles/prepare-configs/tasks/main.yml"
+}
+
+resource "local_file" "AnsibleK8SConfigPush" {
+  content = templatefile("../ansible/roles/push-configs-workers/tasks/main.tmpl", {
+    worker-0-dns = aws_instance.worker-0.private_dns,
+    worker-1-dns = aws_instance.worker-1.private_dns
+  })
+  filename = "../ansible/roles/push-configs-workers/tasks/main.yml"
 }
 
 resource "local_file" "AnsibleK8SETCD" {
