@@ -13,7 +13,8 @@ resource "null_resource" "prepare-and-deploy-configs" {
 
   depends_on = [
     null_resource.prepare-and-deploy-certs,
-    local_file.AnsibleK8SKubeConfigPreparation
+    local_file.AnsibleK8SKubeConfigPreparation,
+    local_file.AnsibleK8SConfigPush
   ]
 }
 
