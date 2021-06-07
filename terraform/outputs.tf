@@ -128,4 +128,10 @@ resource "local_file" "AnsibleK8SWorkers" {
   filename = "../ansible/roles/workers/tasks/main.yml"
 }
 
+resource "local_file" "AnsibleK8SKubectl-Remote" {
+  content = templatefile("../ansible/roles/kubectl-remote/tasks/main.tmpl", {
+    kubernetes-public-adress = aws_lb.lb.dns_name
+  })
+  filename = "../ansible/roles/kubectl-remote/tasks/main.yml"
+}
 
