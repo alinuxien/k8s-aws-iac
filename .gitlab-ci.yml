@@ -62,6 +62,8 @@ destroy_job:
       - cd terraform
       - terraform init -input=false -backend-config="bucket=$AWS_STATE_BUCKET" -backend-config="key=$BRANCH_STATE_KEY" -backend-config="region=$AWS_REGION"
       - terraform destroy -input=false -auto-approve
+      - rm -rf /tmp/certs
+      - rm -rf /tmp/configs
   when: manual
 
  
