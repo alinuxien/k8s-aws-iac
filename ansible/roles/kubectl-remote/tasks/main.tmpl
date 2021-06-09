@@ -1,20 +1,20 @@
 ---
 - name: "Configure Kubectl Remote Cluster : Set Cluster"
-  shell: "kubectl config set-cluster kubernetes-the-hard-way \
+  shell: "sudo -u vagrant kubectl config set-cluster kubernetes-the-hard-way \
             --certificate-authority=/tmp/certs/ca.pem \
             --embed-certs=true \
             --server=https://${kubernetes-public-adress}:6443 "
 
 - name: "Configure Kubectl Remote Cluster : Set Credentials "
-  shell: "kubectl config set-credentials admin \
+  shell: "sudo -u vagrant kubectl config set-credentials admin \
             --client-certificate=/tmp/certs/admin.pem \
             --client-key=/tmp/certs/admin-key.pem "
 
 - name: "Configure Kubectl Remote Cluster : Set Context"
-  shell: "kubectl config set-context kubernetes-the-hard-way \
+  shell: "sudo -u vagrant kubectl config set-context kubernetes-the-hard-way \
             --cluster=kubernetes-the-hard-way \
             --user=admin "
 
 - name: "Configure Kubectl Remote Cluster : Use Context"
-  shell: "kubectl config use-context kubernetes-the-hard-way "
+  shell: "sudo -u vagrant kubectl config use-context kubernetes-the-hard-way "
 

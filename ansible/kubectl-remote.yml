@@ -1,6 +1,5 @@
 ---
 - name: "Configuring kubectl for Remote Access"
   hosts: localhost
-  remote_user: vagrant
   roles:
           - role: "kubectl-remote"
