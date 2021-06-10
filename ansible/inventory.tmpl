@@ -1,4 +1,4 @@
-localhost ansible_user=vagrant ansible_password=vagrant ansible_become=no ansible_connection=local ansible_python_interpreter="/usr/bin/env python"
+localhost ansible_user=vagrant ansible_password=vagrant ansible_become=yes ansible_connection=local ansible_python_interpreter="/usr/bin/env python"
 
 [bastion]
 ${bastion-dns} ansible_host=${bastion-ip} ansible_ssh_user=${bastion-user} ansible_ssh_private_key_file=${private_key_file} # ${bastion-id}
