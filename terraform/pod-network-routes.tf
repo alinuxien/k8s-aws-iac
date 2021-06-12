@@ -1,5 +1,5 @@
 module "subnet_addrs" {
-  source = "hashicorp/subnets/cidr"
+  source          = "hashicorp/subnets/cidr"
   base_cidr_block = var.pod-cidr
   networks = [
     {
