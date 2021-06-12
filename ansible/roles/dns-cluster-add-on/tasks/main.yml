@@ -1,0 +1,4 @@
+---
+- name: "Apply core dns deployment"
+  shell: "kubectl apply -f https://storage.googleapis.com/kubernetes-the-hard-way/coredns-1.8.yaml"
+
