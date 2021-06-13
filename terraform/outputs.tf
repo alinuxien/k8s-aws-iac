@@ -127,9 +127,14 @@ resource "local_file" "AnsibleK8SWorkers" {
     worker-0-int-ip     = aws_instance.worker-0.private_ip,
     worker-1-int-ip     = aws_instance.worker-1.private_ip,
     worker-0-dns        = aws_instance.worker-0.private_dns,
-    worker-1-dns        = aws_instance.worker-1.private_dns
+    worker-1-dns        = aws_instance.worker-1.private_dns,
+    pod-cidr-0          = module.subnet_addrs.networks[0].cidr_block,
+    pod-cidr-1          = module.subnet_addrs.networks[1].cidr_block 
   })
   filename = "../ansible/roles/workers/tasks/main.yml"
+  depends_on = [
+    subnet_addrs
+  ]
 }
 
 resource "local_file" "AnsibleK8SKubectl-Remote" {

@@ -1,4 +1,4 @@
----
+        ---
 - name: "Création du Dossier de Configuration de Kubernetes"
   file:
     path: "/etc/kubernetes/config"
@@ -107,6 +107,7 @@
 
       [Service]
       ExecStart=/usr/local/bin/kube-controller-manager \\
+        --allocate-node-cidrs=true \
         --bind-address=0.0.0.0 \\
         --cluster-cidr=${pod-cidr} \\
         --cluster-name=kubernetes \\
