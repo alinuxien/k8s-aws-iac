@@ -274,3 +274,14 @@
       EOF
   run_once: true
 
+- name: "Adds all nodes IP in /etc/hosts"
+  shell: 
+    cmd: |
+      cat <<EOF | sudo tee -a /etc/hosts
+      ${controller-0-int-ip} controller-0 
+      ${controller-1-int-ip} controller-1 
+      ${worker-0-int-ip} worker-0 
+      ${worker-1-int-ip} worker-1 
+      EOF
+
+
