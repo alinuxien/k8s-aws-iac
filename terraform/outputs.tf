@@ -132,9 +132,6 @@ resource "local_file" "AnsibleK8SWorkers" {
     pod-cidr-1          = aws_route.worker-1-pod-route.destination_cidr_block
   })
   filename = "../ansible/roles/workers/tasks/main.yml"
-  depends_on = [
-    subnet_addrs
-  ]
 }
 
 resource "local_file" "AnsibleK8SKubectl-Remote" {
