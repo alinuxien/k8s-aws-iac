@@ -13,15 +13,27 @@ module "subnet_addrs" {
   ]
 }
 
-resource "aws_route" "worker-0-pod-route" {
+resource "aws_route" "worker-0-pod-route-b" {
   route_table_id         = aws_route_table.private-b.id
   destination_cidr_block = module.subnet_addrs.networks[0].cidr_block
   instance_id            = aws_instance.worker-0.id
 }
 
-resource "aws_route" "worker-1-pod-route" {
+resource "aws_route" "worker-1-pod-route-a" {
   route_table_id         = aws_route_table.private-a.id
   destination_cidr_block = module.subnet_addrs.networks[1].cidr_block
   instance_id            = aws_instance.worker-1.id
+}
+
+resource "aws_route" "worker-0-pod-route-b" {
+  route_table_id         = aws_route_table.private-b.id
+  destination_cidr_block = module.subnet_addrs.networks[1].cidr_block
+  instance_id            = aws_instance.worker-1.id
+}
+
+resource "aws_route" "worker-1-pod-route-a" {
+  route_table_id         = aws_route_table.private-a.id
+  destination_cidr_block = module.subnet_addrs.networks[0].cidr_block
+  instance_id            = aws_instance.worker-0.id
 }
 
