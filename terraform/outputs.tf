@@ -128,8 +128,8 @@ resource "local_file" "AnsibleK8SWorkers" {
     worker-1-int-ip     = aws_instance.worker-1.private_ip,
     worker-0-dns        = aws_instance.worker-0.private_dns,
     worker-1-dns        = aws_instance.worker-1.private_dns,
-    pod-cidr-0          = aws_route.worker-0-pod-route.destination_cidr_block,
-    pod-cidr-1          = aws_route.worker-1-pod-route.destination_cidr_block
+    pod-cidr-0          = aws_route.worker-0-pod-route-a.destination_cidr_block,
+    pod-cidr-1          = aws_route.worker-1-pod-route-a.destination_cidr_block
   })
   filename = "../ansible/roles/workers/tasks/main.yml"
 }
