@@ -266,7 +266,7 @@
         --kubeconfig=/var/lib/kubelet/kubeconfig \\
         --network-plugin=cni \\
         --register-node=true \\
-        --hostname-override worker-0 \
+        --hostname-override=worker-0 \\
         --v=2
       Restart=on-failure
       RestartSec=5
@@ -295,7 +295,7 @@
         --kubeconfig=/var/lib/kubelet/kubeconfig \\
         --network-plugin=cni \\
         --register-node=true \\
-        --hostname-override worker-1 \
+        --hostname-override=worker-1 \\
         --v=2
       Restart=on-failure
       RestartSec=5
@@ -319,7 +319,8 @@
       clusterCIDR: "${pod-cidr}"
       EOF
 
-- name: "Create the Kube Proxy Systemd Unit File on the Workers"
+- name: "Create the Kube Proxy Systemd Unit File on worker-0"
+  when: inventory_hostname == "${worker-0-dns}"
   shell: 
     cmd: |
       cat <<EOF | sudo tee /etc/systemd/system/kube-proxy.service
@@ -329,7 +330,28 @@
 
       [Service]
       ExecStart=/usr/local/bin/kube-proxy \\
-        --config=/var/lib/kube-proxy/kube-proxy-config.yaml
+        --config=/var/lib/kube-proxy/kube-proxy-config.yaml \\
+        --hostname-override=worker-0 
+      Restart=on-failure
+      RestartSec=5
+
+      [Install]
+      WantedBy=multi-user.target
+      EOF
+
+- name: "Create the Kube Proxy Systemd Unit File on worker-1"
+  when: inventory_hostname == "${worker-1-dns}"
+  shell: 
+    cmd: |
+      cat <<EOF | sudo tee /etc/systemd/system/kube-proxy.service
+      [Unit]
+      Description=Kubernetes Kube Proxy
+      Documentation=https://github.com/kubernetes/kubernetes
+
+      [Service]
+      ExecStart=/usr/local/bin/kube-proxy \\
+        --config=/var/lib/kube-proxy/kube-proxy-config.yaml \\
+        --hostname-override=worker-1 
       Restart=on-failure
       RestartSec=5
 
