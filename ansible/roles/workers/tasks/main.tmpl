@@ -213,7 +213,7 @@
       clusterDomain: "cluster.local"
       clusterDNS:
         - "10.32.0.10"
-      podCIDR: "${pod-cidr}"
+      podCIDR: "${pod-cidr-0}"
       resolvConf: "/run/systemd/resolve/resolv.conf"
       runtimeRequestTimeout: "15m"
       tlsCertFile: "/var/lib/kubelet/worker-0.pem"
@@ -239,7 +239,7 @@
       clusterDomain: "cluster.local"
       clusterDNS:
         - "10.32.0.10"
-      podCIDR: "${pod-cidr}"
+      podCIDR: "${pod-cidr-1}"
       resolvConf: "/run/systemd/resolve/resolv.conf"
       runtimeRequestTimeout: "15m"
       tlsCertFile: "/var/lib/kubelet/worker-1.pem"
