@@ -366,9 +366,9 @@
     daemon_reload: yes
     enabled: yes
   with_items:
-    - "containerd" 
     - "kubelet"
     - "kube-proxy"
+    - "containerd" 
 
 - name: "Adds all nodes IP in /etc/hosts"
   shell: 
