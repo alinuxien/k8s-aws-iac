@@ -13,13 +13,4 @@ module "subnet_addrs" {
   ]
 }
 
-var "pod-cidr-0" {
-  type  = string
-  value = module.subnet_addrs.networks[0].cidr_block
-}
-
-var "pod-cidr-1" {
-  type  = string
-  value = module.subnet_addrs.networks[1].cidr_block
-}
 
