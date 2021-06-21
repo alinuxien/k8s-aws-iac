@@ -1,4 +1,0 @@
----
-- name: "Apply calico network bgp + ipip deployment manifest"
-  shell: "kubectl apply -f /home/vagrant/on-demand-infra/calico.yaml"
-
