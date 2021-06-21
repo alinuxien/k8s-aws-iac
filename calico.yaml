@@ -3655,13 +3655,13 @@ spec:
               value: "autodetect"
             # PERSO
             - name: IP_AUTODETECTION_METHOD
-              value: "interface=eth.*"
+              value: "cidr=10.0.0.0/24,10.0.1.0/24"
             # Enable IPIP
             - name: CALICO_IPV4POOL_IPIP
-              value: "Never"
+              value: "CrossSubnet"
             # Enable or Disable VXLAN on the default IP pool.
             - name: CALICO_IPV4POOL_VXLAN
-              value: "CrossSubnet"
+              value: "Never"
             # Set MTU for tunnel device used if ipip is enabled
             - name: FELIX_IPINIPMTU
               valueFrom:
