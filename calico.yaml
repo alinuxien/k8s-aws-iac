@@ -3658,7 +3658,7 @@ spec:
               value: "interface=eth.*"
             # Enable IPIP
             - name: CALICO_IPV4POOL_IPIP
-              value: "CrossSubnet"
+              value: "Always"
             # Enable or Disable VXLAN on the default IP pool.
             - name: CALICO_IPV4POOL_VXLAN
               value: "Never"
