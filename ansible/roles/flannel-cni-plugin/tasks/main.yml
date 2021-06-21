@@ -1,4 +1,0 @@
----
-- name: "Apply flannel network overlay deployment manifest"
-  shell: "kubectl apply -f /home/vagrant/on-demand-infra/flannel.yaml"
-

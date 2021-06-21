@@ -1,5 +1,0 @@
----
-- name: "Deploying the Flannel CNI Plugin"
-  hosts: localhost
-  roles:
-          - role: "flannel-cni-plugin"
