@@ -3655,7 +3655,7 @@ spec:
               value: "autodetect"
             # PERSO
             - name: IP_AUTODETECTION_METHOD
-              value: "can_reach=www.google.com"
+              value: "interface=cnio.*"
             # Enable IPIP
             - name: CALICO_IPV4POOL_IPIP
               value: "CrossSubnet"
