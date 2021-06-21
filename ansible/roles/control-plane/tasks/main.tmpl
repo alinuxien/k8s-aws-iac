@@ -57,7 +57,7 @@
       ExecStart=/usr/local/bin/kube-apiserver \\
         --advertise-address={{ ansible_ssh_host }} \\
         --allow-privileged=true \\
-        --apiserver-count=3 \\
+        --apiserver-count=2 \\
         --audit-log-maxage=30 \\
         --audit-log-maxbackup=3 \\
         --audit-log-maxsize=100 \\
@@ -65,7 +65,7 @@
         --authorization-mode=Node,RBAC \\
         --bind-address=0.0.0.0 \\
         --client-ca-file=/var/lib/kubernetes/ca.pem \\
-        --enable-admission-plugins=NamespaceLifecycle,NodeRestriction,LimitRanger,ServiceAccount,DefaultStorageClass,ResourceQuota \\
+        --enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,TaintNodesByCondition,Priority,DefaultTolerationSeconds,DefaultStorageClass,PersistentVolumeClaimResize,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota \\
         --etcd-cafile=/var/lib/kubernetes/ca.pem \\
         --etcd-certfile=/var/lib/kubernetes/kubernetes.pem \\
         --etcd-keyfile=/var/lib/kubernetes/kubernetes-key.pem \\
@@ -107,6 +107,7 @@
 
       [Service]
       ExecStart=/usr/local/bin/kube-controller-manager \\
+        --allocate-node-cidrs=true \
         --bind-address=0.0.0.0 \\
         --cluster-cidr=${pod-cidr} \\
         --cluster-name=kubernetes \\
@@ -273,4 +274,15 @@
           name: kubernetes
       EOF
   run_once: true
+
+- name: "Adds all nodes IP in /etc/hosts"
+  shell: 
+    cmd: |
+      cat <<EOF | sudo tee -a /etc/hosts
+      ${controller-0-int-ip} controller-0 
+      ${controller-1-int-ip} controller-1 
+      ${worker-0-int-ip} worker-0 
+      ${worker-1-int-ip} worker-1 
+      EOF
+
 
