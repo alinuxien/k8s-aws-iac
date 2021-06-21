@@ -3655,10 +3655,10 @@ spec:
               value: "autodetect"
             # PERSO
             - name: IP_AUTODETECTION_METHOD
-              value: "interface=eth.*"
+              value: "can_reach=www.google.com"
             # Enable IPIP
             - name: CALICO_IPV4POOL_IPIP
-              value: "Always"
+              value: "CrossSubnet"
             # Enable or Disable VXLAN on the default IP pool.
             - name: CALICO_IPV4POOL_VXLAN
               value: "Never"
