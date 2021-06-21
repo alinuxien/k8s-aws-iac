@@ -3655,7 +3655,7 @@ spec:
               value: "autodetect"
             # PERSO
             - name: IP_AUTODETECTION_METHOD
-              value: "cidr=10.0.0.0/24,10.0.1.0/24"
+              value: "interface=eth.*"
             # Enable IPIP
             - name: CALICO_IPV4POOL_IPIP
               value: "CrossSubnet"
