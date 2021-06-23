@@ -1,5 +1,0 @@
----
-- name: "Deploying the Calico CNI Plugin"
-  hosts: localhost
-  roles:
-          - role: "calico-cni-plugin"

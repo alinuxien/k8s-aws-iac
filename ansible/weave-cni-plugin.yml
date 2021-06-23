@@ -1,0 +1,6 @@
+---
+- name: "Deploying the Weave CNI Plugin"
+  hosts: localhost
+  roles:
+          - role: "weave-cni-plugin"
+
