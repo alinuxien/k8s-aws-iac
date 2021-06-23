@@ -6,7 +6,8 @@ resource "null_resource" "dns-cluster-add-on" {
   depends_on = [
     null_resource.kubectl-remote,
     aws_route.worker-1-pod-route-a,
-    aws_route.worker-0-pod-route-b
+    aws_route.worker-0-pod-route-b,
+    null_resource.weave-cni-plugin
   ]
 }
 
