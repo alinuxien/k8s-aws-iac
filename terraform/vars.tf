@@ -74,3 +74,7 @@ variable "pod-cidr" {
   default     = "10.200.0.0/16"
 }
 
+variable "domain" {
+  type        = string
+  description = "Nom de domaine de la partie Applicative du Cluster"
+}
