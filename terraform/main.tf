@@ -32,3 +32,11 @@ resource "aws_key_pair" "keypair" {
   public_key = data.local_file.local-pub-key.content
 }
 
+data "aws_acm_certificate" "cert" {
+  domain = var.domain
+}
+
+data "aws_route53_zone" "primary" {
+  name = var.domain
+}
+

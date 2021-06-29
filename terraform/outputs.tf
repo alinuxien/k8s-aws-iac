@@ -20,6 +20,10 @@ output "kubernetes-public-adress" {
   value = aws_lb.lb.dns_name
 }
 
+output "alb_dns_name" {
+  value = aws_lb.alb.dns_name
+}
+
 resource "local_file" "AnsibleInventory" {
   content = templatefile("../ansible/inventory.tmpl", {
     bastion-dns      = aws_instance.bastion.private_dns,
