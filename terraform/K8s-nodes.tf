@@ -67,7 +67,7 @@ resource "aws_instance" "controller-0" {
   instance_type          = var.instance-type-k8s-node-controller
   subnet_id              = aws_subnet.private-a.id
   vpc_security_group_ids = [aws_security_group.k8s-sg.id]
-  key_name               = aws_key_pair.keypair.id
+  key_name               = aws_key_pair.ec2-keypair.id
   source_dest_check      = false
   tags = {
     Name = "controller-0"
@@ -79,7 +79,7 @@ resource "aws_instance" "controller-1" {
   instance_type          = var.instance-type-k8s-node-controller
   subnet_id              = aws_subnet.private-b.id
   vpc_security_group_ids = [aws_security_group.k8s-sg.id]
-  key_name               = aws_key_pair.keypair.id
+  key_name               = aws_key_pair.ec2-keypair.id
   source_dest_check      = false
   tags = {
     Name = "controller-1"
@@ -91,7 +91,7 @@ resource "aws_instance" "worker-0" {
   instance_type          = var.instance-type-k8s-node-controller
   subnet_id              = aws_subnet.private-a.id
   vpc_security_group_ids = [aws_security_group.k8s-sg.id]
-  key_name               = aws_key_pair.keypair.id
+  key_name               = aws_key_pair.ec2-keypair.id
   source_dest_check      = false
   tags = {
     Name = "worker-0"
@@ -103,7 +103,7 @@ resource "aws_instance" "worker-1" {
   instance_type          = var.instance-type-k8s-node-controller
   subnet_id              = aws_subnet.private-b.id
   vpc_security_group_ids = [aws_security_group.k8s-sg.id]
-  key_name               = aws_key_pair.keypair.id
+  key_name               = aws_key_pair.ec2-keypair.id
   source_dest_check      = false
   tags = {
     Name = "worker-1"
