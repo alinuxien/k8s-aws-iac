@@ -36,7 +36,7 @@ data "aws_acm_certificate" "app-domain-cert" {
   domain = var.domain
 }
 
-data "aws_route53_zone" "primary" {
+data "aws_route53_zone" "app-domain-primary-zone" {
   name = var.domain
 }
 
