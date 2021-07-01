@@ -1,4 +1,4 @@
-# TerraForm Backend
+# TerraForm Backend : AWS S3 bucket
 terraform {
   backend "s3" {
     bucket = "[...]"
@@ -16,11 +16,11 @@ terraform {
   required_version = "= 0.15.3"
 }
 
-# AWS Provider
+# AWS Provider for Terraform
 provider "aws" {}
 
-# Get AZs
-data "aws_availability_zones" "available" {}
+# Get AZs for the Region
+data "aws_availability_zones" "region_azs" {}
 
 # Get local pub key file
 data "local_file" "local-pub-key" {

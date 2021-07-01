@@ -9,7 +9,7 @@ resource "aws_vpc" "main" {
 resource "aws_subnet" "public-a" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.100.0/24"
-  availability_zone = data.aws_availability_zones.available.names[0]
+  availability_zone = data.aws_availability_zones.region_azs.names[0]
   tags = {
     Name = "subnet-public-a"
   }
@@ -18,7 +18,7 @@ resource "aws_subnet" "public-a" {
 resource "aws_subnet" "public-b" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.101.0/24"
-  availability_zone = data.aws_availability_zones.available.names[1]
+  availability_zone = data.aws_availability_zones.region_azs.names[1]
   tags = {
     Name = "subnet-public-b"
   }
@@ -27,7 +27,7 @@ resource "aws_subnet" "public-b" {
 resource "aws_subnet" "private-a" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.0.0/24"
-  availability_zone = data.aws_availability_zones.available.names[0]
+  availability_zone = data.aws_availability_zones.region_azs.names[0]
   tags = {
     Name = "subnet-private-a"
   }
@@ -36,7 +36,7 @@ resource "aws_subnet" "private-a" {
 resource "aws_subnet" "private-b" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.1.0/24"
-  availability_zone = data.aws_availability_zones.available.names[1]
+  availability_zone = data.aws_availability_zones.region_azs.names[1]
   tags = {
     Name = "subnet-private-b"
   }
