@@ -135,7 +135,7 @@ resource "local_file" "workers-bootstrap-file" {
     cluster-pods-cidr-0 = module.subnet_addrs.networks[0].cidr_block,
     cluster-pods-cidr-1 = module.subnet_addrs.networks[1].cidr_block
   })
-  filename = "../ansible/roles/workers/tasks/main.yml"
+  filename = "../ansible/roles/workers-bootstrap/tasks/main.yml"
 }
 
 resource "local_file" "remote-kubectl-file" {
