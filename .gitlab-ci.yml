@@ -2,6 +2,7 @@ stages:
   - check 
   - plan
   - apply
+  - backup
   - destroy
 
 variables:
@@ -54,6 +55,17 @@ apply_job:
       - ansible/roles/etcd-config/tasks/main.yml
       - ansible/roles/control-plane-bootstrap/tasks/main.yml
 
+backup_job:
+  stage: backup
+  tags:
+    - shell
+  script:
+      - cd terraform/final
+      - terraform init -input=false -backend-config="bucket=$AWS_STATE_BUCKET" -backend-config="key=$BRANCH_STATE_KEY" -backend-config="region=$AWS_REGION"
+      - terraform apply -input=false -auto-approve "planfile"
+  allow_failure: true
+  when: manual
+ 
 destroy_job:
   stage: destroy
   tags:
