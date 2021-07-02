@@ -1,6 +1,6 @@
-resource "null_resource" "dns-cluster-add-on" {
+resource "null_resource" "dns-server-config" {
   provisioner "local-exec" {
-    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/dns-cluster-add-on.yml -e 'ansible_become=yes ansible_become_user=vagrant ansible_become_pass=vagrant'"
+    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/dns-server-config.yml -e 'ansible_become=yes ansible_become_user=vagrant ansible_become_pass=vagrant'"
   }
 
   depends_on = [
