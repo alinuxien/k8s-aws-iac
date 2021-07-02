@@ -4,10 +4,6 @@ terraform {
     bucket = "[...]"
     key    = "[...]"
     region = "[...]"
-
-    skip_metadata_api_check     = true
-    skip_region_validation      = true
-    skip_credentials_validation = true
   }
 
   required_providers {
@@ -21,12 +17,7 @@ terraform {
 }
 
 # AWS Provider for Terraform
-provider "aws" {
-  skip_get_ec2_platforms      = true
-  skip_metadata_api_check     = true
-  skip_region_validation      = true
-  skip_credentials_validation = true
-}
+provider "aws" {}
 
 # Get AZs for the Region
 data "aws_availability_zones" "region_azs" {}
