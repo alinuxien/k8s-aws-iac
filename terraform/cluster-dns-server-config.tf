@@ -4,7 +4,7 @@ resource "null_resource" "dns-server-config" {
   }
 
   depends_on = [
-    null_resource.kubectl-remote,
+    null_resource.remote-kubectl-config,
     aws_route.worker-1-pods-route-to-other-node-pods,
     aws_route.worker-0-pods-route-to-other-node-pods,
     null_resource.pods-network-overlay
