@@ -90,7 +90,7 @@
         "ipam": {
           "type": "host-local",
           "ranges": [
-            [{"subnet": "${pod-cidr-0}"}]
+            [{"subnet": "${cluster-pods-cidr-0}"}]
           ],
           "routes": [{"dst": "0.0.0.0/0"}]
         }
@@ -112,7 +112,7 @@
         "ipam": {
           "type": "host-local",
           "ranges": [
-            [{"subnet": "${pod-cidr-1}"}]
+            [{"subnet": "${cluster-pods-cidr-1}"}]
           ],
           "routes": [{"dst": "0.0.0.0/0"}]
         }
@@ -213,7 +213,7 @@
       clusterDomain: "cluster.local"
       clusterDNS:
         - "10.32.0.10"
-      podCIDR: "${pod-cidr-0}"
+      podCIDR: "${cluster-pods-cidr-0}"
       resolvConf: "/run/systemd/resolve/resolv.conf"
       runtimeRequestTimeout: "15m"
       tlsCertFile: "/var/lib/kubelet/worker-0.pem"
@@ -239,7 +239,7 @@
       clusterDomain: "cluster.local"
       clusterDNS:
         - "10.32.0.10"
-      podCIDR: "${pod-cidr-1}"
+      podCIDR: "${cluster-pods-cidr-1}"
       resolvConf: "/run/systemd/resolve/resolv.conf"
       runtimeRequestTimeout: "15m"
       tlsCertFile: "/var/lib/kubelet/worker-1.pem"
@@ -316,7 +316,7 @@
       clientConnection:
         kubeconfig: "/var/lib/kube-proxy/kubeconfig"
       mode: "iptables"
-      clusterCIDR: "${pod-cidr}"
+      clusterCIDR: "${cluster-pods-cidr}"
       EOF
 
 - name: "Create the Kube Proxy Systemd Unit File on worker-0"

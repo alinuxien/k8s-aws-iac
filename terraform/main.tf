@@ -33,10 +33,10 @@ resource "aws_key_pair" "ec2-keypair" {
 }
 
 data "aws_acm_certificate" "app-domain-cert" {
-  domain = var.domain
+  domain = var.app-domain
 }
 
 data "aws_route53_zone" "app-domain-primary-zone" {
-  name = var.domain
+  name = var.app-domain
 }
 

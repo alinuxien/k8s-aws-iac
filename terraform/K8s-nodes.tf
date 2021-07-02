@@ -63,8 +63,8 @@ resource "aws_security_group_rule" "out-all" {
 }
 
 resource "aws_instance" "controller-0" {
-  ami                    = var.ami-k8s-nodes
-  instance_type          = var.instance-type-k8s-node-controller
+  ami                    = var.k8s-nodes-ami
+  instance_type          = var.k8s-controller-nodes-instance-type
   subnet_id              = aws_subnet.private-a.id
   vpc_security_group_ids = [aws_security_group.k8s-sg.id]
   key_name               = aws_key_pair.ec2-keypair.id
@@ -75,8 +75,8 @@ resource "aws_instance" "controller-0" {
 }
 
 resource "aws_instance" "controller-1" {
-  ami                    = var.ami-k8s-nodes
-  instance_type          = var.instance-type-k8s-node-controller
+  ami                    = var.k8s-nodes-ami
+  instance_type          = var.k8s-controller-nodes-instance-type
   subnet_id              = aws_subnet.private-b.id
   vpc_security_group_ids = [aws_security_group.k8s-sg.id]
   key_name               = aws_key_pair.ec2-keypair.id
@@ -87,8 +87,8 @@ resource "aws_instance" "controller-1" {
 }
 
 resource "aws_instance" "worker-0" {
-  ami                    = var.ami-k8s-nodes
-  instance_type          = var.instance-type-k8s-node-controller
+  ami                    = var.k8s-nodes-ami
+  instance_type          = var.k8s-worker-nodes-instance-type
   subnet_id              = aws_subnet.private-a.id
   vpc_security_group_ids = [aws_security_group.k8s-sg.id]
   key_name               = aws_key_pair.ec2-keypair.id
@@ -99,8 +99,8 @@ resource "aws_instance" "worker-0" {
 }
 
 resource "aws_instance" "worker-1" {
-  ami                    = var.ami-k8s-nodes
-  instance_type          = var.instance-type-k8s-node-controller
+  ami                    = var.k8s-nodes-ami
+  instance_type          = var.k8s-worker-nodes-instance-type
   subnet_id              = aws_subnet.private-b.id
   vpc_security_group_ids = [aws_security_group.k8s-sg.id]
   key_name               = aws_key_pair.ec2-keypair.id
