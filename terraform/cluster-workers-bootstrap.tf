@@ -1,6 +1,6 @@
-resource "null_resource" "workers-bootstraping" {
+resource "null_resource" "workers-bootstrap" {
   provisioner "local-exec" {
-    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/workers.yml"
+    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/workers-bootstrap.yml"
   }
 
   depends_on = [
