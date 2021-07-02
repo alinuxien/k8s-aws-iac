@@ -49,7 +49,7 @@ resource "local_file" "AnsibleInventory" {
 }
 
 resource "local_file" "AnsibleK8SCertificatePreparation" {
-  content = templatefile("../ansible/roles/prepare-certs/tasks/main.tmpl", {
+  content = templatefile("../ansible/roles/prepare-certificates/tasks/main.tmpl", {
     controller-0-ext-ip      = aws_instance.controller-0.public_ip,
     controller-0-int-ip      = aws_instance.controller-0.private_ip,
     controller-1-ext-ip      = aws_instance.controller-1.public_ip,
@@ -62,15 +62,15 @@ resource "local_file" "AnsibleK8SCertificatePreparation" {
     kubernetes-hostnames     = "kubernetes,kubernetes.default,kubernetes.default.svc,kubernetes.default.svc.cluster,kubernetes.svc.cluster.local",
     api-server-ip            = var.api-server-ip
   })
-  filename = "../ansible/roles/prepare-certs/tasks/main.yml"
+  filename = "../ansible/roles/prepare-certificates/tasks/main.yml"
 }
 
 resource "local_file" "AnsibleK8SCertificatePush" {
-  content = templatefile("../ansible/roles/push-certs-workers/tasks/main.tmpl", {
+  content = templatefile("../ansible/roles/push-certificates-to-workers/tasks/main.tmpl", {
     worker-0-dns = aws_instance.worker-0.private_dns,
     worker-1-dns = aws_instance.worker-1.private_dns
   })
-  filename = "../ansible/roles/push-certs-workers/tasks/main.yml"
+  filename = "../ansible/roles/push-certificates-to-workers/tasks/main.yml"
 }
 
 resource "local_file" "AnsibleK8SKubeConfigPreparation" {

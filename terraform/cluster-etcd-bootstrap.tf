@@ -8,7 +8,7 @@ resource "null_resource" "etcd-bootstrap" {
   }
 
   depends_on = [
-    null_resource.prepare-and-deploy-certs,
+    null_resource.prepare-and-deploy-certificates,
     local_file.AnsibleK8SETCD
   ]
 }

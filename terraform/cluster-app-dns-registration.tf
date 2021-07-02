@@ -1,4 +1,4 @@
-resource "aws_route53_record" "A-record" {
+resource "aws_route53_record" "app-dns-record" {
   zone_id = data.aws_route53_zone.app-domain-primary-zone.zone_id
   name    = var.app-domain
   type    = "A"

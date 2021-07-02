@@ -49,7 +49,7 @@ apply_job:
   artifacts:
     paths:
       - ansible/inventory.ini
-      - ansible/roles/prepare-certs/tasks/main.yml 
+      - ansible/roles/prepare-certificates/tasks/main.yml 
       - ansible/roles/prepare-configs/tasks/main.yml
       - ansible/roles/etcd-config/tasks/main.yml
       - ansible/roles/control-plane/tasks/main.yml

@@ -1,14 +1,14 @@
-resource "null_resource" "prepare-and-deploy-certs" {
+resource "null_resource" "prepare-and-deploy-certificates" {
   provisioner "local-exec" {
-    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/prepare-certs.yml"
+    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/prepare-certificates.yml"
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/push-certs-workers.yml"
+    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/push-certificates-to-workers.yml"
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/push-certs-controllers.yml"
+    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/push-certificates-to-controllers.yml"
   }
 
   depends_on = [
