@@ -17,7 +17,7 @@ output "worker-1_ip" {
 }
 
 output "kubernetes-public-adress" {
-  value = aws_lb.lb.dns_name
+  value = aws_lb.nlb.dns_name
 }
 
 output "alb_dns_name" {
@@ -58,7 +58,7 @@ resource "local_file" "AnsibleK8SCertificatePreparation" {
     worker-0-int-ip          = aws_instance.worker-0.private_ip,
     worker-1-ext-ip          = aws_instance.worker-1.public_ip,
     worker-1-int-ip          = aws_instance.worker-1.private_ip,
-    kubernetes-public-adress = aws_lb.lb.dns_name,
+    kubernetes-public-adress = aws_lb.nlb.dns_name,
     kubernetes-hostnames     = "kubernetes,kubernetes.default,kubernetes.default.svc,kubernetes.default.svc.cluster,kubernetes.svc.cluster.local",
     api-server-ip            = var.api-server-ip
   })
@@ -83,7 +83,7 @@ resource "local_file" "AnsibleK8SKubeConfigPreparation" {
     worker-0-int-ip          = aws_instance.worker-0.private_ip,
     worker-1-ext-ip          = aws_instance.worker-1.public_ip,
     worker-1-int-ip          = aws_instance.worker-1.private_ip,
-    kubernetes-public-adress = aws_lb.lb.dns_name,
+    kubernetes-public-adress = aws_lb.nlb.dns_name,
     kubernetes-hostnames     = "kubernetes,kubernetes.default,kubernetes.default.svc,kubernetes.default.svc.cluster,kubernetes.svc.cluster.local",
     api-server-ip            = var.api-server-ip
   })
@@ -112,7 +112,7 @@ resource "local_file" "AnsibleK8SETCD" {
 
 resource "local_file" "AnsibleK8SControlPlane" {
   content = templatefile("../ansible/roles/control-plane-bootstrap/tasks/main.tmpl", {
-    kubernetes-public-adress = aws_lb.lb.dns_name,
+    kubernetes-public-adress = aws_lb.nlb.dns_name,
     controller-0-int-ip      = aws_instance.controller-0.private_ip,
     controller-1-int-ip      = aws_instance.controller-1.private_ip,
     worker-0-int-ip          = aws_instance.worker-0.private_ip,
@@ -140,7 +140,7 @@ resource "local_file" "AnsibleK8SWorkers" {
 
 resource "local_file" "AnsibleK8SKubectl-Remote" {
   content = templatefile("../ansible/roles/kubectl-remote/tasks/main.tmpl", {
-    kubernetes-public-adress = aws_lb.lb.dns_name
+    kubernetes-public-adress = aws_lb.nlb.dns_name
   })
   filename = "../ansible/roles/kubectl-remote/tasks/main.yml"
 }

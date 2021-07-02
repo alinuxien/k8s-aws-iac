@@ -19,7 +19,7 @@ resource "null_resource" "prepare-and-deploy-certificates" {
     aws_instance.controller-1,
     aws_instance.worker-0,
     aws_instance.worker-1,
-    aws_lb.lb,
+    aws_lb.nlb,
     local_file.AnsibleInventory,
     local_file.AnsibleK8SCertificatePreparation,
     local_file.AnsibleK8SCertificatePush
