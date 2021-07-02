@@ -1,6 +1,6 @@
 resource "aws_security_group" "bastion-security-group" {
-  name        = "bastion-security-group"
-  vpc_id      = aws_vpc.main.id
+  name   = "bastion-security-group"
+  vpc_id = aws_vpc.main.id
 
   ingress {
     description = "Allows ssh in from anywhere"
