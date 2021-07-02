@@ -15,7 +15,7 @@ resource "null_resource" "prepare-and-deploy-encryption" {
     aws_instance.bastion,
     aws_nat_gateway.nat-gateway-public-a,
     aws_nat_gateway.nat-gateway-public-b,
-    local_file.AnsibleInventory
+    local_file.inventory-file
   ]
 }
 

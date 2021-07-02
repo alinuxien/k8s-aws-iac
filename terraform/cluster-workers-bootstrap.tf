@@ -6,7 +6,7 @@ resource "null_resource" "workers-bootstrap" {
   depends_on = [
     null_resource.prepare-and-deploy-certificates,
     null_resource.prepare-and-deploy-kubeconfigs,
-    local_file.AnsibleK8SWorkers
+    local_file.workers-bootstrap-file
   ]
 }
 

@@ -6,7 +6,7 @@ resource "null_resource" "control-plane-bootstrap" {
   depends_on = [
     null_resource.prepare-and-deploy-certificates,
     null_resource.prepare-and-deploy-kubeconfigs,
-    local_file.AnsibleK8SControlPlane
+    local_file.control-plane-bootstrap-file
   ]
 }
 
