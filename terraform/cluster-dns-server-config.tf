@@ -7,7 +7,7 @@ resource "null_resource" "dns-server-config" {
     null_resource.kubectl-remote,
     aws_route.worker-1-pod-route-a,
     aws_route.worker-0-pod-route-b,
-    null_resource.weave-cni-plugin
+    null_resource.pods-network-overlay
   ]
 }
 
