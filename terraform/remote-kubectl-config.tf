@@ -4,7 +4,7 @@ resource "null_resource" "kubectl-remote" {
   }
 
   depends_on = [
-    null_resource.control-plane-boostrap,
+    null_resource.control-plane-bootstrap,
     null_resource.workers-bootstraping,
     local_file.AnsibleK8SKubectl-Remote
   ]
