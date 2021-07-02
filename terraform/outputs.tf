@@ -124,7 +124,7 @@ resource "local_file" "AnsibleK8SControlPlane" {
 }
 
 resource "local_file" "AnsibleK8SWorkers" {
-  content = templatefile("../ansible/roles/workers/tasks/main.tmpl", {
+  content = templatefile("../ansible/roles/workers-bootstrap/tasks/main.tmpl", {
     cluster-pods-cidr   = var.cluster-pods-cidr,
     controller-0-int-ip = aws_instance.controller-0.private_ip,
     controller-1-int-ip = aws_instance.controller-1.private_ip,
