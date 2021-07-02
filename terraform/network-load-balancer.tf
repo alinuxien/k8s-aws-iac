@@ -4,7 +4,7 @@ resource "aws_lb" "nlb" {
   load_balancer_type         = "network"
   drop_invalid_header_fields = false
   subnets                    = [aws_subnet.public-a.id, aws_subnet.public-b.id]
-  
+
   depends_on = [
     aws_internet_gateway.internet-gateway,
     aws_nat_gateway.nat-gateway-public-a,
