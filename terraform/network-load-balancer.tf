@@ -6,7 +6,7 @@ resource "aws_lb" "lb" {
   subnets                    = [aws_subnet.public-a.id, aws_subnet.public-b.id]
 
   tags = {
-    name = "kubernetes"
+    name = var.project_name
   }
 }
 
@@ -14,7 +14,7 @@ resource "aws_lb_target_group" "tgs" {
   name     = "kubernetes"
   port     = 6443
   protocol = "TCP"
-  vpc_id   = aws_vpc.main.id
+  vpc_id   = aws_vpc.cluster-vpc.id
   stickiness {
     enabled         = true
     type            = "source_ip"

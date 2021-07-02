@@ -12,7 +12,8 @@ resource "null_resource" "prepare-and-deploy-certificates" {
   }
 
   depends_on = [
-    aws_nat_gateway.ngw-a,
+    aws_nat_gateway.nat-gateway-public-a,
+    aws_nat_gateway.nat-gateway-public-b,
     aws_instance.bastion,
     aws_instance.controller-0,
     aws_instance.controller-1,

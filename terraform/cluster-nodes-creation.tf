@@ -1,10 +1,10 @@
 resource "aws_security_group" "k8s-security-group" {
   name        = "k8s-security-group"
   description = "Kubernetes Cluster's Security Group"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = aws_vpc.cluster-vpc.id
 
   tags = {
-    Name = "k8s"
+    Name = var.project_name
   }
 }
 
@@ -14,7 +14,7 @@ resource "aws_security_group_rule" "in-all-for-internal" {
   from_port         = 0
   to_port           = 0
   protocol          = "-1"
-  cidr_blocks       = [aws_vpc.main.cidr_block]
+  cidr_blocks       = [aws_vpc.cluster-vpc.cidr_block]
   security_group_id = aws_security_group.k8s-security-group.id
 }
 
@@ -76,7 +76,7 @@ resource "aws_instance" "controller-0" {
   key_name               = aws_key_pair.ec2-keypair.id
   source_dest_check      = false
   tags = {
-    Name = "k8s"
+    Name = var.project_name
   }
 }
 
@@ -88,7 +88,7 @@ resource "aws_instance" "controller-1" {
   key_name               = aws_key_pair.ec2-keypair.id
   source_dest_check      = false
   tags = {
-    Name = "k8s"
+    Name = var.project_name
   }
 }
 
@@ -100,7 +100,7 @@ resource "aws_instance" "worker-0" {
   key_name               = aws_key_pair.ec2-keypair.id
   source_dest_check      = false
   tags = {
-    Name = "k8s"
+    Name = var.project_name
   }
 }
 
@@ -112,7 +112,7 @@ resource "aws_instance" "worker-1" {
   key_name               = aws_key_pair.ec2-keypair.id
   source_dest_check      = false
   tags = {
-    Name = "k8s"
+    Name = var.project_name
   }
 }
 

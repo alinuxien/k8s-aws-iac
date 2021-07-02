@@ -1,10 +1,10 @@
 resource "aws_security_group" "alb-security-group" {
   name        = "alb-security-group"
   description = "Autoriser le traffic HTTP et HTTPS entrant"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = aws_vpc.cluster-vpc.id
 
   tags = {
-    Name = "alb"
+    Name = var.project_name
   }
 }
 
@@ -72,7 +72,7 @@ resource "aws_lb" "alb" {
   subnets                    = [aws_subnet.public-a.id, aws_subnet.public-b.id]
 
   tags = {
-    name = "alb"
+    name = var.project_name
   }
 }
 
@@ -80,7 +80,7 @@ resource "aws_lb_target_group" "target-group-secure-app" {
   name     = "target-group-secure-app"
   port     = 443
   protocol = "HTTPS"
-  vpc_id   = aws_vpc.main.id
+  vpc_id   = aws_vpc.cluster-vpc.id
   stickiness {
     enabled         = true
     type            = "lb_cookie"
@@ -117,7 +117,7 @@ resource "aws_lb_target_group" "target-group-app" {
   name     = "target-group-app"
   port     = 30000
   protocol = "HTTP"
-  vpc_id   = aws_vpc.main.id
+  vpc_id   = aws_vpc.cluster-vpc.id
 }
 
 resource "aws_lb_target_group_attachment" "target-group-app1" {
