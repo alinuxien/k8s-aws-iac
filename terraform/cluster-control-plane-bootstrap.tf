@@ -1,6 +1,6 @@
-resource "null_resource" "control-plane" {
+resource "null_resource" "control-plane-bootstrap" {
   provisioner "local-exec" {
-    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/control-plane.yml"
+    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/control-plane-bootstrap.yml"
   }
 
   depends_on = [

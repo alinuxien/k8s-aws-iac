@@ -111,7 +111,7 @@ resource "local_file" "AnsibleK8SETCD" {
 }
 
 resource "local_file" "AnsibleK8SControlPlane" {
-  content = templatefile("../ansible/roles/control-plane/tasks/main.tmpl", {
+  content = templatefile("../ansible/roles/control-plane-bootstrap/tasks/main.tmpl", {
     kubernetes-public-adress = aws_lb.lb.dns_name,
     controller-0-int-ip      = aws_instance.controller-0.private_ip,
     controller-1-int-ip      = aws_instance.controller-1.private_ip,
@@ -120,7 +120,7 @@ resource "local_file" "AnsibleK8SControlPlane" {
     service-cluster-ip-range = var.cluster-services-cidr,
     cluster-pods-cidr        = var.cluster-pods-cidr
   })
-  filename = "../ansible/roles/control-plane/tasks/main.yml"
+  filename = "../ansible/roles/control-plane-bootstrap/tasks/main.yml"
 }
 
 resource "local_file" "AnsibleK8SWorkers" {
