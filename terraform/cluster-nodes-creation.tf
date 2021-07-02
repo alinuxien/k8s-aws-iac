@@ -1,6 +1,6 @@
 resource "aws_security_group" "k8s-security-group" {
   name        = "k8s-security-group"
-  description = "Kubernetes Cluster's Security Group"
+  description = "Kubernetes Cluster Security Group"
   vpc_id      = aws_vpc.cluster-vpc.id
 
   tags = {
