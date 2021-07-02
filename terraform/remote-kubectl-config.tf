@@ -1,6 +1,6 @@
-resource "null_resource" "kubectl-remote" {
+resource "null_resource" "remote-kubectl-config" {
   provisioner "local-exec" {
-    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/kubectl-remote.yml -e 'ansible_become=yes ansible_become_user=vagrant ansible_become_pass=vagrant'"
+    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/remote-kubectl-config.yml -e 'ansible_become=yes ansible_become_user=vagrant ansible_become_pass=vagrant'"
   }
 
   depends_on = [

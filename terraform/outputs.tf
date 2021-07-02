@@ -139,9 +139,9 @@ resource "local_file" "workers-bootstrap-file" {
 }
 
 resource "local_file" "remote-kubectl-file" {
-  content = templatefile("../ansible/roles/kubectl-remote/tasks/main.tmpl", {
+  content = templatefile("../ansible/roles/remote-kubectl-config/tasks/main.tmpl", {
     kubernetes-public-adress = aws_lb.nlb.dns_name
   })
-  filename = "../ansible/roles/kubectl-remote/tasks/main.yml"
+  filename = "../ansible/roles/remote-kubectl-config/tasks/main.yml"
 }
 
