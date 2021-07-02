@@ -4,21 +4,21 @@ variable "project_name" {
   default     = "K8S"
 }
 
-variable "ami-bastion" {
+variable "bastion-ami" {
   type        = string
-  description = "Image Amazon à utiliser pour le Bastion SSH"
+  description = "Bastion Host AMI"
   default     = "ami-0f7cd40eac2214b37"
 }
 
 variable "bastion-user" {
   type        = string
-  description = "Nom utilisateur SSH pour le bastion"
+  description = "Bastion Host Username ( depends on Bastion Host AMI )"
   default     = "ubuntu"
 }
 
-variable "instance-type-bastion" {
+variable "bastion-instance-type" {
   type        = string
-  description = "Type d'Instance à utiliser pour le Bastion SSH"
+  description = "Bastion Host Instance Type"
   default     = "t2.micro"
 }
 

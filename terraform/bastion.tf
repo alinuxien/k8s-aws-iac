@@ -26,8 +26,8 @@ resource "aws_security_group" "allow-ssh" {
 
 resource "aws_instance" "bastion" {
   #  user_data                   = data.terraform_remote_state.global.user_data
-  ami                         = var.ami-bastion
-  instance_type               = var.instance-type-bastion
+  ami                         = var.bastion-ami
+  instance_type               = var.bastion-instance-type
   subnet_id                   = aws_subnet.public-a.id
   associate_public_ip_address = true
   key_name                    = aws_key_pair.ec2-keypair.id
