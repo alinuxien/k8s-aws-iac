@@ -1,14 +1,14 @@
-resource "null_resource" "prepare-and-deploy-configs" {
+resource "null_resource" "prepare-and-deploy-kubeconfigs" {
   provisioner "local-exec" {
-    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/prepare-configs.yml"
+    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/prepare-kubeconfigs.yml"
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/push-configs-workers.yml"
+    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/push-kubeconfigs-to-workers.yml"
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/push-configs-controllers.yml"
+    command = "ansible-playbook -i ../ansible/inventory.ini ../ansible/push-kubeconfigs-to-controllers.yml"
   }
 
   depends_on = [
