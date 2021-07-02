@@ -1,10 +1,9 @@
-resource "aws_security_group" "allow-ssh" {
-  name        = "bastion"
-  description = "Security Group du Bastion SSH"
+resource "aws_security_group" "bastion-security-group" {
+  name        = "bastion-security-group"
   vpc_id      = aws_vpc.main.id
 
   ingress {
-    description = "autorise le SSH entrant depuis partout"
+    description = "Allows ssh in from anywhere"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -12,7 +11,7 @@ resource "aws_security_group" "allow-ssh" {
   }
 
   egress {
-    description = "autorise le SSH sortant vers le VPC"
+    description = "Allows ssh out to any host in the VPC"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -25,21 +24,14 @@ resource "aws_security_group" "allow-ssh" {
 }
 
 resource "aws_instance" "bastion" {
-  #  user_data                   = data.terraform_remote_state.global.user_data
   ami                         = var.bastion-ami
   instance_type               = var.bastion-instance-type
   subnet_id                   = aws_subnet.public-a.id
   associate_public_ip_address = true
   key_name                    = aws_key_pair.ec2-keypair.id
-  vpc_security_group_ids      = [aws_security_group.allow-ssh.id]
+  vpc_security_group_ids      = [aws_security_group.bastion-security-group.id]
   tags = {
-    Name = "bastion-a"
+    Name = "bastion"
   }
-  # ignore user_data updates, as this will require a new resource!
-  #  lifecycle {
-  #    ignore_changes = [
-  #      "user_data",
-  #    ]
-  #  }
 }
 
