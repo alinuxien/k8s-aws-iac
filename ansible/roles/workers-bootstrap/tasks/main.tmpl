@@ -12,7 +12,7 @@
 - name: "Disable Swap : Current Session & @Boot"
   shell: "sudo swapoff -a && sed -ri 's/swap/^#?/#/g' /etc/fstab"
 
-- name: "Download Worker Binaries"
+- name: "Download Kubernetes Worker Binaries"
   get_url:
     url: "{{ item }}"    
     dest: "~/"
@@ -38,22 +38,22 @@
     - "/var/run/kubernetes" 
     - "~/containerd"
 
-- name: "Uncompress crictl"
+- name: "Uncompress crictl ( Container Runtime Interface CLI)"
   unarchive:
     src: "~/crictl-v1.21.0-linux-amd64.tar.gz"
     dest: "~/"
     remote_src: yes
 
-- name: "Uncompress containerd"
+- name: "Uncompress containerd ( Container Runtime )"
   unarchive:
     src: "~/containerd-1.4.4-linux-amd64.tar.gz"
     dest: "~/containerd"
     remote_src: yes
 
-- name: "Décompression et Installation de CNI"
+- name: "Uncompress and Install CNI ( Container Network Interface )"
   shell: "mkdir ~/cni; tar zxvf ~/cni-plugins-linux-amd64-v0.9.1.tgz -C ~/cni; sudo cp ~/cni/* /opt/cni/bin/ "
 
-- name: "Rename runc"
+- name: "Rename runc ( Runtime Standard to launch Containers )"
   copy:
     src: "~/runc.amd64"
     dest: "~/runc"
@@ -370,7 +370,7 @@
     - "kube-proxy"
     - "containerd" 
 
-- name: "Adds all nodes IP in /etc/hosts"
+- name: "Adds all nodes IP in /etc/hosts ( for hostname resolving )"
   shell: 
     cmd: |
       cat <<EOF | sudo tee -a /etc/hosts

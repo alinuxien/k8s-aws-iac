@@ -1,5 +1,5 @@
 ---
-- name: "Préparation des Workers Kubernetes"
+- name: "Preparing Kubernetes Worker Nodes"
   hosts: nodes_worker
   roles:
           - role: "workers-bootstrap"
