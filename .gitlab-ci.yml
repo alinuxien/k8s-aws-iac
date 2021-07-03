@@ -63,7 +63,7 @@ backup_validate_job:
     - shell
   script:
       - cd terraform
-      - cp terraform/separate/cluster-nodes-ami-backup.tf ./
+      - cp separate/cluster-nodes-ami-backup.tf ./
       - terraform init -input=false -backend-config="bucket=$AWS_STATE_BUCKET" -backend-config="key=$BRANCH_STATE_KEY" -backend-config="region=$AWS_REGION"
       - terraform validate 
 
@@ -73,7 +73,7 @@ backup_plan_job:
     - shell
   script:
       - cd terraform
-      - cp terraform/separate/cluster-nodes-ami-backup.tf ./
+      - cp separate/cluster-nodes-ami-backup.tf ./
       - terraform init -input=false -backend-config="bucket=$AWS_STATE_BUCKET" -backend-config="key=$BRANCH_STATE_KEY" -backend-config="region=$AWS_REGION"
       - terraform plan -input=false -out "planfile" -no-color >> planoutput.txt
 
@@ -83,7 +83,7 @@ backup_apply_job:
     - shell
   script:
       - cd terraform
-      - cp terraform/separate/cluster-nodes-ami-backup.tf ./
+      - cp separate/cluster-nodes-ami-backup.tf ./
       - terraform init -input=false -backend-config="bucket=$AWS_STATE_BUCKET" -backend-config="key=$BRANCH_STATE_KEY" -backend-config="region=$AWS_REGION"
       - terraform apply -input=false -auto-approve "planfile" 
   allow_failure: true
@@ -94,7 +94,7 @@ destroy_job:
     - shell
   script:
       - cd terraform
-      - cp terraform/separate/cluster-nodes-ami-backup.tf ./
+      - cp separate/cluster-nodes-ami-backup.tf ./
       - terraform init -input=false -backend-config="bucket=$AWS_STATE_BUCKET" -backend-config="key=$BRANCH_STATE_KEY" -backend-config="region=$AWS_REGION"
       - terraform destroy -input=false -auto-approve
       - rm -rf /tmp/certs
