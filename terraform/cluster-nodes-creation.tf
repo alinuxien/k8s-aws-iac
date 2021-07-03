@@ -76,7 +76,7 @@ resource "aws_instance" "controller-0" {
   key_name               = aws_key_pair.ec2-keypair.id
   source_dest_check      = false
   tags = {
-    Name = var.project_name
+    Name = "controller-0"
   }
 }
 
@@ -88,7 +88,7 @@ resource "aws_instance" "controller-1" {
   key_name               = aws_key_pair.ec2-keypair.id
   source_dest_check      = false
   tags = {
-    Name = var.project_name
+    Name = "controller-1"
   }
 }
 
@@ -100,7 +100,7 @@ resource "aws_instance" "worker-0" {
   key_name               = aws_key_pair.ec2-keypair.id
   source_dest_check      = false
   tags = {
-    Name = var.project_name
+    Name = "worker-0"
   }
 }
 
@@ -112,7 +112,7 @@ resource "aws_instance" "worker-1" {
   key_name               = aws_key_pair.ec2-keypair.id
   source_dest_check      = false
   tags = {
-    Name = var.project_name
+    Name = "worker-1"
   }
 }
 
