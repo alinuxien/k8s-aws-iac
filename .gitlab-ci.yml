@@ -80,8 +80,8 @@ backup_plan_job:
   allow_failure: true
   artifacts:
     paths:
-      - terraform/planoutput.txt
-      - terraform/planfile
+      - terraform/planoutputbackup.txt
+      - terraform/planfilebackup
 
 backup_apply_job:
   stage: backup_apply
