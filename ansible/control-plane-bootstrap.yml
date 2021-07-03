@@ -1,5 +1,5 @@
 ---
-- name: "Démarrage du Control Plane Kubernetes"
+- name: "Kubernetes Control Plane Bootstrap"
   hosts: nodes_controller
   roles:
           - role: "control-plane-bootstrap"
