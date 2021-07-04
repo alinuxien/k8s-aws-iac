@@ -4,3 +4,4 @@ public_key_file                    = "/home/vagrant/on-demand-infra/credentials/
 private_key_file                   = "/home/vagrant/on-demand-infra/credentials/id_rsa_aws_k8s"
 app-domain                         = "kube.akrour.fr"
 k8s-controller-nodes-instance-type = "t3.small"
+k8s-worker-nodes-instance-type     = "t3.small"
