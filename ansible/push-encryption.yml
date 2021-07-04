@@ -1,5 +1,5 @@
 ---
-- name: "Copie du fichier de configuration du Cryptage"
+- name: "Copying Encryption Configuration to Controllers"
   hosts: nodes_controller
   roles:
           - role: "push-encryption"

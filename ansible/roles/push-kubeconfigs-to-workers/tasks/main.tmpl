@@ -1,5 +1,5 @@
 ---
-- name: "Copie des KubeConfig sur le worker-0"
+- name: "Copying KubeConfigs to worker-0"
   when: inventory_hostname == "${worker-0-dns}"
   ansible.builtin.copy:
     src: "{{ item }}"    
@@ -8,7 +8,7 @@
     - "/tmp/configs/worker-0.kubeconfig"
     - "/tmp/configs/kube-proxy.kubeconfig"
 
-- name: "Copie des KubeConfig sur le worker-1"
+- name: "Copying KubeConfigs to worker-1"
   when: inventory_hostname == "${worker-1-dns}"
   ansible.builtin.copy:
     src: "{{ item }}"    

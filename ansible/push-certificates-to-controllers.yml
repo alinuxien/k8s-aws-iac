@@ -1,5 +1,5 @@
 ---
-- name: "Copie des certificats générés sur les controllers"
+- name: "Copying Certificates to Controllers"
   hosts: nodes_controller
   roles:
           - role: "push-certificates-to-controllers"

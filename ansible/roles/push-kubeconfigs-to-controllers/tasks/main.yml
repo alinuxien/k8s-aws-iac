@@ -1,5 +1,5 @@
 ---
-- name: "Copie des KubeConfig sur les Controllers"
+- name: "Copying KubeConfigs to Controllers"
   ansible.builtin.copy:
     src: "{{ item }}"    
     dest: "~/"
