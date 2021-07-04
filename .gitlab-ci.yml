@@ -2,9 +2,6 @@ stages:
   - check 
   - plan
   - apply
-  - backup_check
-  - backup_plan
-  - backup_apply
   - destroy
 
 variables:
@@ -56,43 +53,6 @@ apply_job:
       - ansible/roles/prepare-kubeconfigs/tasks/main.yml
       - ansible/roles/etcd-config/tasks/main.yml
       - ansible/roles/control-plane-bootstrap/tasks/main.yml
-
-backup_validate_job:
-  stage: backup_check 
-  tags:
-    - shell
-  script:
-      - cd terraform
-      - cp separate/cluster-nodes-ami-backup.tf ./
-      - terraform init -input=false -backend-config="bucket=$AWS_STATE_BUCKET" -backend-config="key=$BRANCH_STATE_KEY" -backend-config="region=$AWS_REGION"
-      - terraform validate 
-  allow_failure: true
-
-backup_plan_job:
-  stage: backup_plan
-  tags:
-    - shell
-  script:
-      - cd terraform
-      - cp separate/cluster-nodes-ami-backup.tf ./
-      - terraform init -input=false -backend-config="bucket=$AWS_STATE_BUCKET" -backend-config="key=$BRANCH_STATE_KEY" -backend-config="region=$AWS_REGION"
-      - terraform plan -input=false -out "planfilebackup" -no-color >> planoutputbackup.txt
-  allow_failure: true
-  artifacts:
-    paths:
-      - terraform/planoutputbackup.txt
-      - terraform/planfilebackup
-
-backup_apply_job:
-  stage: backup_apply
-  tags:
-    - shell
-  script:
-      - cd terraform
-      - cp separate/cluster-nodes-ami-backup.tf ./
-      - terraform init -input=false -backend-config="bucket=$AWS_STATE_BUCKET" -backend-config="key=$BRANCH_STATE_KEY" -backend-config="region=$AWS_REGION"
-      - terraform apply -input=false -auto-approve "planfilebackup" 
-  allow_failure: true
 
 destroy_job:
   stage: destroy

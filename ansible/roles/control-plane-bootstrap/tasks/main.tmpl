@@ -4,7 +4,7 @@
     path: "/etc/kubernetes/config"
     state: directory
 
-- name: "Téléchargement des Binaires Controller"
+- name: "Downloading Controller Binairies"
   get_url:
     url: "{{ item }}"    
     dest: "~/"
@@ -14,7 +14,7 @@
     - "https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kube-scheduler"
     - "https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kubectl"
 
-- name: "Installation des Binaires Controller"
+- name: "Installing Controller Binairies"
   copy:
     src: "{{ item }}"
     dest: "/usr/local/bin"
@@ -26,12 +26,12 @@
     - "~/kube-scheduler"
     - "~/kubectl"
 
-- name: "Préparation du Dossier de Configuration de l'API Server"
+- name: "Creating API Server Configuration Directory"
   file:
     path: "/var/lib/kubernetes"
     state: directory
 
-- name: "Installation des certificats et clés de l'API Server"
+- name: "Installing API Server Certificates and Encryption Keys"
   copy:
     src: "{{ item }}"
     dest: "/var/lib/kubernetes"
@@ -45,7 +45,7 @@
     - "~/service-account.pem"
     - "~/encryption-config.yaml"
 
-- name: "Create the kube-apiserver.service systemd unit file"
+- name: "Creating API Server Systemd unit file"
   shell: 
     cmd: |
       cat <<EOF | sudo tee /etc/systemd/system/kube-apiserver.service
@@ -91,7 +91,7 @@
       WantedBy=multi-user.target
       EOF
 
-- name: "Installation du KubeConfig du Controller Manager"
+- name: "Installating Controller Manager KubeConfig"
   copy:
     src: "~/kube-controller-manager.kubeconfig"
     dest: "/var/lib/kubernetes"
