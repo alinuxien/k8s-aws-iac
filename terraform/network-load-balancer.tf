@@ -12,7 +12,8 @@ resource "aws_lb" "nlb" {
   ]
 
   tags = {
-    name = var.project_name
+    Project = var.project_name
+    Name    = "nlb"
   }
 }
 

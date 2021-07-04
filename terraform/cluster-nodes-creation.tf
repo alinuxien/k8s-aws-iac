@@ -4,7 +4,8 @@ resource "aws_security_group" "k8s-security-group" {
   vpc_id      = aws_vpc.cluster-vpc.id
 
   tags = {
-    Name = var.project_name
+    Project = var.project_name
+    Name    = "k8s-security-group"
   }
 }
 
@@ -76,7 +77,8 @@ resource "aws_instance" "controller-0" {
   key_name               = aws_key_pair.ec2-keypair.id
   source_dest_check      = false
   tags = {
-    Name = "controller-0"
+    Name    = "controller-0"
+    Project = var.project_name
   }
 }
 
@@ -88,7 +90,8 @@ resource "aws_instance" "controller-1" {
   key_name               = aws_key_pair.ec2-keypair.id
   source_dest_check      = false
   tags = {
-    Name = "controller-1"
+    Name    = "controller-1"
+    Project = var.project_name
   }
 }
 
@@ -100,7 +103,8 @@ resource "aws_instance" "worker-0" {
   key_name               = aws_key_pair.ec2-keypair.id
   source_dest_check      = false
   tags = {
-    Name = "worker-0"
+    Name    = "worker-0"
+    Project = var.project_name
   }
 }
 
@@ -112,7 +116,8 @@ resource "aws_instance" "worker-1" {
   key_name               = aws_key_pair.ec2-keypair.id
   source_dest_check      = false
   tags = {
-    Name = "worker-1"
+    Name    = "worker-1"
+    Project = var.project_name
   }
 }
 

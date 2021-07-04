@@ -19,7 +19,8 @@ resource "aws_security_group" "bastion-security-group" {
   }
 
   tags = {
-    Name = var.project_name
+    Project = var.project_name
+    Name    = "bastion-security-group"
   }
 }
 
@@ -31,7 +32,8 @@ resource "aws_instance" "bastion" {
   key_name                    = aws_key_pair.ec2-keypair.id
   vpc_security_group_ids      = [aws_security_group.bastion-security-group.id]
   tags = {
-    Name = var.project_name
+    Project = var.project_name
+    Name    = "bastion"
   }
 }
 

@@ -2,7 +2,8 @@ resource "aws_vpc" "cluster-vpc" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
   tags = {
-    Name = var.project_name
+    Project = var.project_name
+    Name    = "cluster-vpc"
   }
 }
 
@@ -11,7 +12,8 @@ resource "aws_subnet" "public-a" {
   cidr_block        = "10.0.100.0/24"
   availability_zone = data.aws_availability_zones.region_azs.names[0]
   tags = {
-    Name = var.project_name
+    Project = var.project_name
+    Name    = "public-a"
   }
 }
 
@@ -20,7 +22,8 @@ resource "aws_subnet" "public-b" {
   cidr_block        = "10.0.101.0/24"
   availability_zone = data.aws_availability_zones.region_azs.names[1]
   tags = {
-    Name = var.project_name
+    Project = var.project_name
+    Name    = "public-b"
   }
 }
 
@@ -29,7 +32,8 @@ resource "aws_subnet" "private-a" {
   cidr_block        = "10.0.0.0/24"
   availability_zone = data.aws_availability_zones.region_azs.names[0]
   tags = {
-    Name = var.project_name
+    Project = var.project_name
+    Name    = "private-a"
   }
 }
 
@@ -38,14 +42,16 @@ resource "aws_subnet" "private-b" {
   cidr_block        = "10.0.1.0/24"
   availability_zone = data.aws_availability_zones.region_azs.names[1]
   tags = {
-    Name = var.project_name
+    Project = var.project_name
+    Name    = "private-b"
   }
 }
 
 resource "aws_internet_gateway" "internet-gateway" {
   vpc_id = aws_vpc.cluster-vpc.id
   tags = {
-    Name = var.project_name
+    Project = var.project_name
+    Name    = "internet-gateway"
   }
 }
 
@@ -74,7 +80,8 @@ resource "aws_route_table" "public-a-route-to-internet" {
     gateway_id = aws_internet_gateway.internet-gateway.id
   }
   tags = {
-    Name = var.project_name
+    Project = var.project_name
+    Name    = "public-a-route-to-internet"
   }
 }
 
@@ -85,7 +92,8 @@ resource "aws_route_table" "public-b-route-to-internet" {
     gateway_id = aws_internet_gateway.internet-gateway.id
   }
   tags = {
-    Name = var.project_name
+    Project = var.project_name
+    Name    = "public-b-route-to-internet"
   }
 }
 
@@ -96,7 +104,8 @@ resource "aws_route_table" "private-a-route-to-internet" {
     nat_gateway_id = aws_nat_gateway.nat-gateway-public-a.id
   }
   tags = {
-    Name = var.project_name
+    Project = var.project_name
+    Name    = "private-a-route-to-internet"
   }
 }
 
@@ -107,7 +116,8 @@ resource "aws_route_table" "private-b-route-to-internet" {
     nat_gateway_id = aws_nat_gateway.nat-gateway-public-b.id
   }
   tags = {
-    Name = var.project_name
+    Project = var.project_name
+    Name    = "private-b-route-to-internet"
   }
 }
 

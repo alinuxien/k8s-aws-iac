@@ -97,7 +97,7 @@
     dest: "/var/lib/kubernetes"
     remote_src: yes
 
-- name: "Creating Kube Controller Manager Systemd unit file"
+- name: "Creating Controller Manager Systemd unit file"
   shell: 
     cmd: |
       cat <<EOF | sudo tee /etc/systemd/system/kube-controller-manager.service
@@ -127,13 +127,13 @@
       WantedBy=multi-user.target
       EOF
 
-- name: "Installation du KubeConfig du Scheduler"
+- name: "Installing Scheduler KubeConfig"
   copy:
     src: "~/kube-scheduler.kubeconfig"
     dest: "/var/lib/kubernetes"
     remote_src: yes
 
-- name: "Create the kube-scheduler.yaml Configuration File"
+- name: "Creating Scheduler Configuration Manifest"
   shell: 
     cmd: |
       cat <<EOF | sudo tee /etc/kubernetes/config/kube-scheduler.yaml
@@ -145,7 +145,7 @@
         leaderElect: true
       EOF
 
-- name: "Create the kube-scheduler.service systemd unit file"
+- name: "Creating Scheduler Systemd unit file"
   shell: 
     cmd: |
       cat <<EOF | sudo tee /etc/systemd/system/kube-scheduler.service
@@ -164,7 +164,7 @@
       WantedBy=multi-user.target
       EOF
 
-- name: "Starts the Controller Services"
+- name: "Starting Controller Services"
   ansible.builtin.systemd:
     state: started
     name: "{{ item }}"
@@ -175,28 +175,28 @@
     - "kube-controller-manager"
     - "kube-scheduler"
 
-- name: "Installs CA Cert in Certs Library"
+- name: "Installing CA Certificate in Certificates Library"
   ansible.builtin.copy:
     src: "~/ca.pem"
     dest: "/etc/ssl/certs"
     remote_src: yes
 
-- name: "Update System CA Cert Library"
+- name: "Update System CA Certificates Library"
   shell: "update-ca-certificates || true"
 
-- name: "Adds alias to node for NGINX proxy pass"
+- name: "Adding alias for NGINX proxy pass"
   ansible.builtin.lineinfile:
     path: /etc/hosts
     regexp: '^127\.0\.0\.1\tlocalhost'
     line: '127.0.0.1 localhost kubernetes.default.svc.cluster.local'
 
-- name: "Installs NGINX"
+- name: "Installing NGINX"
   apt:
     name: "nginx"
     state: latest 
     update_cache: yes
 
-- name: "Prepares HTTP Health Checks NGINX Config"
+- name: "Preparing HTTP Health Checks NGINX Configuration"
   shell: 
     cmd: |
       cat <<EOF | sudo tee ~/kubernetes.default.svc.cluster.local
@@ -211,25 +211,25 @@
       }
       EOF
 
-- name: "Installation du fichier de Configuration NGINX"
+- name: "Installating NGINX Configuration"
   copy:
     src: "~/kubernetes.default.svc.cluster.local"
     dest: "/etc/nginx/sites-available"
     remote_src: yes
 
-- name: "Activation du fichier de Configuration NGINX"
+- name: "Activating NGINX Configuration"
   ansible.builtin.file:
     src: /etc/nginx/sites-available/kubernetes.default.svc.cluster.local
     dest: /etc/nginx/sites-enabled/kubernetes.default.svc.cluster.local
     state: link
 
-- name: "Starts  NGINX"
+- name: "Starting NGINX"
   ansible.builtin.systemd:
     state: restarted
     name: "nginx"
     enabled: yes
  
-- name: "Configuration RBAC : Cluster Role"
+- name: "Configurating RBAC : Cluster Role"
   shell: 
     cmd: |
       cat <<EOF | sudo kubectl apply --kubeconfig ~/admin.kubeconfig -f -
@@ -255,7 +255,7 @@
       EOF
   run_once: true
 
-- name: "Configuration RBAC : Cluster Role Binding"
+- name: "Configurating RBAC : Cluster Role Binding"
   shell: 
     cmd: |
       cat <<EOF | sudo kubectl apply --kubeconfig ~/admin.kubeconfig -f -
@@ -275,7 +275,7 @@
       EOF
   run_once: true
 
-- name: "Adds all nodes IP in /etc/hosts"
+- name: "Adding all nodes IP in /etc/hosts ( for hostname resolving )"
   shell: 
     cmd: |
       cat <<EOF | sudo tee -a /etc/hosts
