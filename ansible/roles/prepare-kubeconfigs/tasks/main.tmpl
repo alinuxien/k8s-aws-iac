@@ -1,10 +1,10 @@
 ---
-- name: "Preparation d'un dossier temporaire pour stocker les fichiers de Configuration générés"
+- name: "Preparing Kubeconfigs temporary directory"
   ansible.builtin.file:
     path: /tmp/configs
     state: directory 
 
-- name: "Création du fichier de Configuration pour le Kubelet pour le Worker 0"
+- name: "Creating Kubelet Kubeconfig for worker-0"
   shell: "kubectl config set-cluster kubernetes-the-hard-way \
             --certificate-authority=ca.pem \
             --embed-certs=true \
@@ -21,7 +21,7 @@
             --kubeconfig=worker-0.kubeconfig; \
           kubectl config use-context default --kubeconfig=worker-0.kubeconfig"
 
-- name: "Création du fichier de Configuration pour le Kubelet pour le Worker 1"
+- name: "Creating Kubelet Kubeconfig for worker-1"
   shell: "kubectl config set-cluster kubernetes-the-hard-way \
             --certificate-authority=ca.pem \
             --embed-certs=true \
@@ -38,7 +38,7 @@
             --kubeconfig=worker-1.kubeconfig; \
           kubectl config use-context default --kubeconfig=worker-1.kubeconfig"
 
-- name: "Copie du fichier de Configuration dans un dossier temporaire"
+- name: "Copying Kubelet Kubeconfigs into temporary directory"
   ansible.builtin.copy:
     src: "{{ item }}" 
     dest: "/tmp/configs"
@@ -46,7 +46,7 @@
     - "worker-0.kubeconfig" 
     - "worker-1.kubeconfig" 
 
-- name: "Création du fichier de configuration pour le Kube-Proxy"
+- name: "Creating Kube Proxy Kubeconfig"
   shell: "kubectl config set-cluster kubernetes-the-hard-way \
             --certificate-authority=ca.pem \
             --embed-certs=true \
@@ -63,12 +63,12 @@
             --kubeconfig=kube-proxy.kubeconfig; \
           kubectl config use-context default --kubeconfig=kube-proxy.kubeconfig"
 
-- name: "Copie du fichier de Configuration dans un dossier temporaire"
+- name: "Copying Kube Proxy Kubeconfig into temporary directory"
   ansible.builtin.copy:
     src: "kube-proxy.kubeconfig" 
     dest: "/tmp/configs"
 
-- name: "Création du fichier de Configuration pour le Controller Manager"
+- name: "Creating Controller Manager Kubeconfig"
   shell: "kubectl config set-cluster kubernetes-the-hard-way \
             --certificate-authority=ca.pem \
             --embed-certs=true \
@@ -85,12 +85,12 @@
             --kubeconfig=kube-controller-manager.kubeconfig; \
           kubectl config use-context default --kubeconfig=kube-controller-manager.kubeconfig"
 
-- name: "Copie du fichier de Configuration dans un dossier temporaire"
+- name: "Copying Controller Manager Kubeconfig into temporary directory"
   ansible.builtin.copy:
     src: "kube-controller-manager.kubeconfig" 
     dest: "/tmp/configs"
 
-- name: "Création du fichier de Configuration pour le Kube Scheduler"
+- name: "Creating Scheduler Kubeconfig"
   shell: "kubectl config set-cluster kubernetes-the-hard-way \
             --certificate-authority=ca.pem \
             --embed-certs=true \
@@ -107,12 +107,12 @@
             --kubeconfig=kube-scheduler.kubeconfig; \
           kubectl config use-context default --kubeconfig=kube-scheduler.kubeconfig"
 
-- name: "Copie du fichier de Configuration dans un dossier temporaire"
+- name: "Copying Scheduler Kubeconfig into temporary directory"
   ansible.builtin.copy:
     src: "kube-scheduler.kubeconfig" 
     dest: "/tmp/configs"
 
-- name: "Création du fichier de Configuration pour le User admin"
+- name: "Creating Admin User Kubeconfig"
   shell: "kubectl config set-cluster kubernetes-the-hard-way \
             --certificate-authority=ca.pem \
             --embed-certs=true \
@@ -129,7 +129,7 @@
             --kubeconfig=admin.kubeconfig; \
           kubectl config use-context default --kubeconfig=admin.kubeconfig"
 
-- name: "Copie du fichier de Configuration dans un dossier temporaire"
+- name: "Copying Admin User Kubeconfig into temporary directory"
   ansible.builtin.copy:
     src: "admin.kubeconfig" 
     dest: "/tmp/configs"
