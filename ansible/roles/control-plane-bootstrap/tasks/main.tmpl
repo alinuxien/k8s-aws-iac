@@ -97,7 +97,7 @@
     dest: "/var/lib/kubernetes"
     remote_src: yes
 
-- name: "Create the kube-controller-manager.service systemd unit file"
+- name: "Creating Kube Controller Manager Systemd unit file"
   shell: 
     cmd: |
       cat <<EOF | sudo tee /etc/systemd/system/kube-controller-manager.service
