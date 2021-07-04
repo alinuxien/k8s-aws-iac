@@ -1,13 +1,13 @@
 ---
-- name: "Preparation d'un dossier temporaire pour stocker les Certificats générés"
+- name: "Preparing temporary Certificates Directory"
   ansible.builtin.file:
     path: /tmp/certs
     state: directory  
 
-- name: "Création d'une Autorité de Certification"
+- name: "Creating Certification Autority"
   shell: "cfssl gencert -initca /home/vagrant/on-demand-infra/certs/ca-csr.json | cfssljson -bare ca"
 
-- name: "Copie des certificats dans un dossier temporaire"
+- name: "Copying Certification Autority Certificates into temporary directory"
   ansible.builtin.copy:
     src: "{{ item }}"
     dest: /tmp/certs
@@ -15,7 +15,7 @@
     - "ca.pem"
     - "ca-key.pem"
 
-- name: "Génération du certificat Admin Client"
+- name: "Generating Admin Client Certificates"
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
@@ -23,7 +23,7 @@
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/admin-csr.json | cfssljson -bare admin"
 
-- name: "Copie des certificats dans un dossier temporaire"
+- name: "Copying Admin Client Certificates into temporary directory"
   ansible.builtin.copy:
     src: "{{ item }}" 
     dest: /tmp/certs
@@ -31,7 +31,7 @@
     - "admin-key.pem" 
     - "admin.pem"
 
-- name: "Génération du certificat Client Kubelet pour le Worker 0"
+- name: "Generating Kubelet Certificates for worker-0"
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
@@ -40,7 +40,7 @@
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/worker-0-csr.json | cfssljson -bare worker-0"
 
-- name: "Génération du certificat Client Kubelet pour le Worker 1"
+- name: "Generating Kubelet Certificates for worker-1"
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
@@ -49,7 +49,7 @@
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/worker-1-csr.json | cfssljson -bare worker-1"
 
-- name: "Copie des certificats dans un dossier temporaire"
+- name: "Copying Kubelet Certificates into temporary directory"
   ansible.builtin.copy:
     src: "{{ item }}" 
     dest: /tmp/certs
@@ -60,7 +60,7 @@
     - "worker-1.pem"
 
 
-- name: "Génération du certificat du Control Manager"
+- name: "Generating Controller Manager Certificates"
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
@@ -68,7 +68,7 @@
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/kube-controller-manager-csr.json | cfssljson -bare kube-controller-manager"
 
-- name: "Copie des certificats dans un dossier temporaire"
+- name: "Copying Controller Manager Certificates into temporary directory"
   ansible.builtin.copy:
     src: "{{ item }}" 
     dest: /tmp/certs
@@ -76,7 +76,7 @@
     - "kube-controller-manager-key.pem" 
     - "kube-controller-manager.pem" 
 
-- name: "Génération du certificat du client Kube Proxy"
+- name: "Generating Kube Proxy Certificates Certificates"
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
@@ -84,7 +84,7 @@
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/kube-proxy-csr.json | cfssljson -bare kube-proxy"
 
-- name: "Copie des certificats dans un dossier temporaire"
+- name: "Copying Kube Proxy Certificates into temporary directory"
   ansible.builtin.copy:
     src: "{{ item }}" 
     dest: /tmp/certs
@@ -92,7 +92,7 @@
     - "kube-proxy-key.pem" 
     - "kube-proxy.pem" 
 
-- name: "Génération du certificat du client Scheduler"
+- name: "Generating Scheduler Certificates"
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
@@ -100,7 +100,7 @@
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/kube-scheduler-csr.json | cfssljson -bare kube-scheduler"
 
-- name: "Copie des certificats dans un dossier temporaire"
+- name: "Copying Scheduler Certificates into temporary directory"
   ansible.builtin.copy:
     src: "{{ item }}" 
     dest: /tmp/certs
@@ -108,7 +108,7 @@
     - "kube-scheduler-key.pem" 
     - "kube-scheduler.pem"
 
-- name: "Génération du certificat de l'API Server Kubernetes"
+- name: "Generating API Server Certificates"
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
@@ -117,7 +117,7 @@
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/kubernetes-csr.json | cfssljson -bare kubernetes"
 
-- name: "Copie des certificats dans un dossier temporaire"
+- name: "Copying API Server Certificates into temporary directory"
   ansible.builtin.copy:
     src: "{{ item }}" 
     dest: /tmp/certs
@@ -125,7 +125,7 @@
     - "kubernetes-key.pem" 
     - "kubernetes.pem" 
 
-- name: "Génération de la paire de clé pour le Service Account"
+- name: "Generating Service Account Certificates"
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
@@ -133,7 +133,7 @@
             -profile=kubernetes \
             /home/vagrant/on-demand-infra/certs/service-account-csr.json | cfssljson -bare service-account"
 
-- name: "Copie des certificats dans un dossier temporaire"
+- name: "Copying Service Account Certificates into temporary directory"
   ansible.builtin.copy:
     src: "{{ item }}" 
     dest: /tmp/certs

@@ -1,10 +1,10 @@
 ---
-- name: "Preparation d'un dossier temporaire pour stocker le fichier de config de cryptage"
+- name: "Preparing encryption configuration temporary directory"
   ansible.builtin.file:
     path: /tmp/encryption
     state: directory
 
-- name: "Création du fichier de Configuration pour le Cryptage avec key gen"
+- name: "Creating Encryption Configuration Manifest"
   shell: 
     cmd: |
       cat > encryption-config.yaml <<EOF 
@@ -21,7 +21,7 @@
             - identity: {} 
       EOF
 
-- name: "Copie du fichier de configuration du cryptage dans un dossier temporaire"
+- name: "Copying Encryption Configuration Manifest into temporary directory"
   ansible.builtin.copy:
     src: "encryption-config.yaml"
     dest: /tmp/encryption
