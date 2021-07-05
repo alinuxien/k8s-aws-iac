@@ -1,0 +1,6 @@
+---
+- name: "Copying Certificates to Workers"
+  hosts: nodes_worker
+  roles:
+          - role: "push-certificates-to-workers"
+

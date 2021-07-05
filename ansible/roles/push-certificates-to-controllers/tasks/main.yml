@@ -1,0 +1,13 @@
+---
+- name: "Copying Certificates to Controllers"
+  ansible.builtin.copy:
+    src: "{{ item }}"    
+    dest: "~/"
+  with_items:
+    - "/tmp/certs/ca.pem"
+    - "/tmp/certs/ca-key.pem"
+    - "/tmp/certs/kubernetes-key.pem" 
+    - "/tmp/certs/kubernetes.pem"
+    - "/tmp/certs/service-account-key.pem" 
+    - "/tmp/certs/service-account.pem"
+

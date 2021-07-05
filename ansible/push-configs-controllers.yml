@@ -1,6 +1,0 @@
----
-- name: "Copie des KubeConfig générés sur les controllers"
-  hosts: nodes_controller
-  roles:
-          - role: "push-configs-controllers"
-

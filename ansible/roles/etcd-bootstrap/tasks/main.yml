@@ -1,16 +1,16 @@
 ---
-- name: "Téléchargement de etcd"
+- name: "Downloading ETCD"
   get_url:
     url: "https://github.com/etcd-io/etcd/releases/download/v3.4.15/etcd-v3.4.15-linux-amd64.tar.gz"    
     dest: "~/"
 
-- name: "Décompression de etcd"
+- name: "Uncompressing ETCD"
   unarchive:
     src: "~/etcd-v3.4.15-linux-amd64.tar.gz"
     dest: "~/"
     remote_src: yes
 
-- name: "Installation de etcd"
+- name: "Installating ETCD"
   copy:
     src: "{{ item }}"
     dest: "/usr/local/bin"

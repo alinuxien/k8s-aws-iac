@@ -4,77 +4,78 @@ variable "project_name" {
   default     = "K8S"
 }
 
-variable "ami-bastion" {
+variable "bastion-ami" {
   type        = string
-  description = "Image Amazon à utiliser pour le Bastion SSH"
+  description = "Bastion Host AMI"
   default     = "ami-0f7cd40eac2214b37"
 }
 
 variable "bastion-user" {
   type        = string
-  description = "Nom utilisateur SSH pour le bastion"
+  description = "Bastion Host Username ( depends on Bastion Host AMI )"
   default     = "ubuntu"
 }
 
-variable "instance-type-bastion" {
+variable "bastion-instance-type" {
   type        = string
-  description = "Type d'Instance à utiliser pour le Bastion SSH"
+  description = "Bastion Host Instance Type"
   default     = "t2.micro"
 }
 
 variable "public_key_file" {
   type        = string
-  description = "Chemin complet du fichier contenant la cle publique"
+  description = "Personnal Public Key Full Path"
 }
 
 variable "private_key_file" {
   type        = string
-  description = "Chemin complet du fichier contenant la cle privee"
+  description = "Personnal Private Key Full Path"
 }
 
-variable "ami-k8s-nodes" {
+variable "k8s-nodes-ami" {
   type        = string
-  description = "Image Amazon à utiliser pour les nodes Kubernetes"
+  description = "Kubernetes Cluster Nodes AMI"
   default     = "ami-0f7cd40eac2214b37"
 }
 
 variable "k8s-nodes-user" {
   type        = string
-  description = "Nom utilisateur SSH pour les nodes Kubernetes"
+  description = "Kubernetes Cluster Nodes Username ( depends on Kubernets Cluster Node AMI )"
   default     = "ubuntu"
 }
 
-variable "instance-type-k8s-node-controller" {
+variable "k8s-controller-nodes-instance-type" {
   type        = string
-  description = "Type d'Instance à utiliser pour les nodes Master Kubernetes"
+  description = "Kubernetes Cluster Controller Nodes Instance Type"
   default     = "t2.micro"
 }
 
-variable "instance-type-k8s-node-worker" {
+variable "k8s-worker-nodes-instance-type" {
   type        = string
-  description = "Type d'Instance à utiliser pour les nodes Worker Kubernetes"
+  description = "Kubernetes Cluster Worker Nodes Instance Type"
   default     = "t2.micro"
 }
 
 variable "api-server-ip" {
   type        = string
-  description = "Addresse IP de l'API Server Kubernetes"
+  description = "Kubernetes Cluster Componenet API Server IP"
   default     = "10.32.0.1"
 }
 
-variable "internal-cluster-ip-cidr" {
+variable "cluster-services-cidr" {
   type        = string
-  description = "Plage d'adresses IP réservée pour les services internes du Cluster Kubernetes"
+  description = "Kubernetes Cluster Services CIDR Block"
   default     = "10.32.0.0/24"
 }
 
-variable "pod-cidr" {
+variable "cluster-pods-cidr" {
   type        = string
-  description = "Plage d'allocation des sous-réseaux réservée pour les PODS"
+  description = "Kubernetes Cluster Pods CIDR Block"
   default     = "10.200.0.0/16"
 }
 
-variable "domain" {
+variable "app-domain" {
   type        = string
-  description = "Nom de domaine de la partie Applicative du Cluster"
+  description = "Kubernetes Cluster Applications Domain Name ( must be a real domain )"
+  default     = "yourdomain.ext"
 }

@@ -1,5 +1,0 @@
----
-- name: "Deploying the DNS Cluster Add-on"
-  hosts: localhost
-  roles:
-          - role: "dns-cluster-add-on"

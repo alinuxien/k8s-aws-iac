@@ -1,0 +1,6 @@
+---
+- name: "Copying Certificates to Controllers"
+  hosts: nodes_controller
+  roles:
+          - role: "push-certificates-to-controllers"
+

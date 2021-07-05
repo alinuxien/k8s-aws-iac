@@ -31,7 +31,7 @@ plan_job:
   script:
       - cd terraform
       - terraform init -input=false -backend-config="bucket=$AWS_STATE_BUCKET" -backend-config="key=$BRANCH_STATE_KEY" -backend-config="region=$AWS_REGION"
-      - terraform plan -input=false -out "planfile" -no-color >> planoutput.txt
+      - terraform plan -input=false -parallelism=50 -out "planfile" -no-color >> planoutput.txt
   artifacts:
     paths:
       - terraform/planoutput.txt
@@ -44,15 +44,15 @@ apply_job:
   script:
       - cd terraform
       - terraform init -input=false -backend-config="bucket=$AWS_STATE_BUCKET" -backend-config="key=$BRANCH_STATE_KEY" -backend-config="region=$AWS_REGION"
-      - terraform apply -input=false -auto-approve "planfile"
+      - terraform apply -input=false -parallelism=50 -auto-approve "planfile"
   allow_failure: true
   artifacts:
     paths:
       - ansible/inventory.ini
-      - ansible/roles/prepare-certs/tasks/main.yml 
-      - ansible/roles/prepare-configs/tasks/main.yml
+      - ansible/roles/prepare-certificates/tasks/main.yml 
+      - ansible/roles/prepare-kubeconfigs/tasks/main.yml
       - ansible/roles/etcd-config/tasks/main.yml
-      - ansible/roles/control-plane/tasks/main.yml
+      - ansible/roles/control-plane-bootstrap/tasks/main.yml
 
 destroy_job:
   stage: destroy
@@ -61,7 +61,7 @@ destroy_job:
   script:
       - cd terraform
       - terraform init -input=false -backend-config="bucket=$AWS_STATE_BUCKET" -backend-config="key=$BRANCH_STATE_KEY" -backend-config="region=$AWS_REGION"
-      - terraform destroy -input=false -auto-approve
+      - terraform destroy -input=false -parallelism=50 -auto-approve
       - rm -rf /tmp/certs
       - rm -rf /tmp/configs
   when: manual

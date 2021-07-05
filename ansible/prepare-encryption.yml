@@ -1,5 +1,5 @@
 ---
-- name: "Préparation de la clé de cryptage et de la config associée"
+- name: "Preparing Encryption Key and Configuration"
   hosts: localhost
   roles:
           - role: "prepare-encryption"

@@ -1,30 +1,30 @@
-output "bastion_ip" {
+output "bastion-ip" {
   value = aws_instance.bastion.public_ip
 }
 
-output "controller-0_ip" {
+output "controller-0-ip" {
   value = aws_instance.controller-0.private_ip
 }
 
-output "controller-1_ip" {
+output "controller-1-ip" {
   value = aws_instance.controller-1.private_ip
 }
-output "worker-0_ip" {
+output "worker-0-ip" {
   value = aws_instance.worker-0.private_ip
 }
-output "worker-1_ip" {
+output "worker-1-ip" {
   value = aws_instance.worker-1.private_ip
 }
 
 output "kubernetes-public-adress" {
-  value = aws_lb.lb.dns_name
+  value = aws_lb.nlb.dns_name
 }
 
-output "alb_dns_name" {
+output "alb-dns-name" {
   value = aws_lb.alb.dns_name
 }
 
-resource "local_file" "AnsibleInventory" {
+resource "local_file" "inventory-file" {
   content = templatefile("../ansible/inventory.tmpl", {
     bastion-dns      = aws_instance.bastion.private_dns,
     bastion-ip       = aws_instance.bastion.public_ip,
@@ -48,8 +48,8 @@ resource "local_file" "AnsibleInventory" {
   filename = "../ansible/inventory.ini"
 }
 
-resource "local_file" "AnsibleK8SCertificatePreparation" {
-  content = templatefile("../ansible/roles/prepare-certs/tasks/main.tmpl", {
+resource "local_file" "certificates-preparation-file" {
+  content = templatefile("../ansible/roles/prepare-certificates/tasks/main.tmpl", {
     controller-0-ext-ip      = aws_instance.controller-0.public_ip,
     controller-0-int-ip      = aws_instance.controller-0.private_ip,
     controller-1-ext-ip      = aws_instance.controller-1.public_ip,
@@ -58,23 +58,23 @@ resource "local_file" "AnsibleK8SCertificatePreparation" {
     worker-0-int-ip          = aws_instance.worker-0.private_ip,
     worker-1-ext-ip          = aws_instance.worker-1.public_ip,
     worker-1-int-ip          = aws_instance.worker-1.private_ip,
-    kubernetes-public-adress = aws_lb.lb.dns_name,
+    kubernetes-public-adress = aws_lb.nlb.dns_name,
     kubernetes-hostnames     = "kubernetes,kubernetes.default,kubernetes.default.svc,kubernetes.default.svc.cluster,kubernetes.svc.cluster.local",
     api-server-ip            = var.api-server-ip
   })
-  filename = "../ansible/roles/prepare-certs/tasks/main.yml"
+  filename = "../ansible/roles/prepare-certificates/tasks/main.yml"
 }
 
-resource "local_file" "AnsibleK8SCertificatePush" {
-  content = templatefile("../ansible/roles/push-certs-workers/tasks/main.tmpl", {
+resource "local_file" "certificates-push-file" {
+  content = templatefile("../ansible/roles/push-certificates-to-workers/tasks/main.tmpl", {
     worker-0-dns = aws_instance.worker-0.private_dns,
     worker-1-dns = aws_instance.worker-1.private_dns
   })
-  filename = "../ansible/roles/push-certs-workers/tasks/main.yml"
+  filename = "../ansible/roles/push-certificates-to-workers/tasks/main.yml"
 }
 
-resource "local_file" "AnsibleK8SKubeConfigPreparation" {
-  content = templatefile("../ansible/roles/prepare-configs/tasks/main.tmpl", {
+resource "local_file" "kubeconfigs-preparation-file" {
+  content = templatefile("../ansible/roles/prepare-kubeconfigs/tasks/main.tmpl", {
     controller-0-ext-ip      = aws_instance.controller-0.public_ip,
     controller-0-int-ip      = aws_instance.controller-0.private_ip,
     controller-1-ext-ip      = aws_instance.controller-1.public_ip,
@@ -83,22 +83,22 @@ resource "local_file" "AnsibleK8SKubeConfigPreparation" {
     worker-0-int-ip          = aws_instance.worker-0.private_ip,
     worker-1-ext-ip          = aws_instance.worker-1.public_ip,
     worker-1-int-ip          = aws_instance.worker-1.private_ip,
-    kubernetes-public-adress = aws_lb.lb.dns_name,
+    kubernetes-public-adress = aws_lb.nlb.dns_name,
     kubernetes-hostnames     = "kubernetes,kubernetes.default,kubernetes.default.svc,kubernetes.default.svc.cluster,kubernetes.svc.cluster.local",
     api-server-ip            = var.api-server-ip
   })
-  filename = "../ansible/roles/prepare-configs/tasks/main.yml"
+  filename = "../ansible/roles/prepare-kubeconfigs/tasks/main.yml"
 }
 
-resource "local_file" "AnsibleK8SConfigPush" {
-  content = templatefile("../ansible/roles/push-configs-workers/tasks/main.tmpl", {
+resource "local_file" "kubeconfigs-push-file" {
+  content = templatefile("../ansible/roles/push-kubeconfigs-to-workers/tasks/main.tmpl", {
     worker-0-dns = aws_instance.worker-0.private_dns,
     worker-1-dns = aws_instance.worker-1.private_dns
   })
-  filename = "../ansible/roles/push-configs-workers/tasks/main.yml"
+  filename = "../ansible/roles/push-kubeconfigs-to-workers/tasks/main.yml"
 }
 
-resource "local_file" "AnsibleK8SETCD" {
+resource "local_file" "etcd-bootstrap-file" {
   content = templatefile("../ansible/roles/etcd-config/tasks/main.tmpl", {
     controller-0-int-ip = aws_instance.controller-0.private_ip,
     controller-1-int-ip = aws_instance.controller-1.private_ip,
@@ -110,38 +110,38 @@ resource "local_file" "AnsibleK8SETCD" {
   filename = "../ansible/roles/etcd-config/tasks/main.yml"
 }
 
-resource "local_file" "AnsibleK8SControlPlane" {
-  content = templatefile("../ansible/roles/control-plane/tasks/main.tmpl", {
-    kubernetes-public-adress = aws_lb.lb.dns_name,
+resource "local_file" "control-plane-bootstrap-file" {
+  content = templatefile("../ansible/roles/control-plane-bootstrap/tasks/main.tmpl", {
+    kubernetes-public-adress = aws_lb.nlb.dns_name,
     controller-0-int-ip      = aws_instance.controller-0.private_ip,
     controller-1-int-ip      = aws_instance.controller-1.private_ip,
     worker-0-int-ip          = aws_instance.worker-0.private_ip,
     worker-1-int-ip          = aws_instance.worker-1.private_ip,
-    service-cluster-ip-range = var.internal-cluster-ip-cidr,
-    pod-cidr                 = var.pod-cidr
+    service-cluster-ip-range = var.cluster-services-cidr,
+    cluster-pods-cidr        = var.cluster-pods-cidr
   })
-  filename = "../ansible/roles/control-plane/tasks/main.yml"
+  filename = "../ansible/roles/control-plane-bootstrap/tasks/main.yml"
 }
 
-resource "local_file" "AnsibleK8SWorkers" {
-  content = templatefile("../ansible/roles/workers/tasks/main.tmpl", {
-    pod-cidr            = var.pod-cidr,
+resource "local_file" "workers-bootstrap-file" {
+  content = templatefile("../ansible/roles/workers-bootstrap/tasks/main.tmpl", {
+    cluster-pods-cidr   = var.cluster-pods-cidr,
     controller-0-int-ip = aws_instance.controller-0.private_ip,
     controller-1-int-ip = aws_instance.controller-1.private_ip,
     worker-0-int-ip     = aws_instance.worker-0.private_ip,
     worker-1-int-ip     = aws_instance.worker-1.private_ip,
     worker-0-dns        = aws_instance.worker-0.private_dns,
     worker-1-dns        = aws_instance.worker-1.private_dns,
-    pod-cidr-0          = module.subnet_addrs.networks[0].cidr_block,
-    pod-cidr-1          = module.subnet_addrs.networks[1].cidr_block
+    cluster-pods-cidr-0 = module.subnet_addrs.networks[0].cidr_block,
+    cluster-pods-cidr-1 = module.subnet_addrs.networks[1].cidr_block
   })
-  filename = "../ansible/roles/workers/tasks/main.yml"
+  filename = "../ansible/roles/workers-bootstrap/tasks/main.yml"
 }
 
-resource "local_file" "AnsibleK8SKubectl-Remote" {
-  content = templatefile("../ansible/roles/kubectl-remote/tasks/main.tmpl", {
-    kubernetes-public-adress = aws_lb.lb.dns_name
+resource "local_file" "remote-kubectl-file" {
+  content = templatefile("../ansible/roles/remote-kubectl-config/tasks/main.tmpl", {
+    kubernetes-public-adress = aws_lb.nlb.dns_name
   })
-  filename = "../ansible/roles/kubectl-remote/tasks/main.yml"
+  filename = "../ansible/roles/remote-kubectl-config/tasks/main.yml"
 }
 

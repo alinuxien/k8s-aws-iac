@@ -1,7 +1,0 @@
----
-- name: "Suppression des fichiers de configuration temporaires"
-  ansible.builtin.file:
-    path: /tmp/configs
-    state: absent
-
-

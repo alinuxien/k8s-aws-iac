@@ -1,0 +1,5 @@
+---
+- name: "Configuring kubectl for Remote Access"
+  hosts: localhost
+  roles:
+          - role: "remote-kubectl-config"

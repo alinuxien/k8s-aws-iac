@@ -1,5 +1,5 @@
 ---
-- name: "Suppression des fichiers de configuration temporaires de Crytpage"
+- name: "Deleting temporary Encryption Configuration Files"
   ansible.builtin.file:
     path: /tmp/encryption
     state: absent

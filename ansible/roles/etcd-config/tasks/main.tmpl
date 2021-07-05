@@ -1,16 +1,16 @@
 ---
-- name: "Création du dossier /etc de ETCD"
+- name: "Creating ETCD configuration directory"
   file:
     path: "/etc/etcd"
     state: directory
 
-- name: "Création du dossier /var/lib de ETCD"
+- name: "Creating ETCD installation directory"
   file:
     path: "/var/lib/etcd"
     state: directory
     mode: '0700'
 
-- name: "Installation des certificats et clés dans etcd"
+- name: "Installing ETCD certificates"
   copy:
     src: "{{ item }}"
     dest: "/etc/etcd"
@@ -20,7 +20,7 @@
     - ~/kubernetes-key.pem 
     - ~/kubernetes.pem
 
-- name: "Create the etcd.service systemd unit file"
+- name: "Creating ETCD Systemd unit file"
   shell: 
     cmd: |
       cat <<EOF | sudo tee /etc/systemd/system/etcd.service
@@ -55,7 +55,7 @@
       WantedBy=multi-user.target
       EOF
 
-- name: Starts the etcd server
+- name: "Starting ETCD Server"
   ansible.builtin.systemd:
     state: started
     name: etcd

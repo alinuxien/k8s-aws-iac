@@ -1,5 +1,5 @@
 ---
-- name: "Configuration de ETCD"
+- name: "Configuring ETCD"
   hosts: nodes_controller
   roles:
           - role: "etcd-config"
