@@ -5,7 +5,7 @@
     state: directory  
 
 - name: "Creating Certification Autority"
-  shell: "cfssl gencert -initca /home/vagrant/on-demand-infra/certs/ca-csr.json | cfssljson -bare ca"
+  shell: "cfssl gencert -initca /home/vagrant/gitlab_infra/certs/ca-csr.json | cfssljson -bare ca"
 
 - name: "Copying Certification Autority Certificates into temporary directory"
   ansible.builtin.copy:
@@ -19,9 +19,9 @@
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
-            -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
+            -config=/home/vagrant/gitlab_infra/certs/ca-config.json \
             -profile=kubernetes \
-            /home/vagrant/on-demand-infra/certs/admin-csr.json | cfssljson -bare admin"
+            /home/vagrant/gitlab_infra/certs/admin-csr.json | cfssljson -bare admin"
 
 - name: "Copying Admin Client Certificates into temporary directory"
   ansible.builtin.copy:
@@ -35,19 +35,19 @@
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
-            -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
+            -config=/home/vagrant/gitlab_infra/certs/ca-config.json \
             -hostname=worker-0,${worker-0-ext-ip},${worker-0-int-ip} \
             -profile=kubernetes \
-            /home/vagrant/on-demand-infra/certs/worker-0-csr.json | cfssljson -bare worker-0"
+            /home/vagrant/gitlab_infra/certs/worker-0-csr.json | cfssljson -bare worker-0"
 
 - name: "Generating Kubelet Certificates for worker-1"
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
-            -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
+            -config=/home/vagrant/gitlab_infra/certs/ca-config.json \
             -hostname=worker-1,${worker-1-ext-ip},${worker-1-int-ip} \
             -profile=kubernetes \
-            /home/vagrant/on-demand-infra/certs/worker-1-csr.json | cfssljson -bare worker-1"
+            /home/vagrant/gitlab_infra/certs/worker-1-csr.json | cfssljson -bare worker-1"
 
 - name: "Copying Kubelet Certificates into temporary directory"
   ansible.builtin.copy:
@@ -64,9 +64,9 @@
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
-            -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
+            -config=/home/vagrant/gitlab_infra/certs/ca-config.json \
             -profile=kubernetes \
-            /home/vagrant/on-demand-infra/certs/kube-controller-manager-csr.json | cfssljson -bare kube-controller-manager"
+            /home/vagrant/gitlab_infra/certs/kube-controller-manager-csr.json | cfssljson -bare kube-controller-manager"
 
 - name: "Copying Controller Manager Certificates into temporary directory"
   ansible.builtin.copy:
@@ -80,9 +80,9 @@
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
-            -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
+            -config=/home/vagrant/gitlab_infra/certs/ca-config.json \
             -profile=kubernetes \
-            /home/vagrant/on-demand-infra/certs/kube-proxy-csr.json | cfssljson -bare kube-proxy"
+            /home/vagrant/gitlab_infra/certs/kube-proxy-csr.json | cfssljson -bare kube-proxy"
 
 - name: "Copying Kube Proxy Certificates into temporary directory"
   ansible.builtin.copy:
@@ -96,9 +96,9 @@
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
-            -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
+            -config=/home/vagrant/gitlab_infra/certs/ca-config.json \
             -profile=kubernetes \
-            /home/vagrant/on-demand-infra/certs/kube-scheduler-csr.json | cfssljson -bare kube-scheduler"
+            /home/vagrant/gitlab_infra/certs/kube-scheduler-csr.json | cfssljson -bare kube-scheduler"
 
 - name: "Copying Scheduler Certificates into temporary directory"
   ansible.builtin.copy:
@@ -112,10 +112,10 @@
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
-            -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
+            -config=/home/vagrant/gitlab_infra/certs/ca-config.json \
             -hostname=${api-server-ip},${controller-0-int-ip},${controller-1-int-ip},${kubernetes-public-adress},127.0.0.1,${kubernetes-hostnames} \
             -profile=kubernetes \
-            /home/vagrant/on-demand-infra/certs/kubernetes-csr.json | cfssljson -bare kubernetes"
+            /home/vagrant/gitlab_infra/certs/kubernetes-csr.json | cfssljson -bare kubernetes"
 
 - name: "Copying API Server Certificates into temporary directory"
   ansible.builtin.copy:
@@ -129,9 +129,9 @@
   shell: "cfssl gencert \
             -ca=ca.pem \
             -ca-key=ca-key.pem \
-            -config=/home/vagrant/on-demand-infra/certs/ca-config.json \
+            -config=/home/vagrant/gitlab_infra/certs/ca-config.json \
             -profile=kubernetes \
-            /home/vagrant/on-demand-infra/certs/service-account-csr.json | cfssljson -bare service-account"
+            /home/vagrant/gitlab_infra/certs/service-account-csr.json | cfssljson -bare service-account"
 
 - name: "Copying Service Account Certificates into temporary directory"
   ansible.builtin.copy:

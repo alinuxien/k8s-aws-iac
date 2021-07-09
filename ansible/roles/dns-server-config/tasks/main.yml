@@ -1,4 +1,4 @@
 ---
 - name: "Applying core dns deployment"
-  shell: "kubectl apply -f /home/vagrant/on-demand-infra/coredns-1.8.yaml"
+  shell: "kubectl apply -f /home/vagrant/gitlab_infra/coredns-1.8.yaml"
 
