@@ -6,7 +6,7 @@ Il s'agit seulement d'un projet d'étude, à NE PAS UTILISER EN PROD  !!!
 Des outils bien plus simple, efficace et sécurisés sont disponibles en ligne, comme par exemple [Kops](https://kubernetes.io/fr/docs/setup/custom-cloud/kops/)
 
 ## Ca fait quoi ?
-Ca crée un Cluster Kubernetes sur AWS, composé de 2 nodes Controller et 2 nodes Worker, avec un Serveur DNS interne au Cluster, et le réseau configuré pour permettre la communication des Pods.
+Ca crée un Cluster Kubernetes sur AWS, composé de 2 nodes Controller et 2 nodes Worker, avec un Serveur DNS interne au Cluster, et le réseau configuré pour permettre la communication entre les Pods.
 
 Une fois disponible, on peut y déployer des pods, des deployment et des services Kubernetes à partir de la VM locale qui a permis la construction.
 
