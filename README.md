@@ -24,61 +24,56 @@ Mais je vous rassure : tout est automatisé avec GitLab, Terraform et Ansible !!
 
 ![Vue d'ensemble de l'Architecture Réseaux entre Pods et entre Nodes Kubernetes](https://github.com/alinuxien/k8s-aws-iac/blob/master/K8s%20on%20AWS%20-%20PODS%20Networking.png)
 ## Contenu ?
-- Un `Vangrantfile` et un script `bootstrap.sh` pour la VM et son provisionning initial.
-- Le fichier `inventaire.ini` sert au bon fonctionnement local de Ansible
-- Trois fichiers de Playbook Ansible au nom assez explicite : `install-gitlab.yml`, `install-gitlab-runner.yml`, et `install-gitlab-registry.yml`
-- Le dossier `roles` qui contient les scripts détaillés des taches Ansible associées
-- Le fichier `memo_lancement_playbook.sh` au cas où
-- Le fichier `gitlab.example.com.sslv3.txt` sert à la signature du certificat de sécurité du serveur GitLab créé ( pour que le navigateur puisse l'identifier )
-- Le fichier `registry.mygta.com.sslv3.txt` sert à la même chose pour la Container Registry, pour que GitLab la considère sécurisée.
+- Un pipeline de CI/CD Gitlab : `gitlab-ci.yml` 
+- Le dossier `certs` contient tous les fichiers json nécessaires à la création des Certificats pour le Cluster
+- Le dossier `terraform` contient les scripts de création des ressources sur AWS
+- Le dossier `ansible` contient les playbooks de configuration des ressources sur AWS
+- Le fichier `coredns-1.8.yaml` est un manifeste Kubernetes complet pour la configuration du Serveur DNS interne au Cluster
  
 ## J'ai besoin de quoi ?
-- Une machine Linux ou MacOS ( ça peut tourner sur Windows mais je ne m'y suis pas encore essayé ) avec au moins 8 Go de RAM et un bon CPU ( au moins 4 coeurs et 8 threads CPU )
-- [Virtual Box](https://www.virtualbox.org/) et [Vagrant](https://www.vagrantup.com/downloads) installés sur la machine. 
-- Un petit café, car l'ensemble de l'installation peut prendre 30 mns à 1 heure, selon la puissance de votre connexion Internet et de votre machine.
+- Une VM GitLab locale, avec certains utilitaires, et un Runner de type Shell. Vous pouvez trouver de quoi en créer une sur mesure sur mon projet [gitlab-iac](https://github.com/alinuxien/gitlab-iac)
+- Un compte AWS avec un bucket S3 pour stocker les Remote State Terraform. Vous trouverez les instructions si besoin [ici](https://docs.aws.amazon.com/fr_fr/AmazonS3/latest/user-guide/create-bucket.html)
+- Un nom de domaine valide pour pouvoir accéder aux pods applicatifs depuis un navigateur web. Ce nom de domaine doit être soit hébergé chez AWS Route 53, soit configuré pour déléguer la gestion à AWS Route 53
 
 ## Comment ça s'utilise ?
-Tout se passe au départ dans un terminal :
+Chez AWS, pour ceux qui hébergent leur nom de domaine hors AWS Route 53 :
 
-- faites une copie locale de ce dépot :  `git clone https://github.com/alinuxien/gitlab-iac`
-- allez dans le dossier téléchargé : `cd gitlab-iac`
-- en premier lieu, ajustez la puissance allouée à la VM. Je conseille d'allouer la moitié de vos threads cpu et au moins 2048 Mo de RAM ( gardez-en pour pouvoir utiliser la machine hôte ). Editez le fichier `Vagrantfile`: par défaut, j'ai mis `v.memory = 16384` ( mais ça peut tourner avec 4096 ) et `v.cpus = 8` ( 4 ça passe aussi ).
-- ajoutez le nom d'hôte `mygta.com` à la boucle locale de votre machine hôte, pour pouvoir accéder à GitLab avec une jolie adresse : `https://mygta.com:4443`
-- `sudo vim /etc/hosts` 
-- sur la ligne contenant `127.0.0.1 localhost`, ajoutez mygta.com ( au final ça donne `127.0.0.1	mygta.com localhost` )
-- enregistrez et quittez ce fichier
-- lancez la construction de la VM : `vagrant up`
-- une fois terminé, vous pouvez vous connecter dessus : `vagrant ssh`
-- dans la VM, allez dans le dossier `/vagrant` ( qui est mappé sur votre dossier de travail `gitlab-iac` sur la machine hôte ) : `cd /vagrant`
-- lancez l'installation de GitLab : `ansible-playbook -i inventaire.ini install-gitlab.yml`
-- lorsque c'est terminé, vous pouvez vous rendre dans votre navigateur préféré à l'adresse `https://mygta.com:4443` 
-- la première configuration peut prendre 5 à 10 minutes, pendant lesquelles le navigateur affiche une erreur `Délai de réponse trop long` ou `502 Bad Gateway` servie par GitLab : c'est normal, il suffit de patienter.
-- ensuite, il y aura un avertissement de sécurité, traité dans le point suivant
-- importez le certificat d'autorité racine ( Root CA ) dans le navigateur / la machine hote ( selon navigateur et OS ) comme digne de confiance. Ce certificat a été généré par Ansible et est maintenant disponible dans votre dossier de travail sous le nom `alinuxien-ca.cer`. J'ai testé cela sur Chrome sur Linux et MacOS, et au final, le petit cadenas à coté de l'adresse confirme que le site est sécurisé.
-- une fois passé cette étape de sécurisation, sur votre site GitLab, vous pouvez définir un mot de passe ( pour l'utilisateur `root` ) et ensuite vous connecter en tant que `root`.
-- allez dans `Configure GitLab` en bas, puis `Runners` dans le menu à gauche ( sous `Overview` )
-- sur la droite, vous voyez l'`url` et le `token` qui vont nous servir à pour enregistrer le premier runner
-- dans le terminal, vous devez installer GitLab Runner avec la commande : `ansible-playbook -i inventaire.ini install-gitlab-runner.yml`
-- une fois terminé, vous pouvez enregistrer un runner : `sudo gitlab-runner register`, renseigner url et token, nom du runner au choix ( `shell` ? ), et surtout de type `shell`
-- pour que le Runner puisque accéder correctement à l'instance GitLab, il faut récupérer l'ip de l'instance ( ifconfig ), éditer le fichier `/etc/gitlab-runner/config.toml` pour y ajouter la ligne `extra_hosts = ["mygta.com:10.0.2.15"]` ( `10.0.2.15` étant l'ip de l'instance GitLab récupérée avec ifconfig ), juste après la ligne `executor = "shell"` ( ou après `tls_verify = false` pour un Runner avec un type d'executor autre que Shell ), et enfin relancer le GitLab-Runner : `sudo gitlab-runner restart`
-- tant qu'on y est, on va permettre au Runner d'accéder au daemon Docker : `sudo usermod -aG docker gitlab-runner`
-- de retour le navigateur web, allez vérifier que le runner est apparu dans la liste
-- "délockez" le runner : case `Lock to current projects` *décochée* 
-- de retour dans le terminal, installez la Container Registry intégrée à GitLab : `ansible-playbook -i inventaire.ini install-gitlab-registry.yml`
-- ajoutez les noms d'hôte `mygta`, `mygta.com` et `registry.mygta.com` dans /etc/hosts ( toujours dans la VM ) : au final ça donne `127.0.2.1 registry.mygta.com mygta.com mygta`
-- on va autoriser le daemon Docker à utiliser notre nouvelle Registry. Pour cela, créez un fichier /etc/docker/daemon.json, avec dedans :
+créez une zone hébergée sur votre nom de domaine ( ou sous-domaine ), service Route 53
+notez les noms des 4 serveurs DNS apparus dans l'enregistrement de type NS, et réalisez la redirection chez votre provider DNS ( 4 enregistrements de type NS aussi, je ne m'étale pas sur ce point )
 
-`
-{ 
-  "insecure-registries" : ["registry.mygta.com"] 
-}
-`
-- et on va recharger la configuration du daemon Docker : `sudo systemctl daemon-reload` puis `sudo systemctl restart docker`
+Chez AWS, pour tous : 
+créez un certificat AWS ACM sur votre nom de domaine, service Certificate Manager, avec validation par DNS, avec l'assitance automatique Route 53 ( puisque c'est maintenant lui qui gère le domaine / sous-domaine )
 
+Dans un Terminal : 
+- générez une paire de clés SSH qui seront dédiées au Cluster, dans le dossier de votre choix : `ssh-keygen -f chemin-au-choix/nom-de-la-clé-au-choix`
 
-Et voilà! L'environnement de travail est prêt, avec GitLab sécurisé accessible depuis un navigateur web, équipé d'un Runner et d'une Container Registry sécurisés, prêt à exécuter des Pipelines, créer et stocker des Containers Docker, faire de l'IAC avec Ansible et Terraform, ...
+Ensuite,dans GitLab :
+- vous devez créer un nouveau projet et y déposer le contenu de ce dépot ( `https://github.com/alinuxien/k8s-aws-iac` )
+- éditez le fichier `terraform.tfvars` pour le personnaliser, notamment l'emplacement de la paire de clés ( privée et publique, **en chemin complet** ), le nom de domaine `app-domain`, et le type d'instance pour les nodes du Cluster ( j'ai choisi `c5d.xlarge` pour accélérer un peu le process mais `t2.micro` fonctionne très bien, et est beaucoup moins cher )
+Pour information, Terraform utilise 2 fichiers pour gérer les variables : `vars.tf` pour déclarer les variables et éventuellement leur donner une valeur par défaut, et `terraform.tfvars` pour spécifier la valeur des variables si elles n'ont pas valeur par défaut ou changer la valeur par défaut.
+- vous allez créer des variables de CI/CD pour renseigner les crédentials AWS : 
+- Dans le projet, allez dans le menu de gauche, Settings -> CI/CD, puis développez les `Variables`, et créez : 
+- AWS_ACCESS_KEY_ID **en masqué**
+- AWS_SECRET_ACCESS_KEY **en masqué**
+- AWS_DEFAULT_REGION ( eu-west-3 par exemple )
+- AWS_REGION ( eu-west-3 par exemple )
+- AWS_STATE_BUCKET : le nom du bucket S3
+- AWS_STATE_KEY : un nom au choix, comme le nom du projet, qui sera utilisé comme racine pour le nom des objets de Remote State Terraform
+- TF_IN_AUTOMATION : true
+
+Et voilà! L'environnement de travail est prêt. Il suffit d'exécuter le pipeline : 
+-> dans GitLab, menu de gauche, CI/CD -> Pipelines
+-> cliquez sur le bouton bleu en haut à doite `Run Pipeline`
+-> le reste est automatique : GitLab va faire des vérification, planifier, et créer le Cluster. 
+-> la dernière étape ( sur 4 ), sert à détruire le Cluster sur AWS, et est manuelle, pour que vous puissiez en profiter un peu d'abord... D'ailleurs, pensez bien à détruire le Cluster, dans tous les cas, pour ne pas allourdir votre facture AWS inutilement.
+
+Quand le Cluster est créé, pour tester, dans un terminal :
+- `kubectl version` 
+- `kubectl cluster-info`
+- `kubectl get nodes` liste les noeuds enregistrés dans le cluster
+- `kubectl get all -A` liste tous les objets Kubernetes existant dans le cluster, sur tous les namespaces
 
 # Et après ?
-Pour tester cet environnement, je vous propose la suite du projet, qui consiste à créer un Cluster Kubernetes K8S from scratch, sur AWS, 
-[disponible ici](https://github.com/alinuxien/k8s-aws-iac)
+Pour tjouer avec ce Cluster, je vous propose la suite du projet, qui consiste à mettre en place un Service On Demand, capable de déployer des applications PHP-MySQL depuis GitLab vers le Cluster, et  
+[disponible ici](https://github.com/alinuxien/service-on-demand)
 
