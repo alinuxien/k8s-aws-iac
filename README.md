@@ -19,7 +19,7 @@ Encore une fois, ce n'est pas du tout un contexte idéal pour créer efficacemen
 Mais je vous rassure : tout est automatisé avec GitLab, Terraform et Ansible !!!
 
 ## Ca ressemble à quoi ?
-![Vue d'ensemble de l'Architecture Cloud AWS](https://github.com/alinuxien/k8s-aws-iac/blob/master/K8s%20on%20AWS%20-%20Global%20Architecture.png)
+![Vue d'ensemble de l'Architecture Cloud AWS](https://mygta.com:4443/alinuxien/gitlab-infra/-/blob/master/K8s%20on%20AWS%20-%20Global%20Architecture.png)
 
 
 ![Vue d'ensemble de l'Architecture Réseaux entre Pods et entre Nodes Kubernetes](https://github.com/alinuxien/k8s-aws-iac/blob/master/K8s%20on%20AWS%20-%20PODS%20Networking.png)
