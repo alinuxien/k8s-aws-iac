@@ -22,7 +22,7 @@ Mais je vous rassure : tout est automatisé avec GitLab, Terraform et Ansible !!
 ![Vue d'ensemble de l'Architecture Cloud AWS](https://mygta.com:4443/alinuxien/gitlab-infra/-/blob/master/K8s%20on%20AWS%20-%20Global%20Architecture.png)
 
 
-![Vue d'ensemble de l'Architecture Réseaux entre Pods et entre Nodes Kubernetes](https://github.com/alinuxien/k8s-aws-iac/blob/master/K8s%20on%20AWS%20-%20PODS%20Networking.png)
+![Vue d'ensemble de l'Architecture Réseaux entre Pods et entre Nodes Kubernetes](https://mygta.com:4443/alinuxien/gitlab-infra/-/blob/master/K8s%20on%20AWS%20-%20PODS%20Networking.png)
 ## Contenu ?
 - Un pipeline de CI/CD Gitlab : `gitlab-ci.yml` 
 - Le dossier `certs` contient tous les fichiers json nécessaires à la création des Certificats pour le Cluster
