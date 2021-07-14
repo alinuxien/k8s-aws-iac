@@ -1,4 +1,4 @@
-# Bienvenue sur mon projet GitLab CI/CD Infrastructure As Code
+# Bienvenue sur mon projet de création d'un Cluster Kubernetes sur AWS par l'Infrastructure As Code
 Il s'agit d'un projet réalisé en Mai et Juin 2021 dans le cadre de ma formation "Expert DevOps" chez OpenClassRooms.
 
 ## AVERTISSEMENT
