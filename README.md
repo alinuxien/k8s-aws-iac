@@ -17,7 +17,7 @@ Ce projet est une évolution de mon précédent projet basé sur GitLab [disponi
 
 ## Ca ressemble à quoi ?
 ![Vue d'ensemble de l'Architecture Cloud AWS](https://github.com/alinuxien/k8s-aws-iac/blob/master/K8s%20on%20AWS%20-%20Global%20Architecture.png)
-
+![Vue d'ensemble de l'Architecture Réseaux entre Pods et entre Nodes Kubernetes](https://github.com/alinuxien/k8s-aws-iac/blob/master/K8s%20on%20AWS%20-%20PODS%20Networking.png)
 ## Contenu ?
 - Un `Vangrantfile` et un script `bootstrap.sh` pour la VM et son provisionning initial.
 - Le fichier `inventaire.ini` sert au bon fonctionnement local de Ansible
