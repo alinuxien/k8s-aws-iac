@@ -67,7 +67,7 @@ Et voilà! L'environnement de travail est prêt. Il suffit d'exécuter le pipeli
 - le reste est automatique : GitLab va faire des vérification, planifier, et créer le Cluster. 
 - la dernière étape ( sur 4 ), sert à détruire le Cluster sur AWS, et est manuelle, pour que vous puissiez en profiter un peu d'abord... D'ailleurs, pensez bien à détruire le Cluster, dans tous les cas, pour ne pas allourdir votre facture AWS inutilement.
 
-Quand le Cluster est créé, pour tester, dans un terminal :
+Quand le Cluster est créé, et l'accès est configuré pour l'utilisateur `vagrant` dans la VM. Pour le tester, dans un terminal :
 - `kubectl version` 
 - `kubectl cluster-info`
 - `kubectl get nodes` liste les noeuds enregistrés dans le cluster
