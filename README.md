@@ -62,10 +62,10 @@ Pour information, Terraform utilise 2 fichiers pour gérer les variables : `vars
 - TF_IN_AUTOMATION : true
 
 Et voilà! L'environnement de travail est prêt. Il suffit d'exécuter le pipeline : 
--> dans GitLab, menu de gauche, CI/CD -> Pipelines
--> cliquez sur le bouton bleu en haut à doite `Run Pipeline`
--> le reste est automatique : GitLab va faire des vérification, planifier, et créer le Cluster. 
--> la dernière étape ( sur 4 ), sert à détruire le Cluster sur AWS, et est manuelle, pour que vous puissiez en profiter un peu d'abord... D'ailleurs, pensez bien à détruire le Cluster, dans tous les cas, pour ne pas allourdir votre facture AWS inutilement.
+- dans GitLab, menu de gauche, CI/CD -> Pipelines
+- cliquez sur le bouton bleu en haut à doite `Run Pipeline`
+- le reste est automatique : GitLab va faire des vérification, planifier, et créer le Cluster. 
+- la dernière étape ( sur 4 ), sert à détruire le Cluster sur AWS, et est manuelle, pour que vous puissiez en profiter un peu d'abord... D'ailleurs, pensez bien à détruire le Cluster, dans tous les cas, pour ne pas allourdir votre facture AWS inutilement.
 
 Quand le Cluster est créé, pour tester, dans un terminal :
 - `kubectl version` 
