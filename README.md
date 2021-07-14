@@ -10,7 +10,7 @@ Ca crée un Cluster Kubernetes sur AWS, composé de 2 nodes Controller et 2 node
 
 Une fois disponible, on peut y déployer des pods, des deployment et des services Kubernetes à partir de la VM locale qui a permis la construction.
 
-Afin d'automatiser l'infrastructure, j'ai utilisé Terraform et Ansible.
+Afin d'automatiser l'infrastructure, j'ai utilisé Terraform et Ansible, et j'ai utilisé la CI/CD de GitLab pour développer.
 
 Le Cluster est créé "from scratch", sans recours à des helper comme kubeadm, et est inspiré du tutoriel de Kelsey Hightower, "M. Cloud" chez Google, disponible ici : [Kubernetes The Hard Way](https://github.com/kelseyhightower/kubernetes-the-hard-way).
 
