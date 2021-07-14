@@ -1,19 +1,22 @@
 # Bienvenue sur mon projet GitLab CI/CD Infrastructure As Code
-Il s'agit d'un projet réalisé en Avril 2021 dans le cadre de ma formation "Expert DevOps" chez OpenClassRooms.
+Il s'agit d'un projet réalisé en Mai et Juin 2021 dans le cadre de ma formation "Expert DevOps" chez OpenClassRooms.
 
 ## AVERTISSEMENT
 Il s'agit seulement d'un projet d'étude, à NE PAS UTILISER EN PROD  !!!
+Des outils bien plus simple, efficace et sécurisés sont disponibles en ligne, comme par exemple [Kops](https://kubernetes.io/fr/docs/setup/custom-cloud/kops/)
 
 ## Ca fait quoi ?
-Ca crée un serveur virtuel GitLab, dont le but ici est d'exploiter les fonctionnalités d'intégration et déploiement continu ( CI/CD ) pour, développer de l'Infrastructure As Code avec Terraform et Ansible.
+Ca crée un Cluster Kubernetes sur AWS, composé de 2 nodes Controller et 2 nodes Worker, avec un Serveur DNS interne au Cluster, et le réseau configuré pour permettre la communication des Pods.
 
-A l'usage, on va pouvoir créer des projets équipés de pipeline de CI/CD, qui auront accès à un Runner et une Container Registry, sécurisés, ainsi que quelques autres outils...
+Une fois disponible, on peut y déployer des pods, des deployment et des services Kubernetes à partir de la VM locale qui a permis la construction.
 
-Pour cela, nous allons créer une VM Virtual Box à l'aide de Vagrant, contenant une distribution Linux Ubuntu et les outils nécessaires.
+Afin d'automatiser l'infrastructure, j'ai utilisé Terraform et Ansible.
 
-Ensuite, des scripts et roles Ansible permettent l'installation et la configuration de GitLab, GitLab Runner, et GitLab Container Registry.
+Le Cluster est créé "from scratch", sans recours à des helper comme kubeadm, et est inspiré du tutoriel de Kelsey Hightower, "M. Cloud" chez Google, disponible ici : [Kubernetes The Hard Way](https://github.com/kelseyhightower/kubernetes-the-hard-way).
 
-Ce projet est une évolution de mon précédent projet basé sur GitLab [disponible ici](https://github.com/alinuxien/vm-gitlab-ansible)
+Encore une fois, ce n'est pas du tout un contexte idéal pour créer efficacement des Clusters Kubernetes, mais le but était d'expérimenter toutes les étapes et les composants qui constituent un Cluster.
+
+Mais je vous rassure : tout est automatisé avec GitLab, Terraform et Ansible !!!
 
 ## Ca ressemble à quoi ?
 ![Vue d'ensemble de l'Architecture Cloud AWS](https://github.com/alinuxien/k8s-aws-iac/blob/master/K8s%20on%20AWS%20-%20Global%20Architecture.png)
