@@ -49,7 +49,7 @@ Dans un Terminal :
 
 Ensuite,dans GitLab :
 - vous devez créer un nouveau projet et y déposer le contenu de ce dépot ( `https://github.com/alinuxien/k8s-aws-iac` )
-- éditez le fichier `terraform.tfvars` pour le personnaliser, notamment l'emplacement de la paire de clés ( privée et publique, **en chemin complet** ), le nom de domaine `app-domain`, et le type d'instance pour les nodes du Cluster ( j'ai choisi `c5d.xlarge` pour accélérer un peu le process mais `t2.micro` fonctionne très bien, et est beaucoup moins cher )
+- éditez le fichier `terraform.tfvars` pour le personnaliser, notamment l'emplacement de la paire de clés ( privée et publique, **en chemin complet** ), le nom de domaine dans la variable `app-domain`, et les types d'instance pour les nodes du Cluster, `k8s-controller-nodes-instance-type` et `k8s-worker-nodes-instance-type` ( j'ai choisi `c5d.xlarge` pour accélérer un peu le process mais `t2.micro` fonctionne très bien, et est beaucoup moins cher :) )
 Pour information, Terraform utilise 2 fichiers pour gérer les variables : `vars.tf` pour déclarer les variables et éventuellement leur donner une valeur par défaut, et `terraform.tfvars` pour spécifier la valeur des variables si elles n'ont pas valeur par défaut ou changer la valeur par défaut.
 - vous allez créer des variables de CI/CD pour renseigner les crédentials AWS : 
 - Dans le projet, allez dans le menu de gauche, Settings -> CI/CD, puis développez les `Variables`, et créez : 
