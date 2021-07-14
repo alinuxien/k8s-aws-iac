@@ -6,8 +6,9 @@ stages:
 
 # Préparation du nom de l'objet de stockage du State Terraform dans le Bucket
 # 1 objet par branche
-# Nécessite de définir la variable d'enrivonnement 
-# AWS_STATE_KEY qui 
+# Nécessite de définir la variable de CI/CD 
+# AWS_STATE_KEY qui contient la racine du nom de l'objet de stockage du State
+# autrement dit, le nom du projet
 variables:
   BRANCH_STATE_KEY: $AWS_STATE_KEY-$CI_COMMIT_BRANCH
 
@@ -18,6 +19,17 @@ fmt_job:
   script:
       - terraform fmt -check -recursive terraform/
 
+# Pour les jobs de validation, de plan, d'apply et de destroy, il convient de fournir 
+# les crédentials à Terraform pour qu'il puisse utiliser le provider AWS
+# Pour cela, il convient de définir les variables de CI/CD : 
+# AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY et AWS_DEFAULT_REGION
+# Pour les jobs de validation, de plan, d'apply et de destroy, il convient aussi de finaliser
+# la configuration du Backend Terraform en Remote State sur un Bucket S3 AWS
+# Pour cela, il convient de définir les variables de CI/CD : 
+# AWS_STATE_BUCKET : nom du bucket S3 de stockage des objets Remote State
+# AWS_REGION : région du bucket S3 utilisé pour le stockage des objets Remote State
+# TF_IN_AUTOMATION : à définir à une valeur non nulle (par ex. true ) pour une sortie
+# moins verbeuse de Terraform, plus adaptée à l'automatisation en CI/CD
 validate_job:
   stage: check 
   tags:
@@ -34,6 +46,7 @@ plan_job:
   script:
       - cd terraform
       - terraform init -input=false -backend-config="bucket=$AWS_STATE_BUCKET" -backend-config="key=$BRANCH_STATE_KEY" -backend-config="region=$AWS_REGION"
+      # parallelism : limite du nombre d'opération concurrentes dans le parcours du Graphe Terraform ( défaut 10 )
       - terraform plan -input=false -parallelism=50 -out "planfile" -no-color >> planoutput.txt
   # Mise à disposition du plan Terraform 
   artifacts:
@@ -50,6 +63,7 @@ apply_job:
       - terraform init -input=false -backend-config="bucket=$AWS_STATE_BUCKET" -backend-config="key=$BRANCH_STATE_KEY" -backend-config="region=$AWS_REGION"
       - terraform apply -input=false -parallelism=50 -auto-approve "planfile"
   allow_failure: true
+  # Mise à disposition des scripts Ansible générés par Terraform à l'exécution ( basés sur des templates )
   artifacts:
     paths:
       - ansible/inventory.ini
