@@ -74,6 +74,5 @@ Quand le Cluster est créé, pour tester, dans un terminal :
 - `kubectl get all -A` liste tous les objets Kubernetes existant dans le cluster, sur tous les namespaces
 
 # Et après ?
-Pour tjouer avec ce Cluster, je vous propose la suite du projet, qui consiste à mettre en place un Service On Demand, capable de déployer des applications PHP-MySQL depuis GitLab vers le Cluster, et  
-[disponible ici](https://github.com/alinuxien/service-on-demand)
+Pour jouer avec ce Cluster, je vous propose la suite du projet, qui consiste à mettre en place un Service On Demand, capable de déployer des applications PHP-MySQL depuis GitLab vers le Cluster, sous forme de pods, de deployments et de services, et [disponible ici](https://github.com/alinuxien/service-on-demand)
 
