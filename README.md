@@ -38,7 +38,7 @@ Mais je vous rassure : tout est automatisé avec GitLab, Terraform et Ansible !!
 ## Comment ça s'utilise ?
 Chez AWS, pour ceux qui hébergent leur nom de domaine hors AWS Route 53 :
 
-créez une zone hébergée sur votre nom de domaine ( ou sous-domaine ), service Route 53
+créez une zone hébergée sur votre nom de domaine ( ou sous-domaine ), service Route 53, 
 notez les noms des 4 serveurs DNS apparus dans l'enregistrement de type NS, et réalisez la redirection chez votre provider DNS ( 4 enregistrements de type NS aussi, je ne m'étale pas sur ce point )
 
 Chez AWS, pour tous : 
